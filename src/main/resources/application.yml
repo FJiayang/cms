@@ -1,0 +1,4 @@
+#控制配置文件调用
+spring:
+  profiles:
+    active: dev
