@@ -1,6 +1,8 @@
 package com.fjy.spring.service;
 
 import com.fjy.spring.domain.TbUser;
+import com.fjy.spring.enums.ResultEnum;
+import com.fjy.spring.exception.UserException;
 import com.fjy.spring.repository.TbUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,6 @@ public class UserService {
         if (password.equals(user.getColpassword())){
             return true;
         }
-        return false;
+        throw new UserException(ResultEnum.USER_NOTEXIST);
     }
 }
