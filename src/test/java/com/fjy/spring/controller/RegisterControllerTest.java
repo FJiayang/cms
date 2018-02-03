@@ -15,27 +15,23 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class LoginControllerTest {
+public class RegisterControllerTest {
 
     @Autowired
     private MockMvc mvc;
 
     @Test
-    public void toLoginPage() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/index"))
-                .andExpect(MockMvcResultMatchers.status().isOk());
-    }
-
-    @Test
-    public void doLogin() throws Exception {
-        //测试正常登录
-        mvc.perform(MockMvcRequestBuilders.post("/login/dologin").param("colname", "root").param("colpassword", "root"))
-                .andExpect(MockMvcResultMatchers.status().isOk());
-        //测试密码错误
-        mvc.perform(MockMvcRequestBuilders.post("/login/dologin").param("colname", "root").param("colpassword", "123"))
+    public void doRegister()throws Exception {
+        //测试正常注册,abc每次调试必须改，因为唯一约束
+        mvc.perform(MockMvcRequestBuilders.post("/register/doregister")
+                .param("colname", "abc")
+                .param("colpassword", "123456")
+                .param("colemail","test@gmail.com")
+                .param("colstudentno","0003")
+                .param("colrealname","TestRegister"))
                 .andExpect(MockMvcResultMatchers.content().json("{\n" +
-                        "    \"code\": 105,\n" +
-                        "    \"message\": \"用户名或密码错误\",\n" +
+                        "    \"code\": 0,\n" +
+                        "    \"message\": \"请求成功\",\n" +
                         "    \"data\": null\n" +
                         "}"));
     }

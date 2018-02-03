@@ -9,4 +9,11 @@ public class ResultUtil {
         result.setMessage(msg);
         return result;
     }
+    public static Result error(Integer code,String msg,Object data){
+        Result result = new Result();
+        result.setCode(code);
+        result.setMessage(msg);
+        result.setData(data);
+        return result;
+    }
 }

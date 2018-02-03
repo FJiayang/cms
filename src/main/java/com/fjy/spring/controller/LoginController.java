@@ -21,7 +21,7 @@ public class LoginController {
     @PostMapping("/login/dologin")
     public String doLogin(TbUser tbUser)throws Exception{
         if (userService.doLoginService(tbUser.getColname(),tbUser.getColpassword())){
-            return "home";
+            return "/home/home";
         }
         return "login";
     }

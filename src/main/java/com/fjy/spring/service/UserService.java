@@ -7,6 +7,7 @@ import com.fjy.spring.repository.TbUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class UserService {
 
@@ -16,9 +17,23 @@ public class UserService {
 
     public boolean doLoginService(String name,String password){
         TbUser user = (TbUser)tbUserRepository.findByColname(name).get();
-        if (password.equals(user.getColpassword())){
-            return true;
+        if (user!=null){
+            if (password.equals(user.getColpassword())){
+                return true;
+            }else {
+                throw new UserException(ResultEnum.WRONGPASS);
+            }
+        }else {
+            throw new UserException(ResultEnum.USER_NOTEXIST);
         }
-        throw new UserException(ResultEnum.USER_NOTEXIST);
+    }
+
+    public boolean doRegisterService(TbUser tbUser){
+
+        TbUser user = tbUserRepository.save(tbUser);
+        if (user!=null){
+            throw new UserException(ResultEnum.SUCCESS);
+        }
+        return false;
     }
 }

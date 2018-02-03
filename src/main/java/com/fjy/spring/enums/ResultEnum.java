@@ -8,10 +8,13 @@ public enum ResultEnum {
     DELETE_ERROR(103,"删除失败"),
     ADD_ERROR(104,"添加失败"),
     WRONGPASS(105,"用户名或密码错误"),
-    ILLEGAL_ACCESS(106,"非法访问")
+    ILLEGAL_ACCESS(106,"非法访问"),
+    WRONG_FORM(107,"表单错误"),
+    EMPTY_DATA(108,"无数据")
     ;
     private Integer code;
     private String msg;
+    private String data;
 
     public Integer getCode() {
         return code;
@@ -19,6 +22,15 @@ public enum ResultEnum {
 
     public String getMsg() {
         return msg;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public String getData() {
+        return data;
+
     }
 
     ResultEnum(Integer code, String msg) {

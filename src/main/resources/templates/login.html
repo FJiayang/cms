@@ -3,9 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <title>登录</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="dist/css/style.css">
 </head>
+
 <body>
-<center>
+<!-- 先引入 Vue -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<div id="app">
+    <el-row type="flex" class="row-bg" justify="center">
+        <el-col
+                :md="12" :lg="12" :xl="12">
+            <div class="grid-content bg-purple">
+                <h2>登录系统</h2>
+            </div>
+        </el-col>
+    </el-row>
+    <el-row type="flex" class="row-bg" justify="center">
+        <el-col
+                :md="12" :lg="12" :xl="12">
+            <div class="grid-content bg-purple">
+                <template>
+                    <el-tabs v-model="activeName"
+                             @tab-click="handleClick">
+                        <el-tab-pane label="登录"
+                                     name="login">
+                            <el-form :model="ruleForm2" status-icon
+                                     :rules="rules2" ref="ruleForm2" label-width="100px"
+                                     class="demo-ruleForm"
+                                     action="/cms/login/dologin"
+                                     method="POST" name="loginTest">
+                                <el-form-item label="用户名"
+                                              prop="userName">
+                                    <el-input
+                                            v-model="ruleForm2.userName" name="colname"></el-input>
+                                </el-form-item>
+                                <el-form-item
+                                        label="密码" prop="pass">
+                                    <el-input type="password"
+                                              v-model="ruleForm2.pass" auto-complete="off" name="colpassword"></el-input>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-button type="primary"
+                                               native-type="submit">提交
+                                    </el-button>
+                                    <el-button @click="resetForm('ruleForm2')">重置</el-button>
+                                </el-form-item>
+                            </el-form>
+                        </el-tab-pane>
+                        <el-tab-pane
+                                label="注册" name="register">
+                            <el-form
+                                    :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2"
+                                    label-width="100px" class="demo-ruleForm"
+                                    action="/cms/register/doregister"
+                                    method="POST" name="loginTest">
+                                <el-form-item label="用户名"
+                                              prop="userName">
+                                    <el-input
+                                            v-model="ruleForm2.userName" name="userName"></el-input>
+                                </el-form-item>
+                                <el-form-item
+                                        label="密码" prop="pass">
+                                    <el-input type="password"
+                                              v-model="ruleForm2.pass" auto-complete="off" name="passWord"></el-input>
+                                </el-form-item>
+                                <el-form-item label="确认密码" prop="checkPass">
+                                    <el-input
+                                            type="password" v-model="ruleForm2.checkPass"
+                                            auto-complete="off"></el-input>
+                                </el-form-item>
+                                <el-form-item prop="email" label="邮箱"
+                                              :rules="[
+      { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+      { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change' }
+    ]">
+                                    <el-input v-model="ruleForm2.email"></el-input>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-button type="primary"
+                                               native-type="submit">提交
+                                    </el-button>
+                                    <el-button @click="resetForm('ruleForm2')">重置</el-button>
+                                </el-form-item>
+                            </el-form>
+                        </el-tab-pane>
+                    </el-tabs>
+                </template>
+            </div>
+        </el-col>
+    </el-row>
+</div>
+<script src="./dist/js/LoginStyle.js"></script>
+<!--<body>
+&lt;!&ndash;<center>
     <h1>登录系统</h1>
     <form action="/cms/login/dologin" method="post">
         <p>用户名：
@@ -13,7 +106,7 @@
         <p>密码：
             <input type="password" name="colpassword"></p>
         <input type="submit" value="登录">
-</center>
-</form>
+</center>&ndash;&gt;
+</form>-->
 </body>
 </html>
