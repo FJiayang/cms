@@ -13,11 +13,6 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = {"index",""})
-    public String toLoginPage(){
-        return "login";
-    }
-
     @PostMapping("/login/dologin")
     public String doLogin(TbUser tbUser)throws Exception{
         if (userService.doLoginService(tbUser.getColname(),tbUser.getColpassword())){
