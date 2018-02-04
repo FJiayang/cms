@@ -21,10 +21,10 @@ public class DownLoadController {
     @Autowired
     private FileService fileService;
 
-    @GetMapping("/download")
+    /*@GetMapping("/download")
     public String toDownloadPage(){
-        return "download";
-    }
+        return "download/dodownload";
+    }*/
 
     @GetMapping("/download/findall")
     @ResponseBody
@@ -37,7 +37,7 @@ public class DownLoadController {
     }
 
     @RequestMapping("/download/dodownload")
-    public String download(@RequestParam String fileName , HttpServletRequest request, HttpServletResponse response){
+    public String download(@RequestParam Integer fileId , HttpServletRequest request, HttpServletResponse response){
 
         response.setContentType("text/html;charset=utf-8");
         try {
@@ -49,19 +49,20 @@ public class DownLoadController {
         java.io.BufferedOutputStream bos = null;
 
         TbFile file = new TbFile();
-        file.setColfilename(fileName);
-
-        TbFile tbFile = fileService.findFile(file);
+        file.setColfileid(fileId);
+        TbFile tbFile = fileService.findFileById(file);
+        //TbFile tbFile = fileService.findFile(file);
 
         System.out.println(tbFile.getColfilepath());
 
         String ctxPath = tbFile.getColfilepath();
-        String downLoadPath = ctxPath + fileName;
+        String downLoadPath = ctxPath;
+        //String downLoadPath = ctxPath + tbFile.getColfilename();
         System.out.println(downLoadPath);
         try {
             long fileLength = new File(downLoadPath).length();
             response.setContentType("application/x-msdownload;");
-            response.setHeader("Content-disposition", "attachment; filename=" + new String(fileName.getBytes("utf-8"), "ISO8859-1"));
+            response.setHeader("Content-disposition", "attachment; filename=" + new String(tbFile.getColfilename().getBytes("utf-8"), "ISO8859-1"));
             response.setHeader("Content-Length", String.valueOf(fileLength));
             bis = new BufferedInputStream(new FileInputStream(downLoadPath));
             bos = new BufferedOutputStream(response.getOutputStream());

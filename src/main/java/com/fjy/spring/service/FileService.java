@@ -30,6 +30,10 @@ public class FileService {
         return tbFileRepository.findAll();
     }
 
+    public TbFile findFileById(TbFile tbFile){
+        return tbFileRepository.findById(tbFile.getColfileid()).get();
+    }
+
 
 
 }

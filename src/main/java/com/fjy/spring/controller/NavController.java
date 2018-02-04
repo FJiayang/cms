@@ -14,4 +14,9 @@ public class NavController {
     public String toTestPage(){
         return "/dist/thymeleafTest";
     }
+
+    @GetMapping(value = {"axiosTest"})
+    public String toTestAxiosPage(){
+        return "/dist/axiosTest";
+    }
 }

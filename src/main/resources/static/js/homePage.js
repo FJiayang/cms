@@ -1,3 +1,11 @@
+axios.get('http://localhost:8080/cms/download/findall')
+    .then(function (response) {
+        console.log(response);
+        resolve(response.data);
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
 var Main = {
     data() {
         return {
@@ -10,43 +18,41 @@ var Main = {
                 name: 'food2.jpeg',
                 url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
             }],
-            tableData3: [{
-                date: '2016-05-03',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-02',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-04',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-01',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-08',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-06',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-07',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }]
+            DownloadList: [
+                {
+                    colfileid: 9,
+                    coluserid: 0,
+                    colip: '0:0:0:0:0:0:0:1',
+                    colrealname: '234234',
+                    colfilename: '10K.jpg',
+                    colfilesize: '21.78KB',
+                    colfilepath: 'C:\\Users\\11860\\AppData\\Local\\Temp\\tomcat-docbase.8051654935022807536.8080\\upload/10K.jpg'
+                },
+                {
+                    colfileid: 15,
+                    coluserid: 0,
+                    colip: '0:0:0:0:0:0:0:1',
+                    colrealname: null,
+                    colfilename: '10K.jpg',
+                    colfilesize: '21.78KB',
+                    colfilepath: 'F:\\JAVA Workspace\\Temp\\upload/10K.jpg'
+                }
+            ]
         };
     },
     methods: {
+        handleClick(row) {
+            console.log(row.colfileid);
+        },
         submitUpload() {
             this.$refs.upload.submit();
         },
         handleRemove(file, fileList) {
             console.log(file, fileList);
+        },
+        handleDownload(row){
+            /*var url = window.location.protocol+"://"+window.location.host+":"+window.location.port+"/"*/
+            window.open("http://localhost:8080/cms/download/dodownload?fileId="+row.colfileid);
         },
         handlePreview(file) {
             console.log(file);

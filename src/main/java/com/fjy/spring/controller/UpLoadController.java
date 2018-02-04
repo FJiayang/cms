@@ -60,7 +60,8 @@ public class UpLoadController {
     @RequestMapping(value = "/oneUpload")
     public String oneUpload(@RequestParam("imageFile") MultipartFile imageFile, HttpServletRequest request) {
 
-        String uploadUrl = request.getSession().getServletContext().getRealPath("/") + "upload/";
+        //String uploadUrl = request.getSession().getServletContext().getRealPath("/") + "upload/";
+        String uploadUrl =  serverProperties.getFilePath()+ "upload/";
         String filename = imageFile.getOriginalFilename();
         File dir = new File(uploadUrl);
         if (!dir.exists()) {//判断目录是否存在，否则自动创建
@@ -116,13 +117,13 @@ public class UpLoadController {
      * @return
      */
     @RequestMapping("/moreUpload")
-    public String moreUpload(HttpServletRequest request) {
+    public void moreUpload(HttpServletRequest request) {
 
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
         Map<String, MultipartFile> files = multipartHttpServletRequest.getFileMap();
 
-        String uploadUrl = request.getSession().getServletContext().getRealPath("/") + "upload/";
-
+        //String uploadUrl = request.getSession().getServletContext().getRealPath("/") + "upload/";
+        String uploadUrl = serverProperties.getFilePath()+ "upload/";
 
         File dir = new File(uploadUrl);
         if (!dir.exists()) {
@@ -132,13 +133,17 @@ public class UpLoadController {
         List<String> fileList = new ArrayList<String>();
 
         for (MultipartFile file : files.values()) {
-            File targetFile = new File(uploadUrl + file.getOriginalFilename());
+            String filename = file.getOriginalFilename();
+            File targetFile = new File(uploadUrl + filename);
 
+            System.out.println("文件上传到: " + uploadUrl + filename);
+            System.out.println("文件大小: " + new FormatFileSizeUtil().GetFileSize(file.getSize()));
+            System.out.println("文件名: " + filename);
 
             TbFile tbFile = new TbFile();
             tbFile.setColfilesize(new FormatFileSizeUtil().GetFileSize(file.getSize()));
-            tbFile.setColfilename(file.getName());
-            tbFile.setColfilepath(uploadUrl + file.getName());
+            tbFile.setColfilename(filename);
+            tbFile.setColfilepath(uploadUrl + filename);
             tbFile.setColip(request.getRemoteAddr());
 
             if (fileService.addFile(tbFile))
@@ -167,9 +172,5 @@ public class UpLoadController {
 
             }
         }
-
-        request.setAttribute("files", fileList);
-
-        return "moreUploadResult";
     }
 }
