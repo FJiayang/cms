@@ -7,11 +7,46 @@
 <div th:insert="~{dist/thymeleaf/common_head :: #body_js}"></div>
 <div id="app">
     <el-container>
-        <div th:include="dist/thymeleaf/layout :: asider"></div>
-        <div th:include="dist/thymeleaf/layout :: header"></div>
+        <el-aside th:include="dist/thymeleaf/layout :: asider"></el-aside>
         <el-container>
+            <el-header th:include="dist/thymeleaf/layout :: header"></el-header>
             <el-main>
-                
+                <el-row>
+                    <el-col :md="12" :lg="12" :xl="12">
+                        <div class="grid-content bg-purple-dark">
+                            <el-upload class="upload-demo" ref="upload" action="/cms/oneUpload" :on-preview="handlePreview" :on-remove="handleRemove"
+                                       :file-list="fileList" :auto-upload="false" name="imageFile">
+                                <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+                                <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">
+                                    上传到服务器
+                                </el-button>
+                                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                            </el-upload>
+                        </div>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :md="24" :lg="12" :xl="12">
+                        <div class="grid-content bg-purple-dark">
+                            <el-table :data="tableData3" height="250" border style="width: 100%">
+                                <el-table-column prop="date" label="日期" width="180">
+                                </el-table-column>
+                                <el-table-column prop="name" label="姓名" width="180">
+                                </el-table-column>
+                                <el-table-column prop="address" label="地址">
+                                </el-table-column>
+                                <el-table-column fixed="right" label="操作" width="150">
+                                    <template slot-scope="scope">
+                                        <el-button @click="handleClick(scope.row)" type="success" plain size="small">
+                                            下载
+                                        </el-button>
+                                        <el-button type="danger" plain size="small">删除</el-button>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                        </div>
+                    </el-col>
+                </el-row>
             </el-main>
         </el-container>
     </el-container>

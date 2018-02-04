@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>登录</title>
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-    <link rel="stylesheet" href="dist/css/style.css">
-</head>
-
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="dist/thymeleaf/common_head :: header('登录')"></head>
 <body>
-<!-- 先引入 Vue -->
-<script src="https://unpkg.com/vue/dist/vue.js"></script>
-<!-- 引入组件库 -->
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<div th:insert="~{dist/thymeleaf/common_head :: #body_js}"></div>
 <div id="app">
     <el-row type="flex" class="row-bg" justify="center">
         <el-col
@@ -22,8 +14,7 @@
         </el-col>
     </el-row>
     <el-row type="flex" class="row-bg" justify="center">
-        <el-col
-                :md="12" :lg="12" :xl="12">
+        <el-col :md="12" :lg="12" :xl="12">
             <div class="grid-content bg-purple">
                 <template>
                     <el-tabs v-model="activeName"
@@ -96,7 +87,7 @@
         </el-col>
     </el-row>
 </div>
-<script src="./dist/js/LoginStyle.js"></script>
+<script th:src="@{js/LoginStyle.js}"></script>
 <!--<body>
 &lt;!&ndash;<center>
     <h1>登录系统</h1>
