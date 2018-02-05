@@ -1,11 +1,12 @@
+/*var data = "";
 axios.get('http://localhost:8080/cms/download/findall')
     .then(function (response) {
-        console.log(response);
-        resolve(response.data);
+        console.log(response.data);
+        data = response.data;
     })
     .catch(function (error) {
         console.log(error);
-    });
+    });*/
 var Main = {
     data() {
         return {
@@ -18,27 +19,21 @@ var Main = {
                 name: 'food2.jpeg',
                 url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
             }],
-            DownloadList: [
-                {
-                    colfileid: 9,
-                    coluserid: 0,
-                    colip: '0:0:0:0:0:0:0:1',
-                    colrealname: '234234',
-                    colfilename: '10K.jpg',
-                    colfilesize: '21.78KB',
-                    colfilepath: 'C:\\Users\\11860\\AppData\\Local\\Temp\\tomcat-docbase.8051654935022807536.8080\\upload/10K.jpg'
-                },
-                {
-                    colfileid: 15,
-                    coluserid: 0,
-                    colip: '0:0:0:0:0:0:0:1',
-                    colrealname: null,
-                    colfilename: '10K.jpg',
-                    colfilesize: '21.78KB',
-                    colfilepath: 'F:\\JAVA Workspace\\Temp\\upload/10K.jpg'
-                }
-            ]
+            DownloadList: []
         };
+    },
+    mounted(){
+        this.$nextTick(()=>{
+            var that=this;
+            axios.get('http://localhost:8080/cms/download/findall')
+            .then(function (response) {
+                console.log(response.data);
+                that.DownloadList = response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });})
+
     },
     methods: {
         handleClick(row) {
