@@ -3,6 +3,7 @@ package com.fjy.spring.domain;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.sql.Timestamp;
 
 @Entity
 public class TbFile {
@@ -12,7 +13,7 @@ public class TbFile {
 
     private int coluserid;
 
-    //private String coltime;
+    private Timestamp coltime;
 
     private String colip;
 
@@ -33,6 +34,14 @@ public class TbFile {
                 ", colfilesize='" + colfilesize + '\'' +
                 ", colfilepath='" + colfilepath + '\'' +
                 '}';
+    }
+
+    public Timestamp getColtime() {
+        return coltime;
+    }
+
+    public void setColtime(Timestamp coltime) {
+        this.coltime = coltime;
     }
 
     public int getColfileid() {

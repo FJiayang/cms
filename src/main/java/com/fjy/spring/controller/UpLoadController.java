@@ -1,6 +1,8 @@
 package com.fjy.spring.controller;
 
+import com.fjy.spring.constant.GlobalConstant;
 import com.fjy.spring.domain.TbFile;
+import com.fjy.spring.domain.TbUser;
 import com.fjy.spring.properties.ServerProperties;
 import com.fjy.spring.service.FileService;
 import com.fjy.spring.untils.FormatFileSizeUtil;
@@ -13,7 +15,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -60,6 +64,7 @@ public class UpLoadController {
     @RequestMapping(value = "/oneUpload")
     public String oneUpload(@RequestParam("imageFile") MultipartFile imageFile, HttpServletRequest request) {
 
+        TbUser user = (TbUser)request.getSession().getAttribute(GlobalConstant.USER_SESSION_KEY);
         //String uploadUrl = request.getSession().getServletContext().getRealPath("/") + "upload/";
         String uploadUrl =  serverProperties.getFilePath()+ "upload/";
         String filename = imageFile.getOriginalFilename();
@@ -75,7 +80,7 @@ public class UpLoadController {
         file.setColfilename(filename);
         file.setColfilepath(uploadUrl + filename);
         file.setColip(request.getRemoteAddr());
-
+        file.setColuserid(user.getColuserid());
         if (fileService.addFile(file))
             System.out.println("记录写入数据库成功");
         else
@@ -122,6 +127,9 @@ public class UpLoadController {
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
         Map<String, MultipartFile> files = multipartHttpServletRequest.getFileMap();
 
+        TbUser user = (TbUser)request.getSession().getAttribute(GlobalConstant.USER_SESSION_KEY);
+        Date date = new Date();
+        Timestamp currentTime = new Timestamp(date.getTime());
         //String uploadUrl = request.getSession().getServletContext().getRealPath("/") + "upload/";
         String uploadUrl = serverProperties.getFilePath()+ "upload/";
 
@@ -143,8 +151,10 @@ public class UpLoadController {
             TbFile tbFile = new TbFile();
             tbFile.setColfilesize(new FormatFileSizeUtil().GetFileSize(file.getSize()));
             tbFile.setColfilename(filename);
+            tbFile.setColtime(currentTime);
             tbFile.setColfilepath(uploadUrl + filename);
             tbFile.setColip(request.getRemoteAddr());
+            tbFile.setColuserid(user.getColuserid());
 
             if (fileService.addFile(tbFile))
                 System.out.println("记录写入数据库成功");
