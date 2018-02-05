@@ -1,22 +1,19 @@
 var Main = {
     data() {
-        var checkuserName = (rule, value, callback) => {
+        var checkName = (rule, value, callback) => {
             if (!value) {
                 return callback(new Error('用户名不能为空'));
-            } else {
-                callback();
             }
-            /*        setTimeout(() => {
-                      if (!Number.isInteger(value)) {
-                        callback(new Error('请输入数字值'));
-                      } else {
-                        if (value < 18) {
-                          callback(new Error('必须年满18岁'));
-                        } else {
-                          callback();
-                        }
-                      }
-                    }, 1000);*/
+        };
+        var checkNo = (rule, value, callback) => {
+            if (!value) {
+                return callback(new Error('学号不能为空'));
+            }
+        };
+        var checkRealName = (rule, value, callback) => {
+            if (!value) {
+                return callback(new Error('真实姓名不能为空'));
+            }
         };
         var validatePass = (rule, value, callback) => {
             if (value === '') {
@@ -31,7 +28,7 @@ var Main = {
         var validatePass2 = (rule, value, callback) => {
             if (value === '') {
                 callback(new Error('请再次输入密码'));
-            } else if (value !== this.ruleForm2.pass) {
+            } else if (value !== this.ruleForm2.colpassword) {
                 callback(new Error('两次输入密码不一致!'));
             } else {
                 callback();
@@ -39,23 +36,39 @@ var Main = {
         };
         return {
             ruleForm2: {
-                pass: '',
-                checkPass: '',
-                userName: '',
-                email: ''
+                colname: '',
+                colpassword: '',
+                checkPass:'',
+                colstudentno: '',
+                colrealname: '',
+                colemail: ''
             },
-            activeName: 'login',
             rules2: {
-                pass: [
-                    {validator: validatePass, trigger: 'blur'}
+                colpassword: [
+                    {required: true,validator: validatePass, trigger: 'blur'}
                 ],
                 checkPass: [
-                    {validator: validatePass2, trigger: 'blur'}
+                    {required: true,validator: validatePass2, trigger: 'blur'}
                 ],
-                userName: [
-                    {validator: checkuserName, trigger: 'blur'}
-                ]
-            }
+                colstudentno: [
+                    {
+                        required: true,
+                        validator: checkNo,
+                        trigger: 'blur'
+                    }
+                ],
+                colrealname: [
+                    {
+                        required: true,
+                        validator: checkRealName,
+                        trigger: 'blur'
+                    }
+                ],
+                colname: [
+                    {required: true,validator: checkName, trigger: 'blur'}
+                ],
+            },
+            activeName:'login',
         };
     },
     methods: {

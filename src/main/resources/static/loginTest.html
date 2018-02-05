@@ -1,10 +1,19 @@
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<head th:include="dist/thymeleaf/common_head :: header('登录')"></head>
-<link th:href="@{css/style.css}" rel="stylesheet">
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <!--
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
 <body>
-<div th:insert="~{dist/thymeleaf/common_head :: #body_js}"></div>
+<!-- 先引入 Vue -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <div id="app">
     <el-row type="flex" class="row-bg" justify="center">
         <el-col
@@ -98,7 +107,8 @@
         </el-col>
     </el-row>
 </div>
-<script th:src="@{js/loginstyle.js}"></script>
+<script src="js/loginstyle.js"></script>
+<script src="js/msg.js"></script>
 <!--<body>
 &lt;!&ndash;<center>
     <h1>登录系统</h1>
