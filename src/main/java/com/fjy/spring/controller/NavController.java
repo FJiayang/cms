@@ -19,4 +19,9 @@ public class NavController {
     public String toTestAxiosPage(){
         return "/dist/axiosTest";
     }
+
+    @GetMapping(value = {"/home"})
+    public String toHomePage(){
+        return "/home/home";
+    }
 }

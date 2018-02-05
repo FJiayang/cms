@@ -15,11 +15,11 @@ public class UserService {
     private TbUserRepository tbUserRepository;
 
 
-    public boolean doLoginService(String name,String password){
+    public TbUser doLoginService(String name,String password){
         TbUser user = (TbUser)tbUserRepository.findByColname(name).get();
         if (user!=null){
             if (password.equals(user.getColpassword())){
-                return true;
+                return user;
             }else {
                 throw new UserException(ResultEnum.WRONGPASS);
             }
@@ -32,7 +32,8 @@ public class UserService {
 
         TbUser user = tbUserRepository.save(tbUser);
         if (user!=null){
-            throw new UserException(ResultEnum.SUCCESS);
+            //throw new UserException(ResultEnum.SUCCESS);
+            return true;
         }
         return false;
     }
