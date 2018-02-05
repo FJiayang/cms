@@ -36,7 +36,7 @@ public class RegisterController {
             throw new UserException(resultEnum);
         }
         //加密用户密码
-        tbUser.setColpassword(new BigInteger(CodingUtil.encryptSHA(tbUser.getColpassword().getBytes())).toString());
+        tbUser.setColpassword(new BigInteger(CodingUtil.encryptSHA(tbUser.getColpassword().getBytes())).toString(32));
         if (userService.doRegisterService(tbUser)){
             return "redirect:" + request.getScheme() + "://" + request.getServerName() + ":"
                     + serverProperties.getPortNum() + request.getContextPath() + "/index";

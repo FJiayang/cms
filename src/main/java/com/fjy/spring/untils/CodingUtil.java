@@ -98,7 +98,7 @@ public class CodingUtil {
         System.out.println(new String(decryptBASE64(encryptBASE64(data.getBytes()))));
 
         System.out.println(new BigInteger(encryptMD5(data.getBytes())).toString());
-        System.out.println(new BigInteger(encryptSHA(data.getBytes())).toString());
+        System.out.println(new BigInteger(encryptSHA(data.getBytes())).toString(32));
         System.out.println(new BigInteger(encryptHMAC(data.getBytes(), initMacKey())).toString());
     }
 }

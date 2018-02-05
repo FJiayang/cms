@@ -30,7 +30,7 @@ public class LoginController {
     @PostMapping("/login/dologin")
     public String doLogin(TbUser tbUser)throws Exception{
         //加密用户密码
-        tbUser.setColpassword(new BigInteger(CodingUtil.encryptSHA(tbUser.getColpassword().getBytes())).toString());
+        tbUser.setColpassword(new BigInteger(CodingUtil.encryptSHA(tbUser.getColpassword().getBytes())).toString(32));
         TbUser user = userService.doLoginService(tbUser.getColname(),tbUser.getColpassword());
         if (user!=null){
             request.getSession().setAttribute(USER_SESSION_KEY,user);
