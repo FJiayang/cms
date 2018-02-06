@@ -92,7 +92,7 @@ public class CodingUtil {
 
     public static void main(String[] args) throws Exception {
         // TODO Auto-generated method stub
-        String data = "简单加密";
+        String data = "root";
         System.out.println(new BigInteger(encryptBASE64(data.getBytes())).toString(16));
         System.out.println(new BigInteger(encryptBASE64(data.getBytes())).toString(32));
         System.out.println(new String(decryptBASE64(encryptBASE64(data.getBytes()))));
