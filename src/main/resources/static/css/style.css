@@ -1,5 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
+@import url("https://unpkg.com/element-ui@2.1.0/lib/theme-chalk/display.css");
 @font-face {
     /* font-properties */
     font-family: element-icons;
@@ -9,3 +10,51 @@
 .loginTitle{
 	text-align: center;
 }
+.el-row {
+    margin-bottom: 20px;
+    &:last-child {
+     margin-bottom: 0;
+ }
+}
+.row-bg {
+    padding: 10px 0;
+}
+.text {
+    font-size: 14px;
+}
+
+.item {
+    margin-bottom: 18px;
+}
+
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    content: "";
+}
+.clearfix:after {
+    clear: both
+}
+
+.box-card {
+    width: 100%;
+}
+a{
+    text-decoration: none;
+}
+.demo-table-expand {
+    font-size: 0;
+}
+.demo-table-expand label {
+    width: 90px;
+    color: #99a9bf;
+}
+.demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+}
+.footer{
+    text-align: center;
+}
+

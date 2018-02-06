@@ -1,12 +1,3 @@
-/*var data = "";
-axios.get('http://localhost:8080/cms/download/findall')
-    .then(function (response) {
-        console.log(response.data);
-        data = response.data;
-    })
-    .catch(function (error) {
-        console.log(error);
-    });*/
 var Main = {
     data() {
         var checkName = (rule, value, callback) => {
@@ -44,6 +35,8 @@ var Main = {
             }
         };
         return {
+            activeIndex: '1',
+            dialogVisible: false,
             ruleForm2: {
                 colname: '',
                 colpassword: '',
@@ -78,14 +71,59 @@ var Main = {
                 ],
             },
             activeName:'login',
-            fileList: [{
-                name: 'food.jpeg',
-                url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+            fileList: [],
+            DownloadList: [],
+            tableHomeworkData: [{
+                subject: '信息安全',
+                date: '2018-05-02',
+                name: '实验报告',
+                content: '实验报告',
+                remark:'3000字以上',
+                tempfile:'15251101238.docx'
             }, {
-                name: 'food2.jpeg',
-                url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+                subject: '信息安全',
+                date: '2018-05-02',
+                name: '实验报告',
+                content: '实验报告',
+                remark:'3000字以上',
+                tempfile:'15251101238.docx'
+            }, {
+                subject: '信息安全',
+                date: '2018-05-02',
+                name: '实验报告',
+                content: '实验报告',
+                remark:'3000字以上',
+                tempfile:'15251101238.docx'
+            }, {
+                subject: '信息安全',
+                date: '2018-05-02',
+                name: '实验报告',
+                content: '实验报告',
+                remark:'3000字以上',
+                tempfile:'15251101238.docx'
             }],
-            DownloadList: []
+            tableData2: [{
+                date: '2016-05-02',
+            }, {
+                date: '2016-05-04',
+            }, {
+                date: '2016-05-01',
+            }, {
+                date: '2016-05-03',
+            }],
+            tableData3: [{
+                date: '2016-05-02',
+                name: '王小虎'
+            }, {
+                date: '2016-05-04',
+                name: '王小虎'
+            }, {
+                date: '2016-05-01',
+                name: '王小虎'
+            }, {
+                date: '2016-05-03',
+                name: '王小虎'
+            }]
         };
     },
     mounted() {
@@ -125,6 +163,9 @@ var Main = {
     handleRemove(file, fileList) {
         console.log(file, fileList);
     },
+    ClickToJump(targe){
+        window.open("http://localhost:8080/cms/" + targe);
+    },
     handleDownload(row) {
         /*var url = window.location.protocol+"://"+window.location.host+":"+window.location.port+"/"*/
         window.open("http://localhost:8080/cms/download/dodownload?fileId=" + row.colfileid);
@@ -147,6 +188,13 @@ var Main = {
     handleClose(key, keyPath) {
         console.log(key, keyPath);
     },
+    dialogClose(done) {
+            this.$confirm('确认关闭？')
+                .then(_ => {
+                    done();
+                })
+                .catch(_ => {});
+        },
     showMsg(msg) {
         this.$message({
             message: msg,
