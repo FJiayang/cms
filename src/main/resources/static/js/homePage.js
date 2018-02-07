@@ -1,3 +1,17 @@
+var dt = new Date();
+var month = dt.getMonth()+1;
+var day = dt.getDate();
+var year = dt.getFullYear();
+var cur = year + '-' + month + '-' + day;
+function  DateDiff(sDate1,  sDate2){    //sDate1和sDate2是2002-12-18格式
+    var  aDate,  oDate1,  oDate2,  iDays
+    aDate  =  sDate1.split("-")
+    oDate1  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])    //转换为12-18-2002格式
+    aDate  =  sDate2.split("-")
+    oDate2  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])
+    iDays  =  parseInt(Math.abs(oDate1  -  oDate2)  /  1000  /  60  /  60  /24)    //把相差的毫秒数转换为天数
+    return  iDays
+}
 var Main = {
     data() {
         var checkName = (rule, value, callback) => {
@@ -35,6 +49,9 @@ var Main = {
             }
         };
         return {
+            feedbackForm: {
+                content: ''
+            },
             activeIndex: '1',
             dialogVisible: false,
             ruleForm2: {
@@ -73,7 +90,28 @@ var Main = {
             activeName:'login',
             fileList: [],
             DownloadList: [],
-            tableHomeworkData: [],
+            tableHomeworkData: [
+                {
+                    workid: 1,
+                    colfileid: 56,
+                    workname: "实验报告",
+                    worktime: "2018-02-06 20:44:08.0",
+                    colfilename: "2018 服务器装机.xlsx",
+                    coursename: "信息安全",
+                    workremark: "3000字以上",
+                    workfolder: "第一次作业"
+                },
+                {
+                    workid: 1,
+                    colfileid: 56,
+                    workname: "实验报告2",
+                    worktime: "2018-02-08 20:44:08.0",
+                    colfilename: "2018 服务器装机.xlsx",
+                    coursename: "决策支持系统",
+                    workremark: "3000字以上",
+                    workfolder: "第一次作业"
+                }
+            ],
             tableData2: [{
                 date: '2016-05-02',
             }, {
@@ -113,6 +151,7 @@ var Main = {
                 .then(function (response) {
                     console.log(response.data);
                     that.tableHomeworkData = response.data;
+                    //that.limitTime = response.data;
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -121,6 +160,12 @@ var Main = {
 
     },
     methods: {
+        uploadURL(row){
+            return "http://localhost:8080/cms/moreUpload?courseName="+row.coursename+"&folder="+row.workfolder;
+        },
+        limitTime(row){
+            return DateDiff(row.worktime.replace(/([^\s]+)\s.*/, "$1"),  cur);
+        },
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {

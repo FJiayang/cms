@@ -122,7 +122,9 @@ public class UpLoadController {
      * @return
      */
     @RequestMapping("/moreUpload")
-    public void moreUpload(HttpServletRequest request) {
+    public void moreUpload(HttpServletRequest request,
+                           @RequestParam(value = "courseName",required = false) String courseName,
+                           @RequestParam(value = "folder",required = false) String folder) {
 
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
         Map<String, MultipartFile> files = multipartHttpServletRequest.getFileMap();
@@ -132,7 +134,7 @@ public class UpLoadController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateNowStr = sdf.format(date);
         //String uploadUrl = request.getSession().getServletContext().getRealPath("/") + "upload/";
-        String uploadUrl = serverProperties.getFilePath()+ "upload/";
+        String uploadUrl = serverProperties.getFilePath()+ "upload/"+courseName+"/"+folder+"/";
 
         File dir = new File(uploadUrl);
         if (!dir.exists()) {

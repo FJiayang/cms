@@ -24,4 +24,19 @@ public class NavController {
     public String toHomePage(){
         return "/home/home";
     }
+
+    @GetMapping(value = {"/feedback"})
+    public String toFeedbackPage(){
+        return "/home/feedback";
+    }
+
+    @GetMapping(value = {"/about"})
+    public String toAboutPage(){
+        return "/home/about";
+    }
+
+    @GetMapping(value = {"/user"})
+    public String toUserPage(){
+        return "/home/user";
+    }
 }

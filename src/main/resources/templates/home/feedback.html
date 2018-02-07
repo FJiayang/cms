@@ -1,0 +1,40 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="dist/thymeleaf/common_head :: header('意见反馈')">
+</head>
+<body>
+<div th:insert="~{dist/thymeleaf/common_head :: #body_js}"></div>
+<div id="app">
+    <el-container>
+        <el-container>
+            <el-header th:include="dist/thymeleaf/layout :: header"></el-header>
+            <el-main>
+                <el-col :md="4" :lg="4" :xl="4" class="hidden-sm-and-down">
+                    <el-card th:include="dist/thymeleaf/layout :: userbox"></el-card>
+                </el-col>
+                <el-col :md="14" :lg="14" :xl="14" :sm="18" :xs="23" :offset="1">
+                    <el-form :model="feedbackForm" ref="feedbackForm"  class="demo-ruleForm" action="/cms/home/dofeedback">
+                        <el-form-item label="反馈内容" prop="content" :rules="[
+      { required: true, message: '反馈内容不能为空'}
+    ]">
+                            <el-input type="textarea" v-model.number="feedbackForm.content" auto-complete="off"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="submitForm('feedbackForm')">提交</el-button>
+                            <el-button @click="resetForm('feedbackForm')">重置</el-button>
+                        </el-form-item>
+                    </el-form>
+                </el-col>
+                <el-col :md="5" :lg="5" :sm="5" :xl="5" class="hidden-xs-only">
+
+                </el-col>
+            </el-main>
+            <el-footer th:include="dist/thymeleaf/layout :: footer"></el-footer>
+        </el-container>
+    </el-container>
+</div>
+<script th:src="@{js/homePage.js}"></script>
+<script th:src="@{js/msg.js}"></script>
+</body>
+</html>

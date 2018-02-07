@@ -5,7 +5,6 @@
 </head>
 <body>
 <div th:insert="~{dist/thymeleaf/common_head :: #body_js}"></div>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <!--<div id="app">
     <el-container>
         <el-aside th:include="dist/thymeleaf/layout :: asider"></el-aside>
@@ -97,21 +96,9 @@
             <el-header th:include="dist/thymeleaf/layout :: header"></el-header>
             <el-main>
                 <el-col :md="4" :lg="4" :xl="4" class="hidden-sm-and-down">
-                    <el-card class="box-card">
-                        <div slot="header" class="clearfix">
-                            <!--下面两行报错正常-->
-                            <span th:text="${#httpServletRequest.getSession().getAttribute('USER_SESSION').colname}">用户名</span><br>
-                            <span th:text="${#httpServletRequest.getSession().getAttribute('USER_SESSION').colstudentno}"></span>
-                        </div>
-                        <div class="item">
-                            <el-button type="text" @click="ClickToJump('home')">首页</el-button><br>
-                            <el-button type="text" @click="ClickToJump('user')">个人中心</el-button><br>
-                            <el-button type="text" @click="ClickToJump('about')">关于</el-button><br>
-                            <el-button type="text" @click="ClickToJump('feedback')">意见反馈</el-button>
-                        </div>
-                    </el-card>
+                    <el-card th:include="dist/thymeleaf/layout :: userbox"></el-card>
                 </el-col>
-                <el-col :md="14" :lg="14" :xl="14" :sm="18" :xs="23" offset=1>
+                <el-col :md="14" :lg="14" :xl="14" :sm="18" :xs="23" :offset="1">
                     <el-row>
                         <el-col :span="23">
                             <div class="grid-content bg-purple-dark">
@@ -137,6 +124,20 @@
                                                             {{ props.row.colfilename }}
                                                         </el-button>
                                                     </el-form-item>
+                                                    <el-form-item label="提交作业">
+                                                    <el-upload class="upload-demo" ref="upload"
+                                                               :action="uploadURL(props.row)"
+                                                               :on-preview="handlePreview"
+                                                               :on-remove="handleRemove" :file-list="fileList" :auto-upload="false"
+                                                               name="imageFile">
+                                                        <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+                                                        <el-button style="margin-left: 10px;" size="small" type="success"
+                                                                   @click="submitUpload">
+                                                            上传到服务器
+                                                        </el-button>
+                                                        <!--<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
+                                                    </el-upload>
+                                                    </el-form-item>
                                                 </el-form>
                                             </template>
                                         </el-table-column>
@@ -146,14 +147,14 @@
                                         </el-table-column>
                                         <el-table-column label="提交时间" prop="worktime">
                                         </el-table-column>
-                                        <el-table-column fixed="right" label="操作">
+                                        <!--<el-table-column fixed="right" label="操作">
                                             <template slot-scope="scope">
                                                 <el-button @click="dialogVisible = true" type="success" plain
                                                            size="small">
-                                                    上传作业
+                                                    提交作业
                                                 </el-button>
                                             </template>
-                                        </el-table-column>
+                                        </el-table-column>-->
                                     </el-table>
                                     <!--<el-table :data="tableData1" style="width: 100%">
                                         <el-table-column prop="subject" label="科目">
@@ -174,7 +175,7 @@
                                         </el-table-column>
                                     </el-table>-->
                                 </template>
-                                <el-dialog title="上传作业" :visible.sync="dialogVisible" width="50%"
+                                <!--<el-dialog title="上传作业" :visible.sync="dialogVisible" width="50%"
                                            :before-close="dialogClose">
                                     <el-row>
                                         <el-col :span="23">
@@ -186,7 +187,7 @@
                                         <el-col :span="23">
                                             <div class="grid-content bg-purple-dark">
                                                 <el-upload class="upload-demo" ref="upload"
-                                                           action="https://jsonplaceholder.typicode.com/posts/"
+                                                           action="http://localhost:8080/cms/moreUpload?courseName=tableHomeworkData.row.coursename&folder=tableHomeworkData.row.workfolder"
                                                            :on-preview="handlePreview"
                                                            :on-remove="handleRemove" :file-list="fileList" :auto-upload="false"
                                                            name="imageFile">
@@ -204,7 +205,7 @@
                                         <el-button @click="dialogVisible = false">取 消</el-button>
                                         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
                                     </span>
-                                </el-dialog>
+                                </el-dialog>-->
                             </div>
                         </el-col>
                     </el-row>

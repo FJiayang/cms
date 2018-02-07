@@ -6,6 +6,7 @@ import com.fjy.spring.exception.UserException;
 import com.fjy.spring.service.WorkDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -24,5 +25,10 @@ public class DataController {
         }
         new UserException(ResultEnum.EMPTY_DATA);
         return null;
+    }
+
+    @PostMapping("/home/dofeedback")
+    public void doFeedback(){
+
     }
 }
