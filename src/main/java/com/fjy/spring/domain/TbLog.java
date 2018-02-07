@@ -1,7 +1,6 @@
 package com.fjy.spring.domain;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 @Entity
 public class TbLog {
@@ -12,7 +11,7 @@ public class TbLog {
     @Column(name = "coluserid")
     private Integer userid;
 
-    private Timestamp coltime;
+    private String coltime;
 
     private String colip;
 
@@ -34,11 +33,11 @@ public class TbLog {
         this.userid = userid;
     }
 
-    public Timestamp getColtime() {
+    public String getColtime() {
         return coltime;
     }
 
-    public void setColtime(Timestamp coltime) {
+    public void setColtime(String coltime) {
         this.coltime = coltime;
     }
 

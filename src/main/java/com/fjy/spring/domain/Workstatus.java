@@ -1,7 +1,6 @@
 package com.fjy.spring.domain;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 @Entity
 @Table(name = "tb_workstatus")
@@ -13,6 +12,7 @@ public class Workstatus {
     @Column(name = "coluserid")
     private Integer userid;
 
+    @Column(name = "workid")
     private Integer workId;
 
     private Integer colstatus;

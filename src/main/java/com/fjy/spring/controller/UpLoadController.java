@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -129,7 +129,8 @@ public class UpLoadController {
 
         TbUser user = (TbUser)request.getSession().getAttribute(GlobalConstant.USER_SESSION_KEY);
         Date date = new Date();
-        Timestamp currentTime = new Timestamp(date.getTime());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateNowStr = sdf.format(date);
         //String uploadUrl = request.getSession().getServletContext().getRealPath("/") + "upload/";
         String uploadUrl = serverProperties.getFilePath()+ "upload/";
 
@@ -151,7 +152,7 @@ public class UpLoadController {
             TbFile tbFile = new TbFile();
             tbFile.setColfilesize(new FormatFileSizeUtil().GetFileSize(file.getSize()));
             tbFile.setColfilename(filename);
-            tbFile.setColtime(currentTime);
+            tbFile.setColtime(dateNowStr);
             tbFile.setColfilepath(uploadUrl + filename);
             tbFile.setColip(request.getRemoteAddr());
             tbFile.setColuserid(user.getColuserid());

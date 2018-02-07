@@ -94,26 +94,14 @@
         </el-aside>-->
 
         <el-container>
-            <el-header>
-                <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-                    <el-menu-item index="1">首页</el-menu-item>
-                    <el-submenu index="2">
-                        <template slot="title">个人中心</template>
-                        <el-menu-item index="2-1">选项1</el-menu-item>
-                        <el-menu-item index="2-2">选项2</el-menu-item>
-                        <el-menu-item index="2-3">选项3</el-menu-item>
-                    </el-submenu>
-                    <el-menu-item index="3" @click="ClickToJump('about')">关于</el-menu-item>
-                    <el-menu-item index="4" @click="ClickToJump('feedback')">意见反馈</el-menu-item>
-                    <el-menu-item index="5"><a href="login.jsp">登出</a></el-menu-item>
-                </el-menu>
-            </el-header>
+            <el-header th:include="dist/thymeleaf/layout :: header"></el-header>
             <el-main>
                 <el-col :md="4" :lg="4" :xl="4" class="hidden-sm-and-down">
                     <el-card class="box-card">
                         <div slot="header" class="clearfix">
-                            <span>用户名</span><br>
-                            <span>学号</span>
+                            <!--下面两行报错正常-->
+                            <span th:text="${#httpServletRequest.getSession().getAttribute('USER_SESSION').colname}">用户名</span><br>
+                            <span th:text="${#httpServletRequest.getSession().getAttribute('USER_SESSION').colstudentno}"></span>
                         </div>
                         <div class="item">
                             <el-button type="text" @click="ClickToJump('home')">首页</el-button><br>
@@ -123,7 +111,7 @@
                         </div>
                     </el-card>
                 </el-col>
-                <el-col :md="14" :lg="14" :xl="14" :sm="18" :xs="23" offset="1">
+                <el-col :md="14" :lg="14" :xl="14" :sm="18" :xs="23" offset=1>
                     <el-row>
                         <el-col :span="23">
                             <div class="grid-content bg-purple-dark">
@@ -133,31 +121,30 @@
                                             <template slot-scope="props">
                                                 <el-form label-position="left" inline class="demo-table-expand">
                                                     <el-form-item label="科目">
-                                                        <span>{{ props.row.subject }}</span>
-                                                    </el-form-item>
-                                                    <el-form-item label="作业名称">
-                                                        <span>{{ props.row.name }}</span>
+                                                        <span>{{ props.row.coursename }}</span>
                                                     </el-form-item>
                                                     <el-form-item label="内容">
-                                                        <span>{{ props.row.name }}</span>
+                                                        <span>{{ props.row.workname }}</span>
                                                     </el-form-item>
                                                     <el-form-item label="提交时间">
-                                                        <span>{{ props.row.date }}</span>
+                                                        <span>{{ props.row.worktime }}</span>
                                                     </el-form-item>
                                                     <el-form-item label="特殊要求">
-                                                        <span>{{ props.row.remark }}</span>
+                                                        <span>{{ props.row.workremark }}</span>
                                                     </el-form-item>
                                                     <el-form-item label="模板下载">
-                                                        <span>{{ props.row.tempfile }}</span>
+                                                        <el-button type="text" @click="handleDownload(props.row)">
+                                                            {{ props.row.colfilename }}
+                                                        </el-button>
                                                     </el-form-item>
                                                 </el-form>
                                             </template>
                                         </el-table-column>
-                                        <el-table-column label="科目" prop="subject">
+                                        <el-table-column label="科目" prop="coursename">
                                         </el-table-column>
-                                        <el-table-column label="作业名称" prop="name">
+                                        <el-table-column label="内容" prop="workname">
                                         </el-table-column>
-                                        <el-table-column label="内容" prop="content">
+                                        <el-table-column label="提交时间" prop="worktime">
                                         </el-table-column>
                                         <el-table-column fixed="right" label="操作">
                                             <template slot-scope="scope">
@@ -248,7 +235,7 @@
                                         </el-table-column>
                                         <el-table-column prop="colfilesize" label="大小" width="80">
                                         </el-table-column>
-                                        <el-table-column prop="colip" label="地址">
+                                        <el-table-column prop="coltime" label="上传时间">
                                         </el-table-column>
                                         <el-table-column fixed="right" label="操作" width="150">
                                             <template slot-scope="scope">

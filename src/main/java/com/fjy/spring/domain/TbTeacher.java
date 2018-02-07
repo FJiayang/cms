@@ -12,7 +12,7 @@ public class TbTeacher {
     @GeneratedValue
     private Integer teacherid;
     private Integer coluserid;
-    private Integer coltime;
+    private String coltime;
 
     public Integer getTeacherid() {
         return teacherid;
@@ -30,11 +30,11 @@ public class TbTeacher {
         this.coluserid = coluserid;
     }
 
-    public Integer getColtime() {
+    public String getColtime() {
         return coltime;
     }
 
-    public void setColtime(Integer coltime) {
+    public void setColtime(String coltime) {
         this.coltime = coltime;
     }
 }

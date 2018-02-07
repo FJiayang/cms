@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static com.fjy.spring.constant.GlobalConstant.USER_SESSION_KEY;
@@ -43,10 +44,12 @@ public class LoginController {
             request.getSession().setAttribute(USER_SESSION_KEY,user);
             //写入日志信息
             Date date = new Date();
-            Timestamp currentTime = new Timestamp(date.getTime());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String dateNowStr = sdf.format(date);
+            System.out.println("当前时间："+dateNowStr);
             TbLog log = new TbLog();
             log.setUserid(user.getColuserid());
-            log.setColtime(currentTime);
+            log.setColtime(dateNowStr);
             log.setColheader(request.getHeader("user-agent"));
             log.setColip(request.getRemoteAddr());
             logService.addLogRec(log);

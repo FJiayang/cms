@@ -15,7 +15,7 @@ public class TbAdmin {
 
     @Column(name = "coluserid")
     private Integer userid;
-    private Integer coltime;
+    private String coltime;
 
     public Integer getAdminid() {
         return adminid;
@@ -33,11 +33,11 @@ public class TbAdmin {
         this.userid = userid;
     }
 
-    public Integer getColtime() {
+    public String getColtime() {
         return coltime;
     }
 
-    public void setColtime(Integer coltime) {
+    public void setColtime(String coltime) {
         this.coltime = coltime;
     }
 }

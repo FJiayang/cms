@@ -73,35 +73,7 @@ var Main = {
             activeName:'login',
             fileList: [],
             DownloadList: [],
-            tableHomeworkData: [{
-                subject: '信息安全',
-                date: '2018-05-02',
-                name: '实验报告',
-                content: '实验报告',
-                remark:'3000字以上',
-                tempfile:'15251101238.docx'
-            }, {
-                subject: '信息安全',
-                date: '2018-05-02',
-                name: '实验报告',
-                content: '实验报告',
-                remark:'3000字以上',
-                tempfile:'15251101238.docx'
-            }, {
-                subject: '信息安全',
-                date: '2018-05-02',
-                name: '实验报告',
-                content: '实验报告',
-                remark:'3000字以上',
-                tempfile:'15251101238.docx'
-            }, {
-                subject: '信息安全',
-                date: '2018-05-02',
-                name: '实验报告',
-                content: '实验报告',
-                remark:'3000字以上',
-                tempfile:'15251101238.docx'
-            }],
+            tableHomeworkData: [],
             tableData2: [{
                 date: '2016-05-02',
             }, {
@@ -133,6 +105,14 @@ var Main = {
                 .then(function (response) {
                     console.log(response.data);
                     that.DownloadList = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            axios.get('http://localhost:8080/cms/home/findAllHomework')
+                .then(function (response) {
+                    console.log(response.data);
+                    that.tableHomeworkData = response.data;
                 })
                 .catch(function (error) {
                     console.log(error);

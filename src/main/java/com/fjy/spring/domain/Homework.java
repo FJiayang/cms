@@ -1,50 +1,55 @@
 package com.fjy.spring.domain;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 @Entity
 @Table(name = "tb_homework")
 public class Homework {
     @Id
+    @Column(name = "workid")
     @GeneratedValue
-    private Integer workId;
+    private Integer Id;
 
-    private String workName;
+    @Column(name = "workname")
+    private String Name;
 
-    private Timestamp workTime;
+    @Column(name = "worktime")
+    private String Time;
 
     @Column(name = "colfileid")
     private Integer fileid;
 
-    private String workFolder;
+    @Column(name = "workfolder")
+    private String Folder;
 
+    @Column(name = "courseno")
     private Integer courseNo;
 
-    private String workRemark;
+    @Column(name = "workremark")
+    private String Remark;
 
-    public Integer getWorkId() {
-        return workId;
+    public Integer getId() {
+        return Id;
     }
 
-    public void setWorkId(Integer workId) {
-        this.workId = workId;
+    public void setId(Integer id) {
+        Id = id;
     }
 
-    public String getWorkName() {
-        return workName;
+    public String getName() {
+        return Name;
     }
 
-    public void setWorkName(String workName) {
-        this.workName = workName;
+    public void setName(String name) {
+        Name = name;
     }
 
-    public Timestamp getWorkTime() {
-        return workTime;
+    public String getTime() {
+        return Time;
     }
 
-    public void setWorkTime(Timestamp workTime) {
-        this.workTime = workTime;
+    public void setTime(String time) {
+        Time = time;
     }
 
     public Integer getFileid() {
@@ -55,12 +60,12 @@ public class Homework {
         this.fileid = fileid;
     }
 
-    public String getWorkFolder() {
-        return workFolder;
+    public String getFolder() {
+        return Folder;
     }
 
-    public void setWorkFolder(String workFolder) {
-        this.workFolder = workFolder;
+    public void setFolder(String folder) {
+        Folder = folder;
     }
 
     public Integer getCourseNo() {
@@ -71,11 +76,11 @@ public class Homework {
         this.courseNo = courseNo;
     }
 
-    public String getWorkRemark() {
-        return workRemark;
+    public String getRemark() {
+        return Remark;
     }
 
-    public void setWorkRemark(String workRemark) {
-        this.workRemark = workRemark;
+    public void setRemark(String remark) {
+        Remark = remark;
     }
 }
