@@ -7,44 +7,69 @@ var Main = {
             },
             feedbackData:[
                 {
-                    content:'bug',
-                    time:'2018-2-3',
-                    username:'root'
+                    id: 68,
+                    username: "root",
+                    content: "Fred",
+                    time: "2018-02-08 10:14:11"
+                },
+                {
+                    id: 71,
+                    username: "root",
+                    content: "1234214",
+                    time: "2018-02-08 10:30:38"
+                },
+                {
+                    id: 72,
+                    username: "root",
+                    content: "afsdas",
+                    time: "2018-02-08 10:31:22"
+                },
+                {
+                    id: 73,
+                    username: "root",
+                    content: "反馈",
+                    time: "2018-02-08 10:35:18"
                 }
             ],
             logData:[
                 {
-                    ip:'127.0.0.1',
-                    header:'bug',
-                    time:'2018-2-3',
-                    username:'root'
+                    logid: 55,
+                    colname: "root",
+                    coltime: "2018-02-06 11:35:56.0",
+                    colip: "0:0:0:0:0:0:0:1",
+                    colheader: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
                 },
                 {
-                    ip:'127.0.0.1',
-                    header:'bug',
-                    time:'2018-2-3',
-                    username:'root'
-                },
-                {
-                    ip:'127.0.0.1',
-                    header:'bug',
-                    time:'2018-2-3',
-                    username:'root'
-                },
-                {
-                    ip:'127.0.0.1',
-                    header:'bug',
-                    time:'2018-2-3',
-                    username:'root'
-                },
-                {
-                    ip:'127.0.0.1',
-                    header:'bug',
-                    time:'2018-2-3',
-                    username:'root'
+                    logid: 58,
+                    colname: "root",
+                    coltime: "2018-02-06 11:40:41.0",
+                    colip: "0:0:0:0:0:0:0:1",
+                    colheader: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
                 }
-            ],
+            ]
         }
+    },
+    mounted() {
+        this.$nextTick(() => {
+            var that = this;
+            axios.get('http://localhost:8080/cms/home/findvlog')
+                .then(function (response) {
+                    console.log(response.data);
+                    that.logData = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            axios.get('http://localhost:8080/cms/home/findvfeedback')
+                .then(function (response) {
+                    console.log(response.data);
+                    that.feedbackData = response.data;
+                    //that.limitTime = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        })
     },
     methods: {
         ClickToJump(targe){

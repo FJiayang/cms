@@ -35,6 +35,11 @@ public class NavController {
         return "/home/about";
     }
 
+    @GetMapping(value = {"/admin"})
+    public String toAdminPage(){
+        return "/home/admin";
+    }
+
     @GetMapping(value = {"/home/user"})
     public String toUserPage(){
         return "/home/user";

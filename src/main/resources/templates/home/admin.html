@@ -1,57 +1,19 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>后台</title>
-    <!--
-        <link rel="stylesheet" type="text/css" href="styles.css">
-        -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-    <!--<link rel="stylesheet" href="https://unpkg.com/element-ui@2.1.0/lib/theme-chalk/display.css">-->
-    <link rel="stylesheet" href="../../static/css/style.css">
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="dist/thymeleaf/common_head :: header('管理员主页')">
 </head>
 
 <body>
-<!-- 先引入 Vue -->
-<script src="https://unpkg.com/vue/dist/vue.js"></script>
-<!-- 引入组件库 -->
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<div th:insert="~{dist/thymeleaf/common_head :: #body_js}"></div>
 <div id="app">
     <el-container>
         <el-container>
-            <el-header>
-                <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-                    <el-menu-item index="1">首页</el-menu-item>
-                    <el-submenu index="2">
-                        <template slot="title">个人中心</template>
-                        <el-menu-item index="2-1">选项1</el-menu-item>
-                        <el-menu-item index="2-2">选项2</el-menu-item>
-                        <el-menu-item index="2-3">选项3</el-menu-item>
-                    </el-submenu>
-                    <el-menu-item index="3" @click="ClickToJump('about')">关于</el-menu-item>
-                    <el-menu-item index="4" @click="ClickToJump('feedback')">意见反馈</el-menu-item>
-                    <el-menu-item index="5"><a href="login.jsp">登出</a></el-menu-item>
-                </el-menu>
-            </el-header>
+            <el-header th:include="dist/thymeleaf/layout :: header"></el-header>
             <el-main>
                 <el-col :md="4" :lg="4" :xl="4" class="hidden-sm-and-down">
                     <el-row>
-                        <el-card class="box-card">
-                            <div slot="header" class="clearfix">
-                                <span>用户名</span><br>
-                                <span>学号</span>
-                            </div>
-                            <div class="item">
-                                <el-button type="text" @click="ClickToJump('home')">首页</el-button>
-                                <br>
-                                <el-button type="text" @click="ClickToJump('user')">个人中心</el-button>
-                                <br>
-                                <el-button type="text" @click="ClickToJump('about')">关于</el-button>
-                                <br>
-                                <el-button type="text" @click="ClickToJump('feedback')">意见反馈</el-button>
-                            </div>
-                        </el-card>
+                        <el-card th:include="dist/thymeleaf/layout :: userbox"></el-card>
                     </el-row>
                     <el-row>
                         <el-card class="box-card">
@@ -87,13 +49,13 @@
                         <span>近期登陆日志</span><br>
                         <template>
                             <el-table :data="logData" height="300" :default-sort="{prop: 'time', order: 'descending'}">
-                                <el-table-column prop="username" label="用户名" sortable>
+                                <el-table-column prop="colname" label="用户名" sortable>
                                 </el-table-column>
-                                <el-table-column prop="header" label="请求头" sortable>
+                                <el-table-column prop="coltime" label="时间" sortable>
                                 </el-table-column>
-                                <el-table-column prop="time" label="时间" sortable>
+                                <el-table-column prop="colip" label="ip地址" sortable>
                                 </el-table-column>
-                                <el-table-column prop="ip" label="ip地址" sortable>
+                                <el-table-column prop="colheader" label="请求头" sortable>
                                 </el-table-column>
                             </el-table>
                         </template>
@@ -108,7 +70,7 @@
                                         <span>用户反馈</span>
                                     </div>
                                     <div class="text item">
-                                        <el-table :data="feedbackData" style="width: 100%"
+                                        <el-table :data="feedbackData" style="width: 100%" height="300"
                                                   :default-sort="{prop: 'time', order: 'descending'}">
                                             <el-table-column prop="content" label="内容" sortable>
                                             </el-table-column>
@@ -124,15 +86,11 @@
                     </el-row>
                 </el-col>
             </el-main>
-            <el-footer>
-                <div class="footer">
-                    © 2018 作业提交系统
-                </div>
-            </el-footer>
+            <el-footer th:include="dist/thymeleaf/layout :: footer"></el-footer>
         </el-container>
     </el-container>
 </div>
-<script src="../../static/js/admin.js"></script>
-<script src="../../static/js/msg.js"></script>
+<script th:src="@{js/admin.js}"></script>
+<script th:src="@{js/msg.js}"></script>
 </body>
 </html>

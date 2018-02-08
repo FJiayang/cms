@@ -263,7 +263,6 @@
                                         <span style="color: red"> 功能未完成</span>
                                     </div>
                                     <div class="text item">
-
                                         <el-table :data="tableHomeworkData" style="width: 100%"
                                                   :default-sort="{prop: 'coursename', order: 'descending'}">
                                             <el-table-column prop="coursename" label="科目" sortable width="180">
@@ -274,16 +273,8 @@
                                                 </template>
                                             </el-table-column>
                                         </el-table>
-
-                                        <!--<span>{{ limitTime[0].coursename }}{{ limitTime[0].workname }}</span><br>
-                                       距离提交日期还有<span> {{ limitTime[0].time }}</span>天-->
                                     </div>
-                                <!--<template>
-                                    <el-table :data="tableData2" style="width: 100%">
-                                        <el-table-column prop="date" label="作业提交倒计时">
-                                        </el-table-column>
-                                    </el-table>
-                                </template>-->
+                                </el-card>
                             </div>
                         </el-col>
                     </el-row>
@@ -309,10 +300,7 @@
                     </el-row>
                 </el-col>
             </el-main>
-            <el-footer>
-                <div class="footer">
-                    © 2018 作业提交系统
-                </div></el-footer>
+            <el-footer th:include="dist/thymeleaf/layout :: footer"></el-footer>
         </el-container>
     </el-container>
 </div>
