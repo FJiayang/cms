@@ -25,17 +25,17 @@ public class NavController {
         return "/home/home";
     }
 
-    @GetMapping(value = {"/feedback"})
+    @GetMapping(value = {"/home/feedback"})
     public String toFeedbackPage(){
         return "/home/feedback";
     }
 
-    @GetMapping(value = {"/about"})
+    @GetMapping(value = {"/home/about"})
     public String toAboutPage(){
         return "/home/about";
     }
 
-    @GetMapping(value = {"/user"})
+    @GetMapping(value = {"/home/user"})
     public String toUserPage(){
         return "/home/user";
     }

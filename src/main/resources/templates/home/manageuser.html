@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!--<link rel="stylesheet" href="https://unpkg.com/element-ui@2.1.0/lib/theme-chalk/display.css">-->
+    <link rel="stylesheet" href="../../static/css/style.css">
+</head>
+
+<body>
+<!-- 先引入 Vue -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<div id="app">
+    <el-container>
+        <el-container>
+            <el-header>
+                <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+                    <el-menu-item index="1">首页</el-menu-item>
+                    <el-submenu index="2">
+                        <template slot="title">个人中心</template>
+                        <el-menu-item index="2-1">选项1</el-menu-item>
+                        <el-menu-item index="2-2">选项2</el-menu-item>
+                        <el-menu-item index="2-3">选项3</el-menu-item>
+                    </el-submenu>
+                    <el-menu-item index="3" @click="ClickToJump('about')">关于</el-menu-item>
+                    <el-menu-item index="4" @click="ClickToJump('feedback')">意见反馈</el-menu-item>
+                    <el-menu-item index="5"><a href="login.jsp">登出</a></el-menu-item>
+                </el-menu>
+            </el-header>
+            <el-main>
+
+                <el-col :md="4" :lg="4" :xl="4" class="hidden-sm-and-down">
+                    <el-row><el-card class="box-card">
+                        <div slot="header" class="clearfix">
+                            <span>用户名</span><br>
+                            <span>学号</span>
+                        </div>
+                        <div class="item">
+                            <el-button type="text" @click="ClickToJump('home')">首页</el-button><br>
+                            <el-button type="text" @click="ClickToJump('user')">个人中心</el-button><br>
+                            <el-button type="text" @click="ClickToJump('about')">关于</el-button><br>
+                            <el-button type="text" @click="ClickToJump('feedback')">意见反馈</el-button>
+                        </div>
+                    </el-card>
+                    </el-row>
+                    <el-row>
+                        <el-card class="box-card">
+                            <div slot="header" class="clearfix">
+                                <span>管理员</span><br>
+                                <span>管理员号</span>
+                            </div>
+                            <div class="item">
+                                <el-button type="text" @click="ClickToJump('home')">用户管理</el-button><br>
+                                <el-button type="text" @click="ClickToJump('user')">课程/老师管理</el-button><br>
+                                <el-button type="text" @click="ClickToJump('about')">作业管理</el-button><br>
+                                <el-button type="text" @click="ClickToJump('feedback')">公告/日志</el-button>
+                            </div>
+                        </el-card></el-row>
+                </el-col>
+                <el-col :md="12" :lg="12" :xl="12" :sm="16" :xs="23" :offset="1">
+                    <template>
+                        <div style="margin-bottom: 20px">
+                            <el-button @click="toggleSelection([tableData3[1], tableData3[2]])">切换第二、第三行的选中状态</el-button>
+                            <el-button @click="toggleSelection()">取消选择</el-button>
+                            <el-button @click="togglePost()" type="primary" plain>设为老师</el-button>
+                            <el-button @click="togglePost()" type="warning" plain>设为管理员</el-button>
+                            <el-button @click="togglePost()" type="danger" plain>删除用户</el-button>
+                        </div>
+                        <el-table ref="multipleTable" :data="tableData3"  @selection-change="handleSelectionChange"
+                                  tooltip-effect="dark" style="width: 100%" >
+                            <el-table-column type="selection" prop='id' width="55">
+                            </el-table-column>
+                            <el-table-column label="日期" width="120">
+                                <template slot-scope="scope">{{ scope.row.date }}</template>
+                            </el-table-column>
+                            <el-table-column prop="name" label="姓名" width="120">
+                            </el-table-column>
+                            <el-table-column prop="address" label="地址" show-overflow-tooltip>
+                            </el-table-column>
+                        </el-table>
+                    </template>
+                </el-col>
+                <el-col :md="7" :lg="7" :sm="7" :xl="7" class="hidden-xs-only">
+
+                </el-col>
+            </el-main>
+            <el-footer>
+                <div class="footer">
+                    © 2018 作业提交系统
+                </div></el-footer>
+        </el-container>
+    </el-container>
+</div>
+<script src="../../static/js/manageuser.js"></script>
+<script src="../../static/js/msg.js"></script>
+</body>
+</html>

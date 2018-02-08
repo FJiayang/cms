@@ -201,7 +201,7 @@ var Main = {
                         }
                     })
                     console.log(this.$refs.content.value)
-                    this.openSuccess("成功","反馈成功！")
+                    this.openNotiSuccess("成功","反馈成功！")
                     //this.$options.methods.openNotiSuccess.bind(this)();
                     //alert('submit!');
                 } else {

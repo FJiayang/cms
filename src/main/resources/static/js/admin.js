@@ -2,19 +2,8 @@ var Main = {
     data() {
         return {
             activeIndex: '1',
-            formInline: {
-                user: '',
-                region: ''
-            },
             form: {
-                name: '',
-                region: '',
-                date1: '',
-                date2: '',
-                delivery: false,
-                type: [],
-                resource: '',
-                desc: ''
+                content: '',
             },
             feedbackData:[
                 {
@@ -29,11 +18,38 @@ var Main = {
                     header:'bug',
                     time:'2018-2-3',
                     username:'root'
+                },
+                {
+                    ip:'127.0.0.1',
+                    header:'bug',
+                    time:'2018-2-3',
+                    username:'root'
+                },
+                {
+                    ip:'127.0.0.1',
+                    header:'bug',
+                    time:'2018-2-3',
+                    username:'root'
+                },
+                {
+                    ip:'127.0.0.1',
+                    header:'bug',
+                    time:'2018-2-3',
+                    username:'root'
+                },
+                {
+                    ip:'127.0.0.1',
+                    header:'bug',
+                    time:'2018-2-3',
+                    username:'root'
                 }
             ],
         }
     },
     methods: {
+        ClickToJump(targe){
+            window.location.href="http://localhost:8080/cms/" + targe;
+        },
         handleSelect(key, keyPath) {
             console.log(key, keyPath);
         },
