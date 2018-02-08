@@ -160,16 +160,50 @@ var Main = {
 
     },
     methods: {
+        openNotiSuccess(title,content) {
+            this.$notify({
+                title: title,
+                message: content,
+                type: 'success'
+            });
+        },
+        openSuccess(content) {
+            this.$message({
+                message: content,
+                type: 'success'
+            });
+        },
         uploadURL(row){
             return "http://localhost:8080/cms/moreUpload?courseName="+row.coursename+"&folder="+row.workfolder;
         },
         limitTime(row){
             return DateDiff(row.worktime.replace(/([^\s]+)\s.*/, "$1"),  cur);
         },
-        submitForm(formName) {
+        submitForm(formName,url) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    alert('submit!');
+                    axios({
+                        url: 'http://localhost:8080/cms/'+url,
+                        method: 'post',
+                        data: {
+                            content: this.$refs.content.value
+                        },
+                        transformRequest: [function (data) {
+                            // Do whatever you want to transform the data
+                            let ret = ''
+                            for (let it in data) {
+                                ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                            }
+                            return ret
+                        }],
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    })
+                    console.log(this.$refs.content.value)
+                    this.openSuccess("成功","反馈成功！")
+                    //this.$options.methods.openNotiSuccess.bind(this)();
+                    //alert('submit!');
                 } else {
                     console.log('error submit!!');
                     return false;
@@ -189,7 +223,7 @@ var Main = {
         console.log(file, fileList);
     },
     ClickToJump(targe){
-        window.open("http://localhost:8080/cms/" + targe);
+        window.location.href="http://localhost:8080/cms/" + targe;
     },
     handleDownload(row) {
         /*var url = window.location.protocol+"://"+window.location.host+":"+window.location.port+"/"*/

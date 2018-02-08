@@ -237,15 +237,15 @@
                                     </el-table-column>
                                     </el-table-column>
                                 </el-table>
-                                <el-form :model="feedbackForm" ref="feedbackForm"  class="demo-ruleForm">
+                                <el-form :model="feedbackForm" ref="feedbackForm"  class="demo-ruleForm" id="feedbackForm">
                                     <el-form-item label="反馈内容" prop="content" :rules="[
       { required: true, message: '反馈内容不能为空'}
     ]">
                                         <el-input type="textarea" v-model.number="feedbackForm.content"
-                                                  auto-complete="off"></el-input>
+                                                  auto-complete="off" ref="content"></el-input>
                                     </el-form-item>
                                     <el-form-item>
-                                        <el-button type="primary" @click="submitForm('feedbackForm')">提交</el-button>
+                                        <el-button type="primary" @click="submitForm('feedbackForm','http://localhost:8080/cms/home/dofeedback')">提交</el-button>
                                         <el-button @click="resetForm('feedbackForm')">重置</el-button>
                                     </el-form-item>
                                 </el-form>
@@ -263,14 +263,18 @@
                                         <span style="color: red"> 功能未完成</span>
                                     </div>
                                     <div class="text item">
-                                        <template  slot-scope="props">
-                                            <el-table :data="tableHomeworkData" style="width: 100%" :default-sort="{prop: 'worktime', order: 'descending'}">
+
+                                            <el-table :data="tableHomeworkData" style="width: 100%"
+                                                      :default-sort="{prop: 'coursename', order: 'descending'}">
                                                 <el-table-column prop="coursename" label="科目" sortable width="180">
                                                 </el-table-column>
-                                                <el-table-column @prop="limitTime(props.row)" label="日期" sortable width="180">
-                                                </el-table-column>
+                                                    <el-table-column label="倒计时" sortable>
+                                                        <template slot-scope="scope">
+                                                        {{limitTime(scope.row)}}
+                                                        </template>
+                                                    </el-table-column>
                                             </el-table>
-                                        </template>
+
                                         <!--<span>{{ limitTime[0].coursename }}{{ limitTime[0].workname }}</span><br>
                                        距离提交日期还有<span> {{ limitTime[0].time }}</span>天-->
                                     </div>

@@ -46,7 +46,7 @@ public class LoginController {
             Date date = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String dateNowStr = sdf.format(date);
-            System.out.println("当前时间："+dateNowStr);
+            //System.out.println("当前时间："+dateNowStr);
             TbLog log = new TbLog();
             log.setUserid(user.getColuserid());
             log.setColtime(dateNowStr);

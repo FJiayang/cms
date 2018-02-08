@@ -26,9 +26,4 @@ public class DataController {
         new UserException(ResultEnum.EMPTY_DATA);
         return null;
     }
-
-    @PostMapping("/home/dofeedback")
-    public void doFeedback(){
-
-    }
 }

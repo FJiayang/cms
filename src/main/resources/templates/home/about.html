@@ -13,7 +13,35 @@
                 <el-col :md="4" :lg="4" :xl="4" class="hidden-sm-and-down">
                     <el-card th:include="dist/thymeleaf/layout :: userbox"></el-card>
                 </el-col>
-                <el-col :md="14" :lg="14" :xl="14" :sm="18" :xs="23" :offset="1"></el-col>
+                <el-col :md="14" :lg="14" :xl="14" :sm="18" :xs="23" :offset="1">
+                    <h2>作业提交系统</h2>
+                    <br>
+                    <ul>
+                        <h3>功能说明</h3>
+                        <li>自动识别未提交人员</li>
+                        <li>提供作业格式模板下载</li>
+                        <li>作业作者可以下载已提交的作业，作业保留一学期</li>
+                        <li>实现作业提交，支持多文件上传，文件自动命名为学号+姓名，省去大量烦恼</li>
+                    </ul>
+                    <br>
+                    <ul>
+                        <h3>技术说明</h3>
+                        <li>SpringBoot2.0 MVC后台开发框架，使用SpringJpa持久层api，底层为hibernate实现</li>
+                        <li>vue2.5前端框架，element2.1前端组件，前后端分离的开发方法</li>
+                        <li>用户名密码使用最高安全性的SHA加密算法进行存储，任何人无法获取</li>
+                        <li>具备完整开发和维护文档，提供错误码、数据字典</li>
+                        <li>URL为RESTful API风格，便于开发和维护</li>
+                        <li>异常统一管理</li>
+                    </ul>
+                    <br>
+                    <ul>
+                        <h3>友情链接</h3>
+                        <li><a href="http://web.fjy8018.top:8080/blog/">F嘉阳 博客</a></li>
+                        <li><a href="http://www.fjy8018.top:8080/orderbook/">订书系统</a></li>
+                        <li><a href="https://www.imis2.top/">班级网站</a></li>
+                        <li><a href="http://git.fjy8018.top:8080/users/sign_in">班级代码托管网站（私人）</a></li>
+                    </ul>
+                </el-col>
                 <el-col :md="5" :lg="5" :sm="5" :xl="5" class="hidden-xs-only"></el-col>
             </el-main>
             <el-footer th:include="dist/thymeleaf/layout :: footer"></el-footer>

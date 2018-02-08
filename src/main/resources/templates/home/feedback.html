@@ -14,14 +14,17 @@
                     <el-card th:include="dist/thymeleaf/layout :: userbox"></el-card>
                 </el-col>
                 <el-col :md="14" :lg="14" :xl="14" :sm="18" :xs="23" :offset="1">
-                    <el-form :model="feedbackForm" ref="feedbackForm"  class="demo-ruleForm" action="/cms/home/dofeedback">
+                    <el-form :model="feedbackForm" ref="feedbackForm"  class="demo-ruleForm"
+                             method="POST"
+                             action="/cms/home/dofeedback">
                         <el-form-item label="反馈内容" prop="content" :rules="[
       { required: true, message: '反馈内容不能为空'}
     ]">
-                            <el-input type="textarea" v-model.number="feedbackForm.content" auto-complete="off"></el-input>
+                            <el-input type="textarea" v-model.number="feedbackForm.content"
+                                      auto-complete="off" name="content" ref="content"></el-input>
                         </el-form-item>
                         <el-form-item>
-                            <el-button type="primary" @click="submitForm('feedbackForm')">提交</el-button>
+                            <el-button type="primary" @click="submitForm('feedbackForm','home/dofeedback')">提交</el-button>
                             <el-button @click="resetForm('feedbackForm')">重置</el-button>
                         </el-form-item>
                     </el-form>

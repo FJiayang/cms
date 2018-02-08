@@ -260,11 +260,24 @@
                                 <el-card class="box-card hidden-xs-only">
                                     <div slot="header" class="clearfix">
                                         <span>作业提交倒计时</span>
+                                        <span style="color: red"> 功能未完成</span>
                                     </div>
-                                    <div v-for="o in 4" :key="o" class="text item">
-                                        {{'倒计时 ' + o }}
+                                    <div class="text item">
+
+                                        <el-table :data="tableHomeworkData" style="width: 100%"
+                                                  :default-sort="{prop: 'coursename', order: 'descending'}">
+                                            <el-table-column prop="coursename" label="科目" sortable width="180">
+                                            </el-table-column>
+                                            <el-table-column label="倒计时" sortable>
+                                                <template slot-scope="scope">
+                                                    {{limitTime(scope.row)}}
+                                                </template>
+                                            </el-table-column>
+                                        </el-table>
+
+                                        <!--<span>{{ limitTime[0].coursename }}{{ limitTime[0].workname }}</span><br>
+                                       距离提交日期还有<span> {{ limitTime[0].time }}</span>天-->
                                     </div>
-                                </el-card>
                                 <!--<template>
                                     <el-table :data="tableData2" style="width: 100%">
                                         <el-table-column prop="date" label="作业提交倒计时">
