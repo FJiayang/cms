@@ -157,7 +157,6 @@ var Main = {
                     console.log(error);
                 });
         })
-
     },
     methods: {
         openNotiSuccess(title,content) {

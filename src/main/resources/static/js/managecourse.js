@@ -6,44 +6,39 @@ var Main = {
                 user: '',
                 region: ''
             },
-            tableData3: [{
-                id:'1',
-                date: '2016-05-03',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                id:'2',
-                date: '2016-05-02',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                id:'3',
-                date: '2016-05-04',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                id:'4',
-                date: '2016-05-01',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                id:'5',
-                date: '2016-05-08',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                id:'6',
-                date: '2016-05-06',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                id:'7',
-                date: '2016-05-07',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }],
+            tableData3: [
+                {
+                    courseNo: 1,
+                    courseName: "信息安全",
+                    courseTime: "2018-02-06 20:42:28.0",
+                    teacherusername: "FJY",
+                    teacherrealname: "root"
+                }
+            ],
             multipleSelection: []
         }
+    },
+    mounted() {
+        this.$nextTick(() => {
+            var that = this;
+            axios.get('http://localhost:8080/cms/home/findvcourse')
+                .then(function (response) {
+                    console.log(response.data);
+                    that.tableData3 = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            /*axios.get('http://localhost:8080/cms/home/findAllHomework')
+                .then(function (response) {
+                    console.log(response.data);
+                    that.tableHomeworkData = response.data;
+                    //that.limitTime = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });*/
+        })
     },
     methods: {
         togglePost(url){
@@ -70,7 +65,7 @@ var Main = {
             console.log(key, keyPath);
         },
         ClickToJump(targe){
-            window.location.href="http://localhost:8080/cms/" + targe;
+            window.location.href="http://localhost:8080/cms/home/" + targe;
         },
         toggleSelection(rows) {
             if (rows) {

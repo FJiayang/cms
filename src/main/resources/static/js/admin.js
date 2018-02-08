@@ -17,18 +17,6 @@ var Main = {
                     username: "root",
                     content: "1234214",
                     time: "2018-02-08 10:30:38"
-                },
-                {
-                    id: 72,
-                    username: "root",
-                    content: "afsdas",
-                    time: "2018-02-08 10:31:22"
-                },
-                {
-                    id: 73,
-                    username: "root",
-                    content: "反馈",
-                    time: "2018-02-08 10:35:18"
                 }
             ],
             logData:[

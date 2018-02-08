@@ -22,13 +22,13 @@
                                 <span>管理员号</span>
                             </div>
                             <div class="item">
-                                <el-button type="text" @click="ClickToJump('home')">用户管理</el-button>
+                                <el-button type="text" @click="ClickToJump('admin')">后台主页</el-button>
                                 <br>
-                                <el-button type="text" @click="ClickToJump('user')">课程/老师管理</el-button>
+                                <el-button type="text" @click="ClickToJump('managecourse')">课程管理</el-button>
                                 <br>
-                                <el-button type="text" @click="ClickToJump('about')">作业管理</el-button>
+                                <el-button type="text" @click="ClickToJump('homework')">作业管理</el-button>
                                 <br>
-                                <el-button type="text" @click="ClickToJump('feedback')">公告/日志</el-button>
+                                <el-button type="text" @click="ClickToJump('manageuser')">用户管理</el-button>
                             </div>
                         </el-card>
                     </el-row>
@@ -90,7 +90,7 @@
         </el-container>
     </el-container>
 </div>
-<script th:src="@{js/admin.js}"></script>
-<script th:src="@{js/msg.js}"></script>
+<script th:src="@{../js/admin.js}"></script>
+<script th:src="@{../js/msg.js}"></script>
 </body>
 </html>

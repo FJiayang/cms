@@ -1,10 +1,12 @@
 package com.fjy.spring.controller;
 
+import com.fjy.spring.domain.VCourse;
 import com.fjy.spring.domain.VFeedBack;
 import com.fjy.spring.domain.VLog;
 import com.fjy.spring.domain.VWorkDetail;
 import com.fjy.spring.enums.ResultEnum;
 import com.fjy.spring.exception.UserException;
+import com.fjy.spring.service.CourseService;
 import com.fjy.spring.service.FeedBackService;
 import com.fjy.spring.service.LogService;
 import com.fjy.spring.service.WorkDetailService;
@@ -25,6 +27,9 @@ public class DataController {
 
     @Autowired
     private FeedBackService feedBackService;
+
+    @Autowired
+    private CourseService courseService;
 
     @GetMapping("/home/findAllHomework")
     public List<VWorkDetail> findAllHomework(){
@@ -51,6 +56,16 @@ public class DataController {
         List<VFeedBack> feedBacks = feedBackService.findAllVFeedback();
         if (feedBacks!=null){
             return feedBacks;
+        }
+        new UserException(ResultEnum.EMPTY_DATA);
+        return null;
+    }
+
+    @GetMapping("/home/findvcourse")
+    public List<VCourse> findVCourse(){
+        List<VCourse> vCourses = courseService.findAllVCourse();
+        if (vCourses!=null){
+            return vCourses;
         }
         new UserException(ResultEnum.EMPTY_DATA);
         return null;

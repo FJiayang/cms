@@ -35,10 +35,26 @@ public class NavController {
         return "/home/about";
     }
 
-    @GetMapping(value = {"/admin"})
+    @GetMapping(value = {"/home/admin"})
     public String toAdminPage(){
         return "/home/admin";
     }
+
+    @GetMapping(value = {"/home/managecourse"})
+    public String toManageCoursePage(){
+        return "/home/managecourse";
+    }
+
+    @GetMapping(value = {"/home/manageuser"})
+    public String toManageUserPage(){
+        return "/home/manageuser";
+    }
+
+    @GetMapping(value = {"/home/homework"})
+    public String toHomeworkPage(){
+        return "/home/homework";
+    }
+
 
     @GetMapping(value = {"/home/user"})
     public String toUserPage(){
