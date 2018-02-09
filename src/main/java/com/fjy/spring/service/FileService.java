@@ -19,10 +19,10 @@ public class FileService {
         return false;
     }
 
-    public TbFile findFile(TbFile tbFile){
-        TbFile file = (TbFile) tbFileRepository.findByColfilename(tbFile.getColfilename()).get();
-        if (file!=null)
-            return file;
+    public List<TbFile> findFile(TbFile tbFile){
+        List<TbFile> files =  tbFileRepository.findByColfilename(tbFile.getColfilename());
+        if (files!=null)
+            return files;
         return null;
     }
 
@@ -30,10 +30,17 @@ public class FileService {
         return tbFileRepository.findAll();
     }
 
-    public TbFile findFileById(TbFile tbFile){
+    public TbFile findFileById(TbFile tbFile)
+    {
         return tbFileRepository.findById(tbFile.getColfileid()).get();
     }
 
+    public void deleteFile(TbFile file){
+        tbFileRepository.delete(file);
+    }
 
+    public void deleteFileById(TbFile file){
+        tbFileRepository.deleteById(file.getColfileid());
+    }
 
 }

@@ -61,7 +61,7 @@ var Main = {
     },
     methods: {
         ClickToJump(targe){
-            window.location.href="http://localhost:8080/cms/" + targe;
+            window.location.href="http://localhost:8080/cms/home/" + targe;
         },
         handleSelect(key, keyPath) {
             console.log(key, keyPath);
