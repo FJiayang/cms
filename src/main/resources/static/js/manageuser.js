@@ -2,44 +2,40 @@ var Main = {
     data() {
         return {
             activeIndex: '1',
-            tableData3: [{
-                id:'1',
-                date: '2016-05-03',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                id:'2',
-                date: '2016-05-02',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                id:'3',
-                date: '2016-05-04',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                id:'4',
-                date: '2016-05-01',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                id:'5',
-                date: '2016-05-08',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                id:'6',
-                date: '2016-05-06',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                id:'7',
-                date: '2016-05-07',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }],
+            userData: [
+                {
+                    coluserid: 53,
+                    colname: "FFFF",
+                    colpassword: "330399941720950163549766122324520082468573044291",
+                    colemail: "123@gmail.com",
+                    colstudentno: "123456",
+                    colrealname: "ENMM"
+                }
+            ],
             multipleSelection: []
         }
+    },
+    mounted() {
+        this.$nextTick(() => {
+            var that = this;
+            axios.get('http://localhost:8080/cms/home/findalluser')
+                .then(function (response) {
+                    console.log(response.data);
+                    that.userData = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            /*axios.get('http://localhost:8080/cms/home/findvfeedback')
+                .then(function (response) {
+                    console.log(response.data);
+                    that.feedbackData = response.data;
+                    //that.limitTime = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });*/
+        })
     },
     methods: {
         togglePost(url){

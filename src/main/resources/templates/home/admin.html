@@ -16,21 +16,7 @@
                         <el-card th:include="dist/thymeleaf/layout :: userbox"></el-card>
                     </el-row>
                     <el-row>
-                        <el-card class="box-card">
-                            <div slot="header" class="clearfix">
-                                <span>管理员</span><br>
-                                <span>管理员号</span>
-                            </div>
-                            <div class="item">
-                                <el-button type="text" @click="ClickToJump('admin')">后台主页</el-button>
-                                <br>
-                                <el-button type="text" @click="ClickToJump('managecourse')">课程管理</el-button>
-                                <br>
-                                <el-button type="text" @click="ClickToJump('homework')">作业管理</el-button>
-                                <br>
-                                <el-button type="text" @click="ClickToJump('manageuser')">用户管理</el-button>
-                            </div>
-                        </el-card>
+                        <el-card th:include="dist/thymeleaf/layout :: adminbox"></el-card>
                     </el-row>
                 </el-col>
                 <el-col :md="13" :lg="13" :xl="13" :sm="18" :xs="23" :offset="1">

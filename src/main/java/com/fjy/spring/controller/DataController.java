@@ -1,15 +1,9 @@
 package com.fjy.spring.controller;
 
-import com.fjy.spring.domain.VCourse;
-import com.fjy.spring.domain.VFeedBack;
-import com.fjy.spring.domain.VLog;
-import com.fjy.spring.domain.VWorkDetail;
+import com.fjy.spring.domain.*;
 import com.fjy.spring.enums.ResultEnum;
 import com.fjy.spring.exception.UserException;
-import com.fjy.spring.service.CourseService;
-import com.fjy.spring.service.FeedBackService;
-import com.fjy.spring.service.LogService;
-import com.fjy.spring.service.WorkDetailService;
+import com.fjy.spring.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +24,12 @@ public class DataController {
 
     @Autowired
     private CourseService courseService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private HomeworkService homeworkService;
 
     @GetMapping("/home/findAllHomework")
     public List<VWorkDetail> findAllHomework(){
@@ -66,6 +66,26 @@ public class DataController {
         List<VCourse> vCourses = courseService.findAllVCourse();
         if (vCourses!=null){
             return vCourses;
+        }
+        new UserException(ResultEnum.EMPTY_DATA);
+        return null;
+    }
+
+    @GetMapping("/home/findalluser")
+    public List<TbUser> findAllUser(){
+        List<TbUser> users = userService.findAllUser();
+        if (users!=null){
+            return users;
+        }
+        new UserException(ResultEnum.EMPTY_DATA);
+        return null;
+    }
+
+    @GetMapping("/home/findallvhomework")
+    public List<VHomework> findAllVHomework(){
+        List<VHomework> vHomeworks = homeworkService.findAllVHomework();
+        if (vHomeworks!=null){
+            return vHomeworks;
         }
         new UserException(ResultEnum.EMPTY_DATA);
         return null;

@@ -7,6 +7,8 @@ import com.fjy.spring.repository.TbUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class UserService {
@@ -36,5 +38,9 @@ public class UserService {
             return true;
         }
         return false;
+    }
+
+    public List<TbUser> findAllUser(){
+        return tbUserRepository.findAll();
     }
 }

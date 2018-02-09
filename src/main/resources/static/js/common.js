@@ -1,30 +1,12 @@
-/*
-/!*
- * the first time to call
- *!/
-setTimeout(function () {
-    Push();
-//  alert("setTimeout called");
-}, 200);
-
-setInterval(function () {
-    Push();
-    //alert("setInterval called");
-}, 3000);
-
-//con.showMsg('登录成功');
-function Push() {
-    $.ajax({
-        type: "POST",
-        url: "../CheckLoginServlet?dt=" + new Date().getTime(),//why getTime and wont use
-        data: {},
-        beforeSend: function () {
-        },
-        success: function (data) {
-            var obj = eval("(" + data + ")");//eval使用前要先加括号，才能得到完整的json数据
-            if (obj.msg != 0) {
-                con.showMsg(obj.msg);
-            }
-        }
-    })
-};*/
+function getRootPath_web() {
+    //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
+    var curWwwPath = window.document.location.href;
+    //获取主机地址之后的目录，如： uimcardprj/share/meun.jsp
+    var pathName = window.document.location.pathname;
+    var pos = curWwwPath.indexOf(pathName);
+    //获取主机地址，如： http://localhost:8083
+    var localhostPaht = curWwwPath.substring(0, pos);
+    //获取带"/"的项目名，如：/uimcardprj
+    var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+    return (localhostPaht + projectName);
+}
