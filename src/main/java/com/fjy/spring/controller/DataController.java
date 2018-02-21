@@ -6,6 +6,7 @@ import com.fjy.spring.exception.UserException;
 import com.fjy.spring.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -30,6 +31,12 @@ public class DataController {
 
     @Autowired
     private HomeworkService homeworkService;
+
+    @Autowired
+    private FileService fileService;
+
+    @Autowired
+    private VUserfileService vUserfileService;
 
     @GetMapping("/home/findAllHomework")
     public List<VWorkDetail> findAllHomework(){
@@ -86,6 +93,17 @@ public class DataController {
         List<VHomework> vHomeworks = homeworkService.findAllVHomework();
         if (vHomeworks!=null){
             return vHomeworks;
+        }
+        new UserException(ResultEnum.EMPTY_DATA);
+        return null;
+    }
+
+    @GetMapping("/home/findStudentInCourseFile")
+    public  List<VUserfile> findStudentInCourseFile(
+            @RequestParam(value = "Folder") String Folder,@RequestParam(value = "CourseName") String CourseName){
+        List<VUserfile> files = vUserfileService.findByWorkFolderAndCourseName(Folder,CourseName);
+        if (files!=null){
+            return files;
         }
         new UserException(ResultEnum.EMPTY_DATA);
         return null;

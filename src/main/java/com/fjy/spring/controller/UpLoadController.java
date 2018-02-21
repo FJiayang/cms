@@ -2,9 +2,11 @@ package com.fjy.spring.controller;
 
 import com.fjy.spring.constant.GlobalConstant;
 import com.fjy.spring.domain.TbFile;
+import com.fjy.spring.domain.TbLog;
 import com.fjy.spring.domain.TbUser;
 import com.fjy.spring.properties.ServerProperties;
 import com.fjy.spring.service.FileService;
+import com.fjy.spring.service.LogService;
 import com.fjy.spring.untils.FormatFileSizeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +32,12 @@ public class UpLoadController {
 
     @Autowired
     private FileService fileService;//文件相关数据库操作
+
+    @Autowired
+    private LogService logService;
+
+    @Resource
+    HttpServletRequest httpServletRequest;
 
     @GetMapping("/toOneUpload")
     public String toOneUpload() {
@@ -145,7 +154,9 @@ public class UpLoadController {
 
         for (MultipartFile file : files.values()) {
             String filename = file.getOriginalFilename();
-            File targetFile = new File(uploadUrl + filename);
+            String suffix = "."+filename.substring(filename.lastIndexOf(".") + 1);//获取文件后缀
+
+            File targetFile = new File(uploadUrl + user.getColstudentno()+user.getColrealname()+suffix);
 
             System.out.println("文件上传到: " + uploadUrl + filename);
             System.out.println("文件大小: " + new FormatFileSizeUtil().GetFileSize(file.getSize()));
@@ -153,11 +164,21 @@ public class UpLoadController {
 
             TbFile tbFile = new TbFile();
             tbFile.setColfilesize(new FormatFileSizeUtil().GetFileSize(file.getSize()));
-            tbFile.setColfilename(filename);
+            tbFile.setColfilename(user.getColstudentno()+user.getColrealname()+suffix);
             tbFile.setColtime(dateNowStr);
-            tbFile.setColfilepath(uploadUrl + filename);
+            tbFile.setColrealname(filename);
+            tbFile.setColfilepath(uploadUrl + user.getColstudentno()+user.getColrealname()+suffix);//文件自动学号+姓名命名
             tbFile.setColip(request.getRemoteAddr());
             tbFile.setColuserid(user.getColuserid());
+            tbFile.setCourseName(courseName);
+            tbFile.setWorkFolder(folder);
+
+            TbLog log = new TbLog();
+            log.setUserid(user.getColuserid());
+            log.setColtime(dateNowStr);
+            log.setColip(httpServletRequest.getRemoteAddr());
+            log.setColheader(user.getColname()+"上传了"+filename+"文件");
+            logService.addLogRec(log);
 
             if (fileService.addFile(tbFile))
                 System.out.println("记录写入数据库成功");

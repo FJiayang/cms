@@ -3,8 +3,10 @@ var Main = {
         return {
             activeIndex: '1',
             formInline: {
-                user: '',
-                region: ''
+                name:'',
+                name2:'',
+                content: '',
+                folder: ''
             },
             homeworkData: [
                 {
@@ -17,12 +19,29 @@ var Main = {
                     folder: "第一次作业"
                 }
             ],
+            homeworkFormData:[
+                {
+                    courseNo: 1,
+                    courseName: "信息安全",
+                    courseTime: "2018-02-06 20:42:28.0",
+                    teacherusername: "FJY",
+                    teacherrealname: "root"
+                }
+            ],
             multipleSelection: []
         }
     },
     mounted() {
         this.$nextTick(() => {
             var that = this;
+            axios.get('http://localhost:8080/cms/home/findallvhomework')
+                .then(function (response) {
+                    console.log(response.data);
+                    that.homeworkData = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
             axios.get('http://localhost:8080/cms/home/findallvhomework')
                 .then(function (response) {
                     console.log(response.data);

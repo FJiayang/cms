@@ -43,4 +43,8 @@ public class FileService {
         tbFileRepository.deleteById(file.getColfileid());
     }
 
+    public List<TbFile> findByWorkFolderAndCourseName(String workFolder,String courseName){
+        return tbFileRepository.findByWorkFolderAndCourseName(workFolder,courseName);
+    }
+
 }

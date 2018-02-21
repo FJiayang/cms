@@ -43,4 +43,5 @@ public class UserService {
     public List<TbUser> findAllUser(){
         return tbUserRepository.findAll();
     }
+
 }

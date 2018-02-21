@@ -1,3 +1,17 @@
+var dt = new Date();
+var month = dt.getMonth()+1;
+var day = dt.getDate();
+var year = dt.getFullYear();
+var cur = year + '-' + month + '-' + day;
+function  DateDiff(sDate1,  sDate2){    //sDate1和sDate2是2002-12-18格式
+    var  aDate,  oDate1,  oDate2,  iDays
+    aDate  =  sDate1.split("-")
+    oDate1  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])    //转换为12-18-2002格式
+    aDate  =  sDate2.split("-")
+    oDate2  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])
+    iDays  =  parseInt(Math.abs(oDate1  -  oDate2)  /  1000  /  60  /  60  /24)    //把相差的毫秒数转换为天数
+    return  iDays
+}
 var Main = {
     data() {
         var checkName = (rule, value, callback) => {
@@ -37,19 +51,15 @@ var Main = {
         return {
             activeIndex: '1',
             ruleForm2: {
-                colname: '',
                 colpassword: '',
-                checkPass:'',
-                colstudentno: '',
-                colrealname: '',
-                colemail: ''
+                checkPass: '',
             },
             rules2: {
                 colpassword: [
-                    {required: true,validator: validatePass, trigger: 'blur'}
+                    {required: true, validator: validatePass, trigger: 'blur'}
                 ],
                 checkPass: [
-                    {required: true,validator: validatePass2, trigger: 'blur'}
+                    {required: true, validator: validatePass2, trigger: 'blur'}
                 ],
                 colstudentno: [
                     {
@@ -66,7 +76,7 @@ var Main = {
                     }
                 ],
                 colname: [
-                    {required: true,validator: checkName, trigger: 'blur'}
+                    {required: true, validator: checkName, trigger: 'blur'}
                 ],
             },
             tableHomeworkData: [
@@ -94,10 +104,41 @@ var Main = {
         }
     },
     methods: {
-        submitForm(formName) {
+        openNotiSuccess(title, content) {
+            this.$notify({
+                title: title,
+                message: content,
+                type: 'success'
+            });
+        },
+        limitTime(row){
+            return DateDiff(row.worktime.replace(/([^\s]+)\s.*/, "$1"),  cur);
+        },
+        submitForm(formName, url) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    alert('submit!');
+                    axios({
+                        url: 'http://localhost:8080/cms/' + url,
+                        method: 'post',
+                        data: {
+                            content: this.$refs.content.value
+                        },
+                        transformRequest: [function (data) {
+                            // Do whatever you want to transform the data
+                            let ret = ''
+                            for (let it in data) {
+                                ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                            }
+                            return ret
+                        }],
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    })
+                    console.log(this.$refs.content.value)
+                    this.openNotiSuccess("成功", "修改成功！")
+                    //this.$options.methods.openNotiSuccess.bind(this)();
+                    //alert('submit!');
                 } else {
                     console.log('error submit!!');
                     return false;
@@ -110,8 +151,8 @@ var Main = {
         handleClick(tab, event) {
             console.log(tab, event);
         },
-        ClickToJump(targe){
-            window.location.href="http://localhost:8080/cms/" + targe;
+        ClickToJump(targe) {
+            window.location.href = "http://localhost:8080/cms/" + targe;
         },
         handleSelect(key, keyPath) {
             console.log(key, keyPath);

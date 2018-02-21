@@ -228,6 +228,27 @@ var Main = {
         /*var url = window.location.protocol+"://"+window.location.host+":"+window.location.port+"/"*/
         window.open("http://localhost:8080/cms/download/dodownload?fileId=" + row.colfileid);
     },
+    handleDelete(row) {
+            axios({
+                url: 'http://localhost:8080/cms/home/filedelete',
+                method: 'post',
+                data: {
+                    fileid: row.colfileid
+                },
+                transformRequest: [function (data) {
+                    // Do whatever you want to transform the data
+                    let ret = ''
+                    for (let it in data) {
+                        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                    }
+                    return ret
+                }],
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+            this.openNotiSuccess("成功","删除成功！");
+    },
     handlePreview(file) {
         console.log(file);
     },

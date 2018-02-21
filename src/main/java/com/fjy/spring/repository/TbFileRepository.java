@@ -8,4 +8,6 @@ import java.util.Optional;
 
 public interface TbFileRepository extends JpaRepository<TbFile,Integer>{
     public List<TbFile> findByColfilename(String name);
+
+    public List<TbFile> findByWorkFolderAndCourseName(String workFolder,String courseName);
 }

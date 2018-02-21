@@ -1,17 +1,20 @@
 package com.fjy.spring.domain;
 
+import org.hibernate.annotations.Immutable;
+import org.hibernate.annotations.Subselect;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class TbFile {
+@Immutable
+@Subselect("SELECT * FROM v_userfile")
+public class VUserfile {
     @Id
-    @GeneratedValue
     private int colfileid;
 
-    private int coluserid;
+    private String colstudentno;
 
     private String coltime;
 
@@ -28,6 +31,7 @@ public class TbFile {
     private String courseName;
     @Column(name = "workfolder")
     private String workFolder;
+
 
     @Override
     public String toString() {
@@ -72,12 +76,12 @@ public class TbFile {
         this.colfileid = colfileid;
     }
 
-    public int getColuserid() {
-        return coluserid;
+    public String getColstudentno() {
+        return colstudentno;
     }
 
-    public void setColuserid(int coluserid) {
-        this.coluserid = coluserid;
+    public void setColstudentno(String colstudentno) {
+        this.colstudentno = colstudentno;
     }
 
     public String getColip() {
