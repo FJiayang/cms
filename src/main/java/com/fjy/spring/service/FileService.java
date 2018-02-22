@@ -1,6 +1,7 @@
 package com.fjy.spring.service;
 
 import com.fjy.spring.domain.TbFile;
+import com.fjy.spring.domain.VUserfile;
 import com.fjy.spring.repository.TbFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

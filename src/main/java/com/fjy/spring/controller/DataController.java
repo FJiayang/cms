@@ -99,9 +99,9 @@ public class DataController {
     }
 
     @GetMapping("/home/findStudentInCourseFile")
-    public  List<VUserfile> findStudentInCourseFile(
+    public  List<TbStudentlist> findStudentInCourseFile(
             @RequestParam(value = "Folder") String Folder,@RequestParam(value = "CourseName") String CourseName){
-        List<VUserfile> files = vUserfileService.findByWorkFolderAndCourseName(Folder,CourseName);
+        List<TbStudentlist> files = vUserfileService.findStudentNoByWorkFolderAndCourseName(Folder,CourseName);
         if (files!=null){
             return files;
         }
