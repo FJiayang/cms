@@ -1,4 +1,5 @@
 package com.fjy.spring.domain;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,7 +12,9 @@ public class TbUser {
     private Integer coluserid;
     @NotNull(message = "用户名必填")
     private String colname;
-    @NotNull(message = "密码不能为空")
+
+    @Column(updatable=false)
+    /*@NotNull(message = "密码不能为空")*/
     private String colpassword;
     private String colemail;
     @NotNull(message = "学号必填")

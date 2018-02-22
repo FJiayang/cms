@@ -14,21 +14,6 @@ function  DateDiff(sDate1,  sDate2){    //sDate1和sDate2是2002-12-18格式
 }
 var Main = {
     data() {
-        var checkName = (rule, value, callback) => {
-            if (!value) {
-                return callback(new Error('用户名不能为空'));
-            }
-        };
-        var checkNo = (rule, value, callback) => {
-            if (!value) {
-                return callback(new Error('学号不能为空'));
-            }
-        };
-        var checkRealName = (rule, value, callback) => {
-            if (!value) {
-                return callback(new Error('真实姓名不能为空'));
-            }
-        };
         var validatePass = (rule, value, callback) => {
             if (value === '') {
                 callback(new Error('请输入密码'));
@@ -51,33 +36,18 @@ var Main = {
         return {
             activeIndex: '1',
             ruleForm2: {
+                coluserid:'',
+                colname: '',
+                colstudentno: '',
+                colrealname: '',
+                colemail: '',
                 colpassword: '',
                 checkPass: '',
             },
             rules2: {
-                colpassword: [
-                    {required: true, validator: validatePass, trigger: 'blur'}
-                ],
                 checkPass: [
-                    {required: true, validator: validatePass2, trigger: 'blur'}
-                ],
-                colstudentno: [
-                    {
-                        required: true,
-                        validator: checkNo,
-                        trigger: 'blur'
-                    }
-                ],
-                colrealname: [
-                    {
-                        required: true,
-                        validator: checkRealName,
-                        trigger: 'blur'
-                    }
-                ],
-                colname: [
-                    {required: true, validator: checkName, trigger: 'blur'}
-                ],
+                    { validator: validatePass2, trigger: 'blur'}
+                ]
             },
             tableHomeworkData: [
                 {
@@ -116,7 +86,7 @@ var Main = {
         },
         submitForm(formName, url) {
             this.$refs[formName].validate((valid) => {
-                if (valid) {
+                if (true) {//此处暂时去除校验
                     axios({
                         url: 'http://localhost:8080/cms/' + url,
                         method: 'post',

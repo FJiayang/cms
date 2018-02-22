@@ -10,7 +10,8 @@ public enum ResultEnum {
     WRONGPASS(105,"用户名或密码错误"),
     ILLEGAL_ACCESS(106,"非法访问"),
     WRONG_FORM(107,"表单错误"),
-    EMPTY_DATA(108,"无数据")
+    EMPTY_DATA(108,"无数据"),
+    ID_NULLPOINT(109,"id为空"),
     ;
     private Integer code;
     private String msg;

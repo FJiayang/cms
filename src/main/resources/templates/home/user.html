@@ -19,43 +19,47 @@
                         <el-form
                                 :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2"
                                 label-width="100px" class="demo-ruleForm"
-                                action="/cms/register/doregister"
+                                action="/cms/home/userUpdate"
                                 method="POST" name="register">
+                            <el-form-item label="ID"
+                                          prop="coluserid">
+                                <el-input :readonly="true"
+                                        th:value="${#httpServletRequest.getSession().getAttribute('USER_SESSION').coluserid}" name="coluserid" readonly></el-input>
+                            </el-form-item>
                             <el-form-item label="用户名"
                                           prop="colname">
                                 <el-input
-                                        th:value="${#httpServletRequest.getSession().getAttribute('USER_SESSION').colname}" name="colname"></el-input>
+                                        th:value="${#httpServletRequest.getSession().getAttribute('USER_SESSION').colname}" name="colname" ref="name"></el-input>
                             </el-form-item>
                             <el-form-item
                                     label="密码" prop="colpassword">
-                                <el-input type="password"
+                                <el-input type="password" placeholder="不改密码则留空"
                                           v-model="ruleForm2.colpassword" auto-complete="off" name="colpassword"></el-input>
                             </el-form-item>
                             <el-form-item label="确认密码" prop="checkPass">
-                                <el-input
+                                <el-input placeholder="不改密码则留空"
                                         type="password" v-model="ruleForm2.checkPass"
                                         auto-complete="off" name="checkPass"></el-input>
                             </el-form-item>
                             <el-form-item prop="colemail" label="邮箱"
                                           :rules="[
-      { required: true, message: '请输入邮箱地址', trigger: 'blur' },
       { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change' }
     ]">
-                                <el-input th:value="${#httpServletRequest.getSession().getAttribute('USER_SESSION').colemail}" name="colemail"></el-input>
+                                <el-input th:value="${#httpServletRequest.getSession().getAttribute('USER_SESSION').colemail}" name="colemail" ref="email"></el-input>
                             </el-form-item>
                             <el-form-item label="学号"
                                           prop="colstudentno">
                                 <el-input
-                                        th:value="${#httpServletRequest.getSession().getAttribute('USER_SESSION').colstudentno}" name="colstudentno"></el-input>
+                                        th:value="${#httpServletRequest.getSession().getAttribute('USER_SESSION').colstudentno}" name="colstudentno" ref="studentno"></el-input>
                             </el-form-item>
                             <el-form-item label="真实姓名"
                                           prop="colrealname">
                                 <el-input
-                                        th:value="${#httpServletRequest.getSession().getAttribute('USER_SESSION').colrealname}" name="colrealname"></el-input>
+                                        th:value="${#httpServletRequest.getSession().getAttribute('USER_SESSION').colrealname}" name="colrealname" ref="realname"></el-input>
                             </el-form-item>
                             <el-form-item>
                                 <el-button type="primary"
-                                           @click="submitForm('feedbackForm','register/doregister')">提交
+                                           native-type="submit">提交
                                 </el-button>
                                 <el-button @click="resetForm('ruleForm2')">重置</el-button>
                             </el-form-item>
