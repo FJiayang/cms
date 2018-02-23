@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Immutable
-@Subselect("SELECT * FROM v_log ORDER BY coltime LIMIT 0, 20")
+@Subselect("SELECT * FROM v_log ORDER BY coltime DESC LIMIT 0, 20")
 public class VLog {
     @Id
     private Integer logid;

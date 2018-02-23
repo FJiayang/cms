@@ -35,6 +35,22 @@
                     </ul>
                     <br>
                     <ul>
+                        <h3>开发人员</h3>
+                        <li><strong>界面布局设计 </strong>蓝钜</li>
+                        <li><strong>代码开发 </strong>符嘉阳</li>
+                    </ul>
+                    <br>
+                    <el-button type="text" @click="dialogTableVisible = true">查看更新日志</el-button>
+
+                    <el-dialog title="GitLab更新日志" :visible.sync="dialogTableVisible">
+                        <el-table :data="VersionList">
+                            <el-table-column property="date" label="日期"></el-table-column>
+                            <el-table-column property="content" label="内容"></el-table-column>
+                            <el-table-column property="version" label="版本"></el-table-column>
+                            <el-table-column property="user" label="提交人员"></el-table-column>
+                        </el-table>
+                    </el-dialog>
+                    <ul>
                         <h3>友情链接</h3>
                         <li><a href="http://web.fjy8018.top:8080/blog/">F嘉阳 博客</a></li>
                         <li><a href="http://www.fjy8018.top:8080/orderbook/">订书系统</a></li>
@@ -48,7 +64,6 @@
         </el-container>
     </el-container>
 </div>
-<script th:src="@{/js/homePage.js}"></script>
-<script th:src="@{/js/common.js}"></script>
+<script th:src="@{/js/home.js}"></script>
 </body>
 </html>

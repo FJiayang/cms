@@ -48,4 +48,8 @@ public class FileService {
         return tbFileRepository.findByWorkFolderAndCourseName(workFolder,courseName);
     }
 
+    public List<TbFile> findByColuserid(Integer id){
+        return tbFileRepository.findByColuserid(id);
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.fjy.spring.controller;
 
 import com.fjy.spring.domain.TbFile;
+import com.fjy.spring.domain.TbUser;
 import com.fjy.spring.enums.ResultEnum;
 import com.fjy.spring.exception.UserException;
 import com.fjy.spring.service.FileService;
@@ -11,15 +12,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.List;
 
+import static com.fjy.spring.constant.GlobalConstant.USER_SESSION_KEY;
+
 @Controller
 public class DownLoadController {
     @Autowired
     private FileService fileService;
+
+    @Resource
+    HttpServletRequest request;
 
     /*@GetMapping("/download")
     public String toDownloadPage(){
@@ -30,6 +37,19 @@ public class DownLoadController {
     @ResponseBody
     public List<TbFile> toDownloadAll(){
         List<TbFile> files = fileService.findAllFile();//此处做空指针判断并抛出错误
+        if (files!=null)
+            return files;
+        new UserException(ResultEnum.EMPTY_DATA);
+        return null;
+    }
+
+    @GetMapping("/download/findone")
+    @ResponseBody
+    public List<TbFile> toDownloadOne(){
+        TbUser user = (TbUser)request.getSession().getAttribute(USER_SESSION_KEY);
+        System.out.println(user.toString());
+        List<TbFile> files = fileService.findByColuserid(user.getColuserid());
+        //此处做空指针判断并抛出错误
         if (files!=null)
             return files;
         new UserException(ResultEnum.EMPTY_DATA);
