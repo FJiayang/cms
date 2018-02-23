@@ -40,7 +40,7 @@ var Main = {
     mounted() {
         this.$nextTick(() => {
             var that = this;
-            axios.get('http://localhost:8080/cms/home/findvlog')
+            axios.get(getRootPath_web()+'/home/findvlog')
                 .then(function (response) {
                     console.log(response.data);
                     that.logData = response.data;
@@ -48,7 +48,7 @@ var Main = {
                 .catch(function (error) {
                     console.log(error);
                 });
-            axios.get('http://localhost:8080/cms/home/findvfeedback')
+            axios.get(getRootPath_web()+'/home/findvfeedback')
                 .then(function (response) {
                     console.log(response.data);
                     that.feedbackData = response.data;
@@ -61,7 +61,7 @@ var Main = {
     },
     methods: {
         ClickToJump(targe){
-            window.location.href="http://localhost:8080/cms/home/" + targe;
+            window.location.href=getRootPath_web()+"/" + targe;
         },
         handleSelect(key, keyPath) {
             console.log(key, keyPath);

@@ -34,7 +34,7 @@ var Main = {
     mounted() {
         this.$nextTick(() => {
             var that = this;
-            axios.get('http://localhost:8080/cms/home/findallvhomework')
+            axios.get(getRootPath_web()+'/home/findallvhomework')
                 .then(function (response) {
                     console.log(response.data);
                     that.homeworkData = response.data;
@@ -42,7 +42,7 @@ var Main = {
                 .catch(function (error) {
                     console.log(error);
                 });
-            axios.get('http://localhost:8080/cms/home/findallvhomework')
+            axios.get(getRootPath_web()+'/home/findallvhomework')
                 .then(function (response) {
                     console.log(response.data);
                     that.homeworkData = response.data;
@@ -55,7 +55,7 @@ var Main = {
     methods: {
         togglePost(url){
             axios({
-                url: 'http://localhost:8080/cms/'+url,
+                url: getRootPath_web()+url,
                 method: 'post',
                 data: {
                     id:this.multipleSelection
@@ -77,7 +77,7 @@ var Main = {
             console.log(key, keyPath);
         },
         ClickToJump(targe){
-            window.location.href="http://localhost:8080/cms/" + targe;
+            window.location.href=getRootPath_web()+ "/" + targe;
         },
         toggleSelection(rows) {
             if (rows) {

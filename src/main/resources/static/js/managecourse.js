@@ -24,7 +24,7 @@ var Main = {
     mounted() {
         this.$nextTick(() => {
             var that = this;
-            axios.get('http://localhost:8080/cms/home/findvcourse')
+            axios.get(getRootPath_web()+'/home/findvcourse')
                 .then(function (response) {
                     console.log(response.data);
                     that.tableData3 = response.data;
@@ -46,7 +46,7 @@ var Main = {
     methods: {
         togglePost(url){
             axios({
-                url: 'http://localhost:8080/cms/'+url,
+                url: getRootPath_web()+'/'+url,
                 method: 'post',
                 data: {
                     id:this.multipleSelection
@@ -100,7 +100,7 @@ var Main = {
             console.log(item);
         },
         ClickToJump(targe){
-            window.location.href="http://localhost:8080/cms/home/" + targe;
+            window.location.href=getRootPath_web()+"/"+ targe;
         },
         toggleSelection(rows) {
             if (rows) {
@@ -123,7 +123,7 @@ var Main = {
         /*this.restaurants = this.loadAll();*/
         this.restaurants=this.$nextTick(() => {
             var that = this;
-            axios.get('http://localhost:8080/cms/home/findvcourse')
+            axios.get(getRootPath_web()+'/home/findvcourse')
                 .then(function (response) {
                     console.log(response.data);
                     that.logData = response.data;

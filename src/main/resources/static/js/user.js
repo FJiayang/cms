@@ -123,7 +123,7 @@ var Main = {
             this.$refs[formName].validate((valid) => {
                 if (true) {//此处暂时去除校验
                     axios({
-                        url: 'http://localhost:8080/cms/' + url,
+                        url: getRootPath_web()+'/' + url,
                         method: 'post',
                         data: {
                             content: this.$refs.content.value
@@ -157,7 +157,7 @@ var Main = {
             console.log(tab, event);
         },
         ClickToJump(targe) {
-            window.location.href = "http://localhost:8080/cms/" + targe;
+            window.location.href = getRootPath_web()+"/" + targe;
         },
         handleSelect(key, keyPath) {
             console.log(key, keyPath);
@@ -169,7 +169,7 @@ var Main = {
     mounted() {
         this.$nextTick(() => {
             var that = this;
-            axios.get('http://localhost:8080/cms/home/userinfo')
+            axios.get(getRootPath_web()+'/home/userinfo')
                 .then(function (response) {
                     console.log(response.data);
                     that.ruleForm2 = response.data;

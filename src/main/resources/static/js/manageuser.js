@@ -18,7 +18,7 @@ var Main = {
     mounted() {
         this.$nextTick(() => {
             var that = this;
-            axios.get('http://localhost:8080/cms/home/findalluser')
+            axios.get(getRootPath_web()+'/home/findalluser')
                 .then(function (response) {
                     console.log(response.data);
                     that.userData = response.data;
@@ -64,7 +64,7 @@ var Main = {
             console.log(key, keyPath);
         },
         ClickToJump(targe){
-            window.location.href="http://localhost:8080/cms/" + targe;
+            window.location.href=getRootPath_web()+"/" + targe;
         },
         toggleSelection(rows) {
             if (rows) {
