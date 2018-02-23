@@ -14,6 +14,21 @@ function  DateDiff(sDate1,  sDate2){    //sDate1和sDate2是2002-12-18格式
 }
 var Main = {
     data() {
+        var checkName = (rule, value, callback) => {
+            if (!value) {
+                return callback(new Error('用户名不能为空'));
+            }
+        };
+        var checkNo = (rule, value, callback) => {
+            if (!value) {
+                return callback(new Error('学号不能为空'));
+            }
+        };
+        var checkRealName = (rule, value, callback) => {
+            if (!value) {
+                return callback(new Error('真实姓名不能为空'));
+            }
+        };
         var validatePass = (rule, value, callback) => {
             if (value === '') {
                 callback(new Error('请输入密码'));
@@ -34,7 +49,7 @@ var Main = {
             }
         };
         return {
-            activeIndex: '1',
+            activeIndex: '2-1',
             ruleForm2: {
                 coluserid:'',
                 colname: '',
@@ -45,9 +60,29 @@ var Main = {
                 checkPass: '',
             },
             rules2: {
+                colpassword: [
+                    {required: true,validator: validatePass, trigger: 'blur'}
+                ],
                 checkPass: [
-                    { validator: validatePass2, trigger: 'blur'}
-                ]
+                    {required: true,validator: validatePass2, trigger: 'blur'}
+                ],
+                colstudentno: [
+                    {
+                        required: true,
+                        validator: checkNo,
+                        trigger: 'blur'
+                    }
+                ],
+                colrealname: [
+                    {
+                        required: true,
+                        validator: checkRealName,
+                        trigger: 'blur'
+                    }
+                ],
+                colname: [
+                    {required: true,validator: checkName, trigger: 'blur'}
+                ],
             },
             tableHomeworkData: [
                 {
@@ -130,6 +165,19 @@ var Main = {
         onSubmit() {
             console.log('submit!');
         }
+    },
+    mounted() {
+        this.$nextTick(() => {
+            var that = this;
+            axios.get('http://localhost:8080/cms/home/userinfo')
+                .then(function (response) {
+                    console.log(response.data);
+                    that.ruleForm2 = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        })
     }
 }
 var Ctor = Vue.extend(Main)

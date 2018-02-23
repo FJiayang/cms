@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+
+import static com.fjy.spring.constant.GlobalConstant.USER_SESSION_KEY;
 
 @RestController
 public class DataController {
@@ -37,6 +41,9 @@ public class DataController {
 
     @Autowired
     private VUserfileService vUserfileService;
+
+    @Resource
+    HttpServletRequest httpServletRequest;
 
     @GetMapping("/home/findAllHomework")
     public List<VWorkDetail> findAllHomework(){
@@ -107,5 +114,11 @@ public class DataController {
         }
         new UserException(ResultEnum.EMPTY_DATA);
         return null;
+    }
+
+    @GetMapping("/home/userinfo")
+    public VUserinfo findUserInfo(){
+        TbUser user= (TbUser)httpServletRequest.getSession().getAttribute(USER_SESSION_KEY);
+        return userService.findUserInfo(user.getColuserid());
     }
 }

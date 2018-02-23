@@ -1,9 +1,11 @@
 package com.fjy.spring.service;
 
 import com.fjy.spring.domain.TbUser;
+import com.fjy.spring.domain.VUserinfo;
 import com.fjy.spring.enums.ResultEnum;
 import com.fjy.spring.exception.UserException;
 import com.fjy.spring.repository.TbUserRepository;
+import com.fjy.spring.repository.VUserinfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,9 @@ public class UserService {
 
     @Autowired
     private TbUserRepository tbUserRepository;
+
+    @Autowired
+    private VUserinfoRepository vUserinfoRepository;
 
 
     public TbUser doLoginService(String name,String password){
@@ -42,6 +47,10 @@ public class UserService {
 
     public List<TbUser> findAllUser(){
         return tbUserRepository.findAll();
+    }
+
+    public VUserinfo findUserInfo(Integer coluserid){
+        return vUserinfoRepository.findById(coluserid).get();
     }
 
 }
