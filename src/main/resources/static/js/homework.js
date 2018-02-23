@@ -2,12 +2,21 @@ var Main = {
     data() {
         return {
             activeIndex: '1',
+            dialogTableVisible: false,
             formInline: {
                 name:'',
                 name2:'',
                 content: '',
                 folder: ''
             },
+            UncommittedPersonList:[
+                {
+                    listid: 1,
+                    colstudentno:'15251101238',
+                    colrealname:'符嘉阳',
+                    sex:'男'
+                }
+            ],
             homeworkData: [
                 {
                     fileid: 56,
@@ -53,6 +62,25 @@ var Main = {
         })
     },
     methods: {
+        findUncommitStudent(row){
+            var that = this;
+            this.dialogTableVisible = true;
+            axios.get(getRootPath_web()+'/home/findStudentInCourseFile',
+                {
+                    params: {
+                        Folder: row.folder,
+                        CourseName:row.courseName
+                    }
+                }
+            )
+                .then(function (response) {
+                    console.log(response.data);
+                    that.UncommittedPersonList = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        },
         togglePost(url){
             axios({
                 url: getRootPath_web()+url,
@@ -72,6 +100,14 @@ var Main = {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             })
+        },
+        dialogClose(done) {
+            this.$confirm('确认关闭？')
+                .then(_ => {
+                    done();
+                })
+                .catch(_ => {
+                });
         },
         handleSelect(key, keyPath) {
             console.log(key, keyPath);

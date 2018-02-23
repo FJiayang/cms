@@ -314,7 +314,6 @@ var Main = {
         })
     },
     methods: {
-
         openNotiSuccess(title, content) {
             this.$notify({
                 title: title,
@@ -378,15 +377,15 @@ var Main = {
             console.log(file, fileList);
         },
         ClickToJump(targe) {
-            window.location.href = "http://localhost:8080/cms/" + targe;
+            window.location.href = getRootPath_web()+"/" + targe;
         },
         handleDownload(row) {
             /*var url = window.location.protocol+"://"+window.location.host+":"+window.location.port+"/"*/
-            window.open("http://localhost:8080/cms/download/dodownload?fileId=" + row.colfileid);
+            window.open(getRootPath_web()+"/download/dodownload?fileId=" + row.colfileid);
         },
         handleDelete(row) {
             axios({
-                url: 'http://localhost:8080/cms/home/filedelete',
+                url: getRootPath_web()+'/home/filedelete',
                 method: 'post',
                 data: {
                     fileid: row.colfileid

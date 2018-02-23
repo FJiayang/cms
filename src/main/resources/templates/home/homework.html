@@ -1,50 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>作业管理</title>
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-    <!--<link rel="stylesheet" href="https://unpkg.com/element-ui@2.1.0/lib/theme-chalk/display.css">-->
-    <link rel="stylesheet" href="../../static/css/style.css">
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="dist/thymeleaf/common_head :: header('作业管理')">
 </head>
-
 <body>
-<!-- 先引入 Vue -->
-<script src="https://unpkg.com/vue/dist/vue.js"></script>
-<!-- 引入组件库 -->
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<div th:insert="~{dist/thymeleaf/common_head :: #body_js}"></div>
 <div id="app">
     <el-container>
         <el-container>
-            <el-header>
-                <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-                    <el-menu-item index="1">首页</el-menu-item>
-                    <el-submenu index="2">
-                        <template slot="title">个人中心</template>
-                        <el-menu-item index="2-1">选项1</el-menu-item>
-                        <el-menu-item index="2-2">选项2</el-menu-item>
-                        <el-menu-item index="2-3">选项3</el-menu-item>
-                    </el-submenu>
-                    <el-menu-item index="3" @click="ClickToJump('about')">关于</el-menu-item>
-                    <el-menu-item index="4" @click="ClickToJump('feedback')">意见反馈</el-menu-item>
-                    <el-menu-item index="5"><a href="login.jsp">登出</a></el-menu-item>
-                </el-menu>
-            </el-header>
+            <el-header th:include="dist/thymeleaf/layout :: header"></el-header>
             <el-main>
                 <el-col :md="4" :lg="4" :xl="4" class="hidden-sm-and-down">
-                    <el-row><el-card class="box-card">
-                        <div slot="header" class="clearfix">
-                            <span>用户名</span><br>
-                            <span>学号</span>
-                        </div>
-                        <div class="item">
-                            <el-button type="text" @click="ClickToJump('home')">首页</el-button><br>
-                            <el-button type="text" @click="ClickToJump('user')">个人中心</el-button><br>
-                            <el-button type="text" @click="ClickToJump('about')">关于</el-button><br>
-                            <el-button type="text" @click="ClickToJump('feedback')">意见反馈</el-button>
-                        </div>
-                    </el-card>
+                    <el-row>
+                        <el-card th:include="dist/thymeleaf/layout :: userbox"></el-card>
                     </el-row>
                     <el-row>
                         <el-card th:include="dist/thymeleaf/layout :: adminbox"></el-card>
@@ -72,8 +40,25 @@
                             </el-table-column>
                             <el-table-column prop="folder" label="子文件夹" show-overflow-tooltip>
                             </el-table-column>
+                            <el-table-column fixed="right" label="操作" width="200">
+                                <template slot-scope="scope">
+                                    <el-button @click="handleDownload(scope.row)" type="success" plain
+                                               size="small">
+                                        批量下载
+                                    </el-button>
+                                    <el-button type="primary" plain size="small"
+                                               @click="findUncommitStudent(scope.row)">未交名单</el-button>
+                                </template>
+                            </el-table-column>
                         </el-table>
                     </template></el-row>
+                    <el-dialog title="未提交人员名单" :visible.sync="dialogTableVisible">
+                        <el-table :data="UncommittedPersonList" :default-sort="{prop: 'colstudentno', order: 'ascending'}">
+                            <el-table-column property="colstudentno" label="学号" sortable></el-table-column>
+                            <el-table-column property="colrealname" label="姓名" sortable></el-table-column>
+                            <el-table-column property="sex" label="性别" sortable></el-table-column>
+                        </el-table>
+                    </el-dialog>
                    <el-row>
                         <h4>添加作业</h4>
                         <el-form :inline="true" :model="formInline" class="demo-form-inline">
@@ -114,7 +99,6 @@
         </el-container>
     </el-container>
 </div>
-<script src="../../static/js/homework.js"></script>
-<script src="../../static/js/common.js"></script>
+<script th:src="@{/js/homework.js}"></script>
 </body>
 </html>

@@ -314,7 +314,6 @@ var Main = {
         })
     },
     methods: {
-
         openNotiSuccess(title, content) {
             this.$notify({
                 title: title,
@@ -329,7 +328,7 @@ var Main = {
             });
         },
         uploadURL(row) {
-            return "http://localhost:8080/cms/moreUpload?courseName=" + row.coursename + "&folder=" + row.workfolder;
+            return getRootPath_web()+"/moreUpload?courseName=" + row.coursename + "&folder=" + row.workfolder;
         },
         limitTime(row) {
             return DateDiff(row.worktime.replace(/([^\s]+)\s.*/, "$1"), cur);
@@ -338,7 +337,7 @@ var Main = {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     axios({
-                        url: 'http://localhost:8080/cms/' + url,
+                        url: getRootPath_web()+'/' + url,
                         method: 'post',
                         data: {
                             content: this.$refs.content.value
