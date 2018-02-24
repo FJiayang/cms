@@ -109,6 +109,11 @@ var Main = {
                 .catch(_ => {
                 });
         },
+        handleDownload(row) {
+            /*var url = window.location.protocol+"://"+window.location.host+":"+window.location.port+"/"*/
+            window.open(getRootPath_web()+"/download/downloadzip?courseName="
+                + row.courseName+"&Folder="+row.folder);
+        },
         handleSelect(key, keyPath) {
             console.log(key, keyPath);
         },

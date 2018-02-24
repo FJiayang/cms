@@ -6,6 +6,7 @@ server:
 serverproperties:
   port_num: 8080
   filePath: F:\JAVA Workspace\Temp\
+  zipfilePath: F:\JAVA Workspace\Temp\zip\
 spring:
   thymeleaf:
     prefix: classpath:/templates/
