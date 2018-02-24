@@ -17,16 +17,22 @@ var Main = {
         var checkName = (rule, value, callback) => {
             if (!value) {
                 return callback(new Error('用户名不能为空'));
+            }else {
+                callback()
             }
         };
         var checkNo = (rule, value, callback) => {
             if (!value) {
                 return callback(new Error('学号不能为空'));
+            }else {
+                callback()
             }
         };
         var checkRealName = (rule, value, callback) => {
             if (!value) {
                 return callback(new Error('真实姓名不能为空'));
+            }else {
+                callback()
             }
         };
         var validatePass = (rule, value, callback) => {
