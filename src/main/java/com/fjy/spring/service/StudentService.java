@@ -26,4 +26,6 @@ public class StudentService {
         return tbStudentListRepository.findByColstudentnoAndColrealname(studentno,realname);
     }
 
+
+
 }

@@ -51,14 +51,26 @@ public class RegisterControllerTest {
     @Test
     public void doCheckStudent()throws Exception {
         //测试学号与姓名不匹配
-        mvc.perform(MockMvcRequestBuilders.post("/CheckStudent")
+        mvc.perform(MockMvcRequestBuilders.get("/CheckStudent")
                 .param("studentno","15251101238")
                 .param("realname","符嘉"))
                 .andExpect(MockMvcResultMatchers.content().string("false"));
         //测试学号与姓名匹配
-        mvc.perform(MockMvcRequestBuilders.post("/CheckStudent")
+        mvc.perform(MockMvcRequestBuilders.get("/CheckStudent")
                 .param("studentno","15251101238")
                 .param("realname","符嘉阳"))
+                .andExpect(MockMvcResultMatchers.content().string("true"));
+    }
+
+    @Test
+    public void doUserName()throws Exception {
+        //测试用户名已存在
+        mvc.perform(MockMvcRequestBuilders.get("/CheckUserName")
+                .param("name","root"))
+                .andExpect(MockMvcResultMatchers.content().string("false"));
+        //测试用户名不存在
+        mvc.perform(MockMvcRequestBuilders.get("/CheckUserName")
+                .param("name","root1"))
                 .andExpect(MockMvcResultMatchers.content().string("true"));
     }
 }

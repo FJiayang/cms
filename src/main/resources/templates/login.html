@@ -22,20 +22,20 @@
                              @tab-click="handleClick">
                         <el-tab-pane label="登录"
                                      name="login">
-                            <el-form :model="ruleForm2" status-icon
-                                     :rules="rules2" ref="ruleForm2" label-width="100px"
+                            <el-form :model="ruleForm1" status-icon
+                                     :rules="rules1" ref="ruleForm1" label-width="100px"
                                      class="demo-ruleForm"
                                      action="/cms/login/dologin"
                                      method="POST" name="login">
                                 <el-form-item label="用户名"
                                               prop="colname">
                                     <el-input
-                                            v-model="ruleForm2.colname" name="colname"></el-input>
+                                            v-model="ruleForm1.colname" name="colname"></el-input>
                                 </el-form-item>
                                 <el-form-item
                                         label="密码" prop="colpassword">
                                     <el-input type="password"
-                                              v-model="ruleForm2.colpassword" auto-complete="off" name="colpassword"></el-input>
+                                              v-model="ruleForm1.colpassword" auto-complete="off" name="colpassword"></el-input>
                                 </el-form-item>
                                 <el-form-item>
                                     <el-button type="primary"

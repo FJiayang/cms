@@ -20,6 +20,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.math.BigInteger;
+import java.util.Optional;
 
 @Controller
 public class RegisterController {
@@ -70,6 +71,20 @@ public class RegisterController {
         if (studentlist!=null)
             return true;
         return false;
+    }
+
+    /**
+     * 查询用户名是否存在
+     * @param name
+     * @return
+     */
+    @GetMapping("/CheckUserName")
+    @ResponseBody
+    public boolean doUserName(@RequestParam(value = "name") String name){
+        Optional<TbUser> user = userService.findByColname(name);
+        if (user.isPresent())
+            return false;
+        return true;
     }
 
 }

@@ -3,6 +3,30 @@ var Main = {
         var checkName = (rule, value, callback) => {
             if (!value) {
                 return callback(new Error('用户名不能为空'));
+            }else {
+                //判断用户名是否已存在
+                axios.get(getRootPath_web() + '/CheckUserName', {
+                    params: {
+                        name: value
+                    }
+                })
+                    .then(function (response) {
+                        console.log(response.data);
+                        if (response.data === true) {
+                            callback()
+                        } else {
+                            return callback(new Error('用户名已存在'));
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        this.errorNotify(error.message);
+                    });
+            }
+        };
+        var checkName1 = (rule, value, callback) => {
+            if (!value) {
+                return callback(new Error('用户名不能为空'));
             } else {
                 callback()
             }
@@ -76,6 +100,10 @@ var Main = {
             }
         };
         return {
+            ruleForm1: {
+                colname: '',
+                colpassword: '',
+            },
             ruleForm2: {
                 colname: '',
                 colpassword: '',
@@ -83,6 +111,14 @@ var Main = {
                 colstudentno: '',
                 colrealname: '',
                 colemail: ''
+            },
+            rules1: {
+                colpassword: [
+                    {required: true,validator: validatePass, trigger: 'blur'}
+                ],
+                colname: [
+                    {required: true,validator: checkName1, trigger: 'blur'}
+                ],
             },
             rules2: {
                 colpassword: [
