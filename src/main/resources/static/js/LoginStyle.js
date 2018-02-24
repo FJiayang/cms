@@ -3,22 +3,57 @@ var Main = {
         var checkName = (rule, value, callback) => {
             if (!value) {
                 return callback(new Error('用户名不能为空'));
-            }else {
+            } else {
                 callback()
             }
         };
         var checkNo = (rule, value, callback) => {
             if (!value) {
                 return callback(new Error('学号不能为空'));
-            }else {
-                callback()
+            } else {
+                //判断是否为指定班级的合法用户
+                axios.get(getRootPath_web() + '/CheckStudentNo', {
+                    params: {
+                        studentno: value
+                    }
+                })
+                    .then(function (response) {
+                        console.log(response.data);
+                        if (response.data === true) {
+                            callback()
+                        } else {
+                            return callback(new Error('学号非法'));
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        this.errorNotify(error.message);
+                    });
             }
         };
         var checkRealName = (rule, value, callback) => {
             if (!value) {
                 return callback(new Error('真实姓名不能为空'));
-            }else {
-                callback()
+            } else {
+                //判断用户名与学号是否匹配
+                axios.get(getRootPath_web() + '/CheckStudent', {
+                    params: {
+                        realname: value,
+                        studentno: this.ruleForm2.colstudentno
+                    }
+                })
+                    .then(function (response) {
+                        console.log(response.data);
+                        if (response.data === false) {
+                            return callback(new Error('姓名与学号不匹配'));
+                        } else {
+                            callback()
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        this.errorNotify(error.message);
+                    });
             }
         };
         var validatePass = (rule, value, callback) => {
@@ -44,17 +79,17 @@ var Main = {
             ruleForm2: {
                 colname: '',
                 colpassword: '',
-                checkPass:'',
+                checkPass: '',
                 colstudentno: '',
                 colrealname: '',
                 colemail: ''
             },
             rules2: {
                 colpassword: [
-                    {required: true,validator: validatePass, trigger: 'blur'}
+                    {required: true, validator: validatePass, trigger: 'blur'}
                 ],
                 checkPass: [
-                    {required: true,validator: validatePass2, trigger: 'blur'}
+                    {required: true, validator: validatePass2, trigger: 'blur'}
                 ],
                 colstudentno: [
                     {
@@ -71,13 +106,19 @@ var Main = {
                     }
                 ],
                 colname: [
-                    {required: true,validator: checkName, trigger: 'blur'}
+                    {required: true, validator: checkName, trigger: 'blur'}
                 ],
             },
-            activeName:'login',
+            activeName: 'login',
         };
     },
     methods: {
+        errorNotify(content) {
+            this.$notify.error({
+                title: '错误',
+                message: content
+            })
+        },
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {

@@ -1,15 +1,20 @@
 package com.fjy.spring.controller;
 
+import com.fjy.spring.domain.TbStudentlist;
 import com.fjy.spring.domain.TbUser;
 import com.fjy.spring.enums.ResultEnum;
 import com.fjy.spring.exception.UserException;
 import com.fjy.spring.properties.ServerProperties;
+import com.fjy.spring.service.StudentService;
 import com.fjy.spring.service.UserService;
 import com.fjy.spring.untils.CodingUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +26,9 @@ public class RegisterController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private StudentService studentService;
 
     @Autowired
     private ServerProperties serverProperties;
@@ -43,6 +51,25 @@ public class RegisterController {
             // return "login";
         }
         throw new UserException(ResultEnum.UNKOWN_ERROR);
+    }
+
+    @GetMapping("/CheckStudentNo")
+    @ResponseBody
+    public boolean doCheckStudentNo(@RequestParam(value = "studentno") String studentno){
+        TbStudentlist studentlist = studentService.findStudentByNo(studentno);
+        if (studentlist!=null)
+            return true;
+        return false;
+    }
+
+    @GetMapping("/CheckStudent")
+    @ResponseBody
+    public boolean doCheckStudent(@RequestParam(value = "studentno") String studentno,
+                                  @RequestParam(value = "realname") String realname){
+        TbStudentlist studentlist = studentService.findByColstudentnoAndColrealname(studentno,realname);
+        if (studentlist!=null)
+            return true;
+        return false;
     }
 
 }

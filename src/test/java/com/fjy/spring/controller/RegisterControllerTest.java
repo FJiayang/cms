@@ -35,4 +35,30 @@ public class RegisterControllerTest {
                         "    \"data\": null\n" +
                         "}"));
     }
+
+    @Test
+    public void doCheckStudentNo()throws Exception {
+        //测试非法学号检查
+        mvc.perform(MockMvcRequestBuilders.post("/CheckStudentNo")
+                .param("studentno","0003"))
+                .andExpect(MockMvcResultMatchers.content().string("false"));
+        //测试合法学号检查
+        mvc.perform(MockMvcRequestBuilders.post("/CheckStudentNo")
+                .param("studentno","15251101238"))
+                .andExpect(MockMvcResultMatchers.content().string("true"));
+    }
+
+    @Test
+    public void doCheckStudent()throws Exception {
+        //测试学号与姓名不匹配
+        mvc.perform(MockMvcRequestBuilders.post("/CheckStudent")
+                .param("studentno","15251101238")
+                .param("realname","符嘉"))
+                .andExpect(MockMvcResultMatchers.content().string("false"));
+        //测试学号与姓名匹配
+        mvc.perform(MockMvcRequestBuilders.post("/CheckStudent")
+                .param("studentno","15251101238")
+                .param("realname","符嘉阳"))
+                .andExpect(MockMvcResultMatchers.content().string("true"));
+    }
 }
