@@ -8,6 +8,7 @@ import com.fjy.spring.properties.ServerProperties;
 import com.fjy.spring.service.FileService;
 import com.fjy.spring.service.LogService;
 import com.fjy.spring.untils.FormatFileSizeUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@Slf4j
 public class UpLoadController {
 
     @Autowired
@@ -91,13 +93,15 @@ public class UpLoadController {
         file.setColip(request.getRemoteAddr());
         file.setColuserid(user.getColuserid());
         if (fileService.addFile(file))
-            System.out.println("记录写入数据库成功");
+            log.info("记录写入数据库成功");
+            //System.out.println("记录写入数据库成功");
         else
-            System.out.println("记录写入数据库失败");
+            log.error("记录写入数据库失败");
+            //System.out.println("记录写入数据库失败");
 
-        System.out.println("文件上传到: " + uploadUrl + filename);
-        System.out.println("文件大小: " + new FormatFileSizeUtil().GetFileSize(imageFile.getSize()));
-        System.out.println("文件名: " + filename);
+        log.info("文件上传到: " + uploadUrl + filename);
+        log.info("文件大小: " + new FormatFileSizeUtil().GetFileSize(imageFile.getSize()));
+        log.info("文件名: " + filename);
 
         File targetFile = new File(uploadUrl + filename);
         if (!targetFile.exists()) {
@@ -133,7 +137,8 @@ public class UpLoadController {
     @RequestMapping("/moreUpload")
     public void moreUpload(HttpServletRequest request,
                            @RequestParam(value = "courseName",required = false) String courseName,
-                           @RequestParam(value = "folder",required = false) String folder) {
+                           @RequestParam(value = "folder",required = false) String folder,
+                           @RequestParam(value = "rename",required = true) boolean rename) {
 
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
         Map<String, MultipartFile> files = multipartHttpServletRequest.getFileMap();
@@ -142,8 +147,14 @@ public class UpLoadController {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateNowStr = sdf.format(date);
+        String uploadUrl;
         //String uploadUrl = request.getSession().getServletContext().getRealPath("/") + "upload/";
-        String uploadUrl = serverProperties.getFilePath()+ "upload/"+courseName+"/"+folder+"/";
+        if (rename){
+             uploadUrl = serverProperties.getFilePath()+ "upload/"+courseName+"/"+folder+"/";
+        }else {
+             uploadUrl = serverProperties.getFilePath()+ "upload/";
+        }
+
 
         File dir = new File(uploadUrl);
         if (!dir.exists()) {
@@ -155,35 +166,43 @@ public class UpLoadController {
         for (MultipartFile file : files.values()) {
             String filename = file.getOriginalFilename();
             String suffix = "."+filename.substring(filename.lastIndexOf(".") + 1);//获取文件后缀
-
-            File targetFile = new File(uploadUrl + user.getColstudentno()+user.getColrealname()+suffix);
-
-            System.out.println("文件上传到: " + uploadUrl + filename);
-            System.out.println("文件大小: " + new FormatFileSizeUtil().GetFileSize(file.getSize()));
-            System.out.println("文件名: " + filename);
-
             TbFile tbFile = new TbFile();
+            String pathname;
+            if (rename){
+                 pathname = uploadUrl + user.getColstudentno()+user.getColrealname()+suffix;
+                tbFile.setColfilename(user.getColstudentno()+user.getColrealname()+suffix);
+            }else {
+                pathname = uploadUrl + filename;
+                tbFile.setColfilename(filename);
+            }
+            File targetFile = new File(pathname);
+
+            log.info("文件上传到: " + uploadUrl + filename);
+            log.info("文件大小: " + new FormatFileSizeUtil().GetFileSize(file.getSize()));
+            log.info("文件名: " + filename);
+
+
             tbFile.setColfilesize(new FormatFileSizeUtil().GetFileSize(file.getSize()));
-            tbFile.setColfilename(user.getColstudentno()+user.getColrealname()+suffix);
+
             tbFile.setColtime(dateNowStr);
             tbFile.setColrealname(filename);
-            tbFile.setColfilepath(uploadUrl + user.getColstudentno()+user.getColrealname()+suffix);//文件自动学号+姓名命名
+            tbFile.setColfilepath(pathname);//文件自动学号+姓名命名
             tbFile.setColip(request.getRemoteAddr());
             tbFile.setColuserid(user.getColuserid());
             tbFile.setCourseName(courseName);
             tbFile.setWorkFolder(folder);
 
-            TbLog log = new TbLog();
-            log.setUserid(user.getColuserid());
-            log.setColtime(dateNowStr);
-            log.setColip(httpServletRequest.getRemoteAddr());
-            log.setColheader(user.getColname()+"上传了"+filename+"文件");
-            logService.addLogRec(log);
+            TbLog logs = new TbLog();
+            logs.setUserid(user.getColuserid());
+            logs.setColtime(dateNowStr);
+            logs.setColip(httpServletRequest.getRemoteAddr());
+            logs.setColheader(user.getColname()+"上传了'"+filename+"'文件");
+            logService.addLogRec(logs);
 
             if (fileService.addFile(tbFile))
-                System.out.println("记录写入数据库成功");
+                log.info("记录写入数据库成功");
             else
-                System.out.println("记录写入数据库失败");
+                log.error("记录写入数据库失败");
 
             if (!targetFile.exists()) {
                 try {

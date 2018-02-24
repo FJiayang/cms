@@ -5,6 +5,7 @@ import com.fjy.spring.domain.TbUser;
 import com.fjy.spring.properties.ServerProperties;
 import com.fjy.spring.service.FeedBackService;
 import com.fjy.spring.untils.RedirectUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import java.util.Date;
 import static com.fjy.spring.constant.GlobalConstant.USER_SESSION_KEY;
 
 @RestController
+@Slf4j
 public class FeedBackController {
 
     @Autowired
@@ -42,7 +44,7 @@ public class FeedBackController {
         feedBack.setUserid(user.getColuserid());
         RedirectUtil red = new RedirectUtil();
         if (feedBackService.addContent(feedBack)){
-            System.out.println("写入数据库成功");
+            log.info("反馈信息写入数据库成功");
         }
 
     }

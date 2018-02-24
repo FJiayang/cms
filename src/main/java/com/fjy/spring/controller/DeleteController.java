@@ -4,6 +4,7 @@ import com.fjy.spring.domain.TbFile;
 import com.fjy.spring.enums.ResultEnum;
 import com.fjy.spring.exception.UserException;
 import com.fjy.spring.service.FileService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.File;
 
 @Controller
+@Slf4j
 public class DeleteController {
     @Autowired
     private FileService fileService;//文件相关数据库操作
@@ -37,7 +39,7 @@ public class DeleteController {
         TbFile resfile = fileService.findFileById(tbFile);
         File filepath = new File(resfile.getColfilepath());
         if (!filepath.exists()) {
-            System.out.println("删除文件失败:" + resfile.getColfilename() + "不存在！");
+            log.error("删除文件失败:" + resfile.getColfilename() + "不存在！");
         } else {
             if (filepath.isFile()){
                 deleteFile(resfile.getColfilepath(),resfile.getColfileid());
@@ -60,14 +62,14 @@ public class DeleteController {
         if (file.exists() && file.isFile()) {
             if (file.delete()) {
                 fileService.deleteFileById(tbFile);
-                System.out.println("删除单个文件" + fileName + "成功！");
+                log.info("删除单个文件" + fileName + "成功！");
                 return true;
             } else {
-                System.out.println("删除单个文件" + fileName + "失败！");
+                log.info("删除单个文件" + fileName + "失败！");
                 return false;
             }
         } else {
-            System.out.println("删除单个文件失败：" + fileName + "不存在！");
+            log.info("删除单个文件失败：" + fileName + "不存在！");
             return false;
         }
     }

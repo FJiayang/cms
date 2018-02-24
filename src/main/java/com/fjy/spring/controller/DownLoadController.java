@@ -6,6 +6,7 @@ import com.fjy.spring.enums.ResultEnum;
 import com.fjy.spring.exception.UserException;
 import com.fjy.spring.properties.ServerProperties;
 import com.fjy.spring.service.FileService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,7 +56,7 @@ public class DownLoadController {
     @ResponseBody
     public List<TbFile> toDownloadOne(){
         TbUser user = (TbUser)request.getSession().getAttribute(USER_SESSION_KEY);
-        System.out.println(user.toString());
+        //log.info(user.toString());
         List<TbFile> files = fileService.findByColuserid(user.getColuserid());
         //此处做空指针判断并抛出错误
         if (files!=null)
@@ -81,12 +82,12 @@ public class DownLoadController {
         TbFile tbFile = fileService.findFileById(file);
         //TbFile tbFile = fileService.findFile(file);
 
-        System.out.println(tbFile.getColfilepath());
+        //System.out.println(tbFile.getColfilepath());
 
         String ctxPath = tbFile.getColfilepath();
         String downLoadPath = ctxPath;
         //String downLoadPath = ctxPath + tbFile.getColfilename();
-        System.out.println(downLoadPath);
+        //System.out.println(downLoadPath);
         try {
             long fileLength = new File(downLoadPath).length();
             response.setContentType("application/x-msdownload;");
@@ -146,7 +147,7 @@ public class DownLoadController {
         // 要生成的压缩文件地址和文件名称
         String zipFileName=courseName+folder+".zip";
         String desPath = zipPath+"\\"+zipFileName;
-        System.out.println("打包文件存储地址："+desPath);
+        //System.out.println("打包文件存储地址："+desPath);
 
         File zipFile = new File(desPath);
         ZipOutputStream zipStream = null;
@@ -244,13 +245,13 @@ public class DownLoadController {
             if (f.isFile()) {
                 fileList.add(f);
             } else if (f.isDirectory()) {
-                System.out.println(f.getAbsolutePath());
+                //log.info(f.getAbsolutePath());
                 path.add(f.getAbsolutePath());
                 getFileString(f.getAbsolutePath());
             }
         }
         for (File f1 : fileList) {
-            System.out.println(f1.getName());
+            //System.out.println(f1.getName());
             path.add(f1.getAbsolutePath());
             /*name[j]=f1.getName();j++;*/
         }

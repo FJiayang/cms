@@ -5,6 +5,7 @@ var Main = {
             form: {
                 content: '',
             },
+            fileList: [],
             feedbackData:[
                 {
                     id: 68,
@@ -60,6 +61,18 @@ var Main = {
         })
     },
     methods: {
+        uploadURL(row) {
+            return getRootPath_web()+"/moreUpload?rename=false";
+        },
+        submitUpload() {
+            this.$refs.upload.submit();
+        },
+        handleRemove(file, fileList) {
+            console.log(file, fileList);
+        },
+        handlePreview(file) {
+            console.log(file);
+        },
         ClickToJump(targe){
             window.location.href=getRootPath_web()+"/" + targe;
         },

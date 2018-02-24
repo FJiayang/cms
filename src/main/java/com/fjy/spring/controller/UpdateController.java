@@ -6,6 +6,7 @@ import com.fjy.spring.exception.UserException;
 import com.fjy.spring.properties.ServerProperties;
 import com.fjy.spring.service.UserService;
 import com.fjy.spring.untils.CodingUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
 
 @Controller
+@Slf4j
 public class UpdateController {
     @Autowired
     private UserService userService;
@@ -36,7 +38,7 @@ public class UpdateController {
             tbUser.setColpassword(new BigInteger(CodingUtil.encryptSHA(tbUser.getColpassword().getBytes())).toString(32));
         }
         if (userService.doRegisterService(tbUser)){
-            System.out.println(tbUser.getColname()+" 信息更新成功");
+            log.info(tbUser.getColname()+" 信息更新成功");
             return "redirect:" + request.getScheme() + "://" + request.getServerName() + ":"
                     + serverProperties.getPortNum() + request.getContextPath() + "/home/user";
             // return "login";

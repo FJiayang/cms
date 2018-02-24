@@ -328,7 +328,7 @@ var Main = {
             });
         },
         uploadURL(row) {
-            return getRootPath_web()+"/moreUpload?courseName=" + row.coursename + "&folder=" + row.workfolder;
+            return getRootPath_web()+"/moreUpload?courseName=" + row.coursename + "&folder=" + row.workfolder+"&rename=true";
         },
         limitTime(row) {
             return DateDiff(row.worktime.replace(/([^\s]+)\s.*/, "$1"), cur);

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
 
-    <!--<appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>
                 %d - %msg%n
             </pattern>
         </layout>
-    </appender>-->
+    </appender>
     <!--每天输出一个文件，使用RollingFileAppender滚动输出策略-->
     <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!--根据范围仅保留info的日志-->
@@ -48,7 +48,7 @@
     </appender>
 
     <root level="info">
-        <!--<appender-ref ref="consoleLog"/>-->
+        <appender-ref ref="consoleLog"/>
         <appender-ref ref="fileInfoLog"/>
         <appender-ref ref="fileErrorLog"/>
     </root>
