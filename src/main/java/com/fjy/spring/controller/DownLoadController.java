@@ -132,7 +132,12 @@ public class DownLoadController {
                             @RequestParam(value = "Folder")String folder, HttpServletResponse response){
         //获取文件夹名称
         String paths = serverProperties.getFilePath()+ "upload/"+courseName+"/"+folder;
-        String zipPath = serverProperties.getFilePath();
+        String zipPath = serverProperties.getFilePath()+"zip/";
+
+        File dir = new File(zipPath);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
 
         List<String> pathList = new ArrayList<String>();
         pathList=getFileString(paths);
