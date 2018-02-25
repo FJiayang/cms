@@ -26,7 +26,7 @@
                                      :rules="rules1" ref="ruleForm1" label-width="100px"
                                      class="demo-ruleForm"
                                      action="/cms/login/dologin"
-                                     method="POST" name="login">
+                                     method="POST" name="ruleForm1" id="ruleForm1">
                                 <el-form-item label="用户名"
                                               prop="colname">
                                     <el-input
@@ -39,9 +39,9 @@
                                 </el-form-item>
                                 <el-form-item>
                                     <el-button type="primary"
-                                               native-type="submit">提交
+                                               @click="clickToSubmit('ruleForm1')">提交
                                     </el-button>
-                                    <el-button @click="resetForm('ruleForm2')">重置</el-button>
+                                    <el-button @click="resetForm('ruleForm1')">重置</el-button>
                                 </el-form-item>
                             </el-form>
                         </el-tab-pane>

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -58,5 +59,15 @@ public class LoginController {
                     + serverProperties.getPortNum() + request.getContextPath() + "/home";
         }
         return "login";
+    }
+
+    @PostMapping("/beforeLogin")
+    @ResponseBody
+    public boolean beforeLogin(TbUser tbUser)throws Exception{
+        System.out.println(tbUser.toString());
+        //加密用户密码
+        tbUser.setColpassword(new BigInteger(CodingUtil.encryptSHA(tbUser.getColpassword().getBytes())).toString(32));
+        TbUser user = userService.doLoginService(tbUser.getColname(),tbUser.getColpassword());
+        return user!=null;
     }
 }
