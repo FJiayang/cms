@@ -132,4 +132,10 @@ public class DataController {
         userque.setAnswer(new BigInteger(CodingUtil.encryptSHA(userque.getAnswer().getBytes())).toString(32));
         return userService.addUserQue(userque);
     }
+
+    /*@GetMapping("/finduserque")
+    public TbUserque findUserQue(){
+        TbUserque userque = userService;
+
+    }*/
 }

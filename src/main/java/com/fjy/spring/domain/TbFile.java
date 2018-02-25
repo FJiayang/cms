@@ -1,11 +1,14 @@
 package com.fjy.spring.domain;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
+@Data
 public class TbFile {
     @Id
     @GeneratedValue
@@ -28,95 +31,4 @@ public class TbFile {
     private String courseName;
     @Column(name = "workfolder")
     private String workFolder;
-
-    @Override
-    public String toString() {
-        return "TbFile{" +
-                "colip='" + colip + '\'' +
-                ", colrealname='" + colrealname + '\'' +
-                ", colfilename='" + colfilename + '\'' +
-                ", colfilesize='" + colfilesize + '\'' +
-                ", colfilepath='" + colfilepath + '\'' +
-                '}';
-    }
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
-    public String getWorkFolder() {
-        return workFolder;
-    }
-
-    public void setWorkFolder(String workFolder) {
-        this.workFolder = workFolder;
-    }
-
-    public String getColtime() {
-        return coltime;
-    }
-
-    public void setColtime(String coltime) {
-        this.coltime = coltime;
-    }
-
-    public int getColfileid() {
-        return colfileid;
-    }
-
-    public void setColfileid(int colfileid) {
-        this.colfileid = colfileid;
-    }
-
-    public int getColuserid() {
-        return coluserid;
-    }
-
-    public void setColuserid(int coluserid) {
-        this.coluserid = coluserid;
-    }
-
-    public String getColip() {
-        return colip;
-    }
-
-    public void setColip(String colip) {
-        this.colip = colip;
-    }
-
-    public String getColrealname() {
-        return colrealname;
-    }
-
-    public void setColrealname(String colrealname) {
-        this.colrealname = colrealname;
-    }
-
-    public String getColfilename() {
-        return colfilename;
-    }
-
-    public void setColfilename(String colfilename) {
-        this.colfilename = colfilename;
-    }
-
-    public String getColfilesize() {
-        return colfilesize;
-    }
-
-    public void setColfilesize(String colfilesize) {
-        this.colfilesize = colfilesize;
-    }
-
-    public String getColfilepath() {
-        return colfilepath;
-    }
-
-    public void setColfilepath(String colfilepath) {
-        this.colfilepath = colfilepath;
-    }
 }
