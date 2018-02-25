@@ -42,6 +42,7 @@ public class LoginController {
         tbUser.setColpassword(new BigInteger(CodingUtil.encryptSHA(tbUser.getColpassword().getBytes())).toString(32));
         TbUser user = userService.doLoginService(tbUser.getColname(),tbUser.getColpassword());
         if (user!=null){
+            user.setColpassword(null);
             request.getSession().setAttribute(USER_SESSION_KEY,user);
             //写入日志信息
             Date date = new Date();
