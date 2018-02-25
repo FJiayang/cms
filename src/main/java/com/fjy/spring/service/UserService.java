@@ -1,10 +1,12 @@
 package com.fjy.spring.service;
 
 import com.fjy.spring.domain.TbUser;
+import com.fjy.spring.domain.TbUserque;
 import com.fjy.spring.domain.VUserinfo;
 import com.fjy.spring.enums.ResultEnum;
 import com.fjy.spring.exception.UserException;
 import com.fjy.spring.repository.TbUserRepository;
+import com.fjy.spring.repository.TbUserqueRepository;
 import com.fjy.spring.repository.VUserinfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,9 @@ public class UserService {
 
     @Autowired
     private TbUserRepository tbUserRepository;
+
+    @Autowired
+    private TbUserqueRepository userqueRepository;
 
     @Autowired
     private VUserinfoRepository vUserinfoRepository;
@@ -64,6 +69,13 @@ public class UserService {
 
     public Optional<TbUser> findByColname(String name){
         return tbUserRepository.findByColname(name);
+    }
+
+    public boolean addUserQue(TbUserque userque){
+        TbUserque tbUserque = userqueRepository.save(userque);
+        if (tbUserque!=null)
+            return true;
+        return false;
     }
 
 }

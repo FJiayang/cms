@@ -1,4 +1,5 @@
 var dt = new Date();
+let th = this;
 var month = dt.getMonth()+1;
 var day = dt.getDate();
 var year = dt.getFullYear();
@@ -14,6 +15,20 @@ function  DateDiff(sDate1,  sDate2){    //sDate1和sDate2是2002-12-18格式
 }
 var Main = {
     data() {
+        var checkQuestion = (rule, value, callback) => {
+            if (!value) {
+                return callback(new Error('问题不能为空'));
+            }else {
+                callback()
+            }
+        };
+        var checkAnswer = (rule, value, callback) => {
+            if (!value) {
+                return callback(new Error('答案不能为空'));
+            }else {
+                callback()
+            }
+        };
         var checkName = (rule, value, callback) => {
             if (!value) {
                 return callback(new Error('用户名不能为空'));
@@ -64,6 +79,19 @@ var Main = {
                 colemail: '',
                 colpassword: '',
                 checkPass: '',
+            },
+            ruleForm3: {
+                coluserid:'',
+                question: '',
+                answer: ''
+            },
+            rules3: {
+                question: [
+                    {required: true,validator: checkQuestion, trigger: 'blur'}
+                ],
+                answer: [
+                    {required: true,validator: checkAnswer, trigger: 'blur'}
+                ]
             },
             rules2: {
                 colpassword: [
@@ -122,17 +150,30 @@ var Main = {
                 type: 'success'
             });
         },
+        openNotiError(title, content) {
+            this.$notify.error({
+                title: title,
+                message: content
+            });
+        },
         limitTime(row){
             return DateDiff(row.worktime.replace(/([^\s]+)\s.*/, "$1"),  cur);
         },
         submitForm(formName, url) {
             this.$refs[formName].validate((valid) => {
-                if (true) {//此处暂时去除校验
+                var that = this;
+                var params = new URLSearchParams();
+                params.append('userid', '55');       //你要传给后台的参数值 key/value
+                params.append('question', th.ruleForm3.question.value);
+                params.append('answer', th.ruleForm3.answer.value);
+                if (valid) {//此处暂时去除校验
                     axios({
                         url: getRootPath_web()+'/' + url,
                         method: 'post',
                         data: {
-                            content: this.$refs.content.value
+                            userid:th.ruleForm3.userid.value,
+                            question:th.ruleForm3.question.value,
+                            answer:th.ruleForm3.answer.value
                         },
                         transformRequest: [function (data) {
                             // Do whatever you want to transform the data
@@ -145,13 +186,26 @@ var Main = {
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
                         }
-                    })
-                    console.log(this.$refs.content.value)
-                    this.openNotiSuccess("成功", "修改成功！")
+                    }).then(function (response) {
+                        console.log(response.data);
+                        if (response.data===true){
+                            that.openNotiSuccess("成功", "修改成功！");
+                        }else if (response.data===false){
+                            that.openNotiError("失败", "修改失败！");
+                        }else {
+                            that.openNotiError("错误", response.data.message);
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                        that.openNotiError("错误", "服务器错误！");
+                    });
+                    //console.log(this.$refs.content.value)
+                    //this.openNotiSuccess("成功", "修改成功！")
                     //this.$options.methods.openNotiSuccess.bind(this)();
                     //alert('submit!');
                 } else {
                     console.log('error submit!!');
+                    that.openNotiError("错误", "表单填写错误！");
                     return false;
                 }
             });

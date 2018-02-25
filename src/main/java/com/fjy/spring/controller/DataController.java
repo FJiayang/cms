@@ -4,18 +4,23 @@ import com.fjy.spring.domain.*;
 import com.fjy.spring.enums.ResultEnum;
 import com.fjy.spring.exception.UserException;
 import com.fjy.spring.service.*;
+import com.fjy.spring.untils.CodingUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigInteger;
 import java.util.List;
 
 import static com.fjy.spring.constant.GlobalConstant.USER_SESSION_KEY;
 
 @RestController
+@Slf4j
 public class DataController {
 
     @Autowired
@@ -43,7 +48,7 @@ public class DataController {
     private VUserfileService vUserfileService;
 
     @Resource
-    HttpServletRequest httpServletRequest;
+    private HttpServletRequest httpServletRequest;
 
     @GetMapping("/home/findAllHomework")
     public List<VWorkDetail> findAllHomework(){
@@ -51,8 +56,7 @@ public class DataController {
         if (homeworks!=null){
             return homeworks;
         }
-        new UserException(ResultEnum.EMPTY_DATA);
-        return null;
+        throw new UserException(ResultEnum.EMPTY_DATA);
     }
 
     @GetMapping("/home/findvlog")
@@ -61,8 +65,7 @@ public class DataController {
         if (vlogs!=null){
             return vlogs;
         }
-        new UserException(ResultEnum.EMPTY_DATA);
-        return null;
+        throw new UserException(ResultEnum.EMPTY_DATA);
     }
 
     @GetMapping("/home/findvfeedback")
@@ -71,8 +74,7 @@ public class DataController {
         if (feedBacks!=null){
             return feedBacks;
         }
-        new UserException(ResultEnum.EMPTY_DATA);
-        return null;
+        throw new UserException(ResultEnum.EMPTY_DATA);
     }
 
     @GetMapping("/home/findvcourse")
@@ -81,8 +83,7 @@ public class DataController {
         if (vCourses!=null){
             return vCourses;
         }
-        new UserException(ResultEnum.EMPTY_DATA);
-        return null;
+        throw new UserException(ResultEnum.EMPTY_DATA);
     }
 
     @GetMapping("/home/findalluser")
@@ -91,8 +92,7 @@ public class DataController {
         if (users!=null){
             return users;
         }
-        new UserException(ResultEnum.EMPTY_DATA);
-        return null;
+        throw new UserException(ResultEnum.EMPTY_DATA);
     }
 
     @GetMapping("/home/findallvhomework")
@@ -101,8 +101,7 @@ public class DataController {
         if (vHomeworks!=null){
             return vHomeworks;
         }
-        new UserException(ResultEnum.EMPTY_DATA);
-        return null;
+        throw new UserException(ResultEnum.EMPTY_DATA);
     }
 
     @GetMapping("/home/findStudentInCourseFile")
@@ -112,13 +111,25 @@ public class DataController {
         if (files!=null){
             return files;
         }
-        new UserException(ResultEnum.EMPTY_DATA);
-        return null;
+        throw new UserException(ResultEnum.EMPTY_DATA);
     }
 
     @GetMapping("/home/userinfo")
     public VUserinfo findUserInfo(){
         TbUser user= (TbUser)httpServletRequest.getSession().getAttribute(USER_SESSION_KEY);
         return userService.findUserInfo(user.getColuserid());
+    }
+
+    /**
+     * 存储密保问题
+     * @param userque
+     * @return
+     */
+    @PostMapping("/home/adduserque")
+    public boolean adduserque(TbUserque userque)throws Exception{
+        log.info(userque.toString());
+        //对密保问题加密存储
+        userque.setAnswer(new BigInteger(CodingUtil.encryptSHA(userque.getAnswer().getBytes())).toString(32));
+        return userService.addUserQue(userque);
     }
 }

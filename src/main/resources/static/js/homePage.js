@@ -95,6 +95,66 @@ var Main = {
             DownloadList: [],
             VersionList:[
                 {
+                    date:'2018-02-24',
+                    content:'实现对重复文件自动重命名',
+                    version:'V1.11',
+                    user:'F嘉阳'
+                },
+                {
+                    date:'2018-02-24',
+                    content:'实现对文件是否重命名的控制，目前设定为管理员上传的文件不会重命名，完善日志输出存储',
+                    version:'V1.10',
+                    user:'F嘉阳'
+                },
+                {
+                    date:'2018-02-24',
+                    content:'添加运行日志处理，频率为每天对error和info级别的日志进行文件保存，实现判断注册用户名是否已存在',
+                    version:'V1.9.1',
+                    user:'F嘉阳'
+                },
+                {
+                    date:'2018-02-24',
+                    content:'实现前端对学号和用户名的异步判断，核心技术为axios',
+                    version:'V1.9',
+                    user:'F嘉阳'
+                },
+                {
+                    date:'2018-02-24',
+                    content:'修复注册表单输入正确不会显示反馈图标的问题',
+                    version:'V1.8.2',
+                    user:'F嘉阳'
+                },
+                {
+                    date:'2018-02-24',
+                    content:'修复文件批量下载的错误，为压缩文件进行统一管理，批量下载不支持多线程',
+                    version:'V1.8.1',
+                    user:'F嘉阳'
+                },
+                {
+                    date:'2018-02-24',
+                    content:'实现文件批量下载',
+                    version:'V1.8',
+                    user:'F嘉阳'
+                },
+                {
+                    date:'2018-02-23',
+                    content:'实现对未交作业人员的查询和展示',
+                    version:'V1.7',
+                    user:'F嘉阳'
+                },
+                {
+                    date:'2018-02-23',
+                    content:'去除js对绝对地址的依赖，为日志添加排序选项',
+                    version:'V1.6.1',
+                    user:'F嘉阳'
+                },
+                {
+                    date:'2018-02-23',
+                    content:'实现用户仅能查看自己提交的文件',
+                    version:'V1.6',
+                    user:'F嘉阳'
+                },
+                {
                     date:'2018-02-23',
                     content:'修复用户信息修改页面数据绑定方式，改为使用axios进行数据获取和绑定',
                     version:'V1.5',
