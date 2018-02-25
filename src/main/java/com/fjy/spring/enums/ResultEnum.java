@@ -12,6 +12,9 @@ public enum ResultEnum {
     WRONG_FORM(607,"表单错误"),
     EMPTY_DATA(608,"无数据"),
     ID_NULLPOINT(609,"id为空"),
+    EMPTY_QUESTION(610,"该用户未设置密保问题"),
+    QUESTION_ERROR(611,"问题与答案不匹配"),
+
     ;
     private Integer code;
     private String msg;

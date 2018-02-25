@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 
 import static com.fjy.spring.constant.GlobalConstant.USER_SESSION_KEY;
 
@@ -133,9 +134,42 @@ public class DataController {
         return userService.addUserQue(userque);
     }
 
-    /*@GetMapping("/finduserque")
-    public TbUserque findUserQue(){
-        TbUserque userque = userService;
+    /**
+     * 判断密保问题是否正确，正确返回true，错误返回false，其余反馈异常对象
+     * @param name
+     * @param question
+     * @param answer
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/finduserque")
+    public boolean findUserQue(@RequestParam(value = "name")String name
+            ,@RequestParam(value = "question")String question
+            ,@RequestParam(value = "answer")String answer)throws Exception{
+        Optional<VUserque> userque = userService.findUserQueByName(name);
+        if (!userque.isPresent()){
+            throw new UserException(ResultEnum.EMPTY_QUESTION);
+        }else if(question.equals(userque.get().getQuestion())){
+            if(new BigInteger(CodingUtil.encryptSHA(answer.getBytes())).toString(32).equals(userque.get().getAnswer()))
+                return true;
+            else
+                return false;
+        }else{
+            throw new UserException(ResultEnum.QUESTION_ERROR);
+        }
+    }
 
-    }*/
+    @PostMapping("/resetPass")
+    public boolean resetPass(@RequestParam(value = "name") String name
+            , @RequestParam(value = "password") String password,
+              @RequestParam(value = "question") String question
+            , @RequestParam(value = "answer") String answer) throws Exception {
+        log.info("name:{}, password:{}, question:{}, answer:{}",name,password,question,answer);
+        if (findUserQue(name,question,answer)){
+            //service方法内含有对密码加密的操作
+            return userService.updateColpasswordByColname(password,name);
+        }else {
+            throw new UserException(ResultEnum.ILLEGAL_ACCESS);
+        }
+    }
 }

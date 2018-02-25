@@ -1,6 +1,8 @@
+let outSideThis = this;
 var Main = {
     data() {
         var checkName = (rule, value, callback) => {
+            let that= this;
             if (!value) {
                 return callback(new Error('用户名不能为空'));
             }else {
@@ -20,7 +22,42 @@ var Main = {
                     })
                     .catch(function (error) {
                         console.log(error);
-                        this.errorNotify(error.message);
+                        that.errorNotify(error.message);
+                    });
+            }
+        };
+        var checkQuestion = (rule, value, callback) => {
+            if (!value) {
+                return callback(new Error('问题不能为空'));
+            } else {
+                callback()
+            }
+        };
+        var checkAnswer = (rule, value, callback) => {
+            let that = this;
+            if (!value) {
+                return callback(new Error('答案不能为空'));
+            } else {
+                axios.get(getRootPath_web() + '/finduserque', {
+                    params: {
+                        name :outSideThis.findpass.colname.value,
+                        question:outSideThis.findpass.question.value,
+                        answer: value
+                    }
+                })
+                    .then(function (response) {
+                        console.log(response.data);
+                        if (response.data === true) {
+                            callback()
+                        } else if (response.data === false){
+                            return callback(new Error('答案错误'));
+                        }else {
+                            return callback(new Error(response.data.message));
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        that.errorNotify("未知错误");
                     });
             }
         };
@@ -99,6 +136,25 @@ var Main = {
                 callback();
             }
         };
+        var validatePass3 = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('请输入密码'));
+            } else {
+                if (this.ruleForm3.checkPass !== '') {
+                    this.$refs.ruleForm3.validateField('checkPass');
+                }
+                callback();
+            }
+        };
+        var validatePass4 = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('请再次输入密码'));
+            } else if (value !== this.ruleForm3.colpassword) {
+                callback(new Error('两次输入密码不一致!'));
+            } else {
+                callback();
+            }
+        };
         return {
             ruleForm1: {
                 colname: '',
@@ -111,6 +167,30 @@ var Main = {
                 colstudentno: '',
                 colrealname: '',
                 colemail: ''
+            },
+            ruleForm3: {
+                colname:'',
+                question: '',
+                answer: '',
+                colpassword: '',
+                checkPass: ''
+            },
+            rules3: {
+                colname: [
+                    {required: true,validator: checkName1, trigger: 'blur'}
+                ],
+                question: [
+                    {required: true,validator: checkQuestion, trigger: 'blur'}
+                ],
+                answer: [
+                    {required: true,validator: checkAnswer, trigger: 'blur'}
+                ],
+                colpassword: [
+                    {required: true, validator: validatePass3, trigger: 'blur'}
+                ],
+                checkPass: [
+                    {required: true, validator: validatePass4, trigger: 'blur'}
+                ]
             },
             rules1: {
                 colpassword: [
@@ -155,12 +235,63 @@ var Main = {
                 message: content
             })
         },
-        submitForm(formName) {
+        openNotiSuccess(title, content) {
+            this.$notify({
+                title: title,
+                message: content,
+                type: 'success'
+            });
+        },
+        openNotiError(title, content) {
+            this.$notify.error({
+                title: title,
+                message: content
+            });
+        },
+        submitForm(formName, url) {
             this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    alert('submit!');
+                var that = this;
+                if (valid) {//此处暂时去除校验
+                    axios({
+                        url: getRootPath_web()+'/' + url,
+                        method: 'post',
+                        data: {
+                            name :outSideThis.findpass.colname.value,
+                            password:outSideThis.findpass.colpassword.value,
+                            question:outSideThis.findpass.question.value,
+                            answer:outSideThis.findpass.answer.value,
+                        },
+                        transformRequest: [function (data) {
+                            // Do whatever you want to transform the data
+                            let ret = ''
+                            for (let it in data) {
+                                ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                            }
+                            return ret
+                        }],
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    }).then(function (response) {
+                        console.log(response.data);
+                        if (response.data===true){
+                            that.openNotiSuccess("成功", "修改成功,请切换至登录选项！");
+                        }else if (response.data===false){
+                            that.openNotiError("失败", "修改失败！");
+                        }else {
+                            that.openNotiError("错误", response.data.message);
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                        that.openNotiError("错误", "服务器错误！");
+                    });
+                    //console.log(this.$refs.content.value)
+                    //this.openNotiSuccess("成功", "修改成功！")
+                    //this.$options.methods.openNotiSuccess.bind(this)();
+                    //alert('submit!');
                 } else {
                     console.log('error submit!!');
+                    that.openNotiError("错误", "表单填写错误！");
                     return false;
                 }
             });

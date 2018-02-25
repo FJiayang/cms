@@ -92,6 +92,54 @@
                                 </el-form-item>
                             </el-form>
                         </el-tab-pane>
+                        <el-tab-pane
+                                label="找回密码" name="findpass">
+                            <el-form
+                                    :model="ruleForm3" status-icon :rules="rules3" ref="ruleForm3"
+                                    label-width="100px" class="demo-ruleForm"
+                                    action="/cms/register/doregister"
+                                    method="POST" name="findpass">
+                                <el-form-item label="用户名"
+                                              prop="colname">
+                                    <el-input
+                                            v-model="ruleForm3.colname" name="colname"></el-input>
+                                </el-form-item>
+                                <el-form-item label="问题"
+                                              prop="question">
+                                    <el-select v-model="ruleForm3.question" placeholder="请选择密保问题" name="question">
+                                        <el-option label="您母亲的姓名是？" value="您母亲的姓名是？"></el-option>
+                                        <el-option label="您父亲的姓名是？" value="您父亲的姓名是？"></el-option>
+                                        <el-option label="您配偶的姓名是？" value="您配偶的姓名是？"></el-option>
+                                        <el-option label="您的出生地是？" value="您的出生地是？"></el-option>
+                                        <el-option label="您高中班主任的名字是？" value="您高中班主任的名字是？"></el-option>
+                                        <el-option label="您初中班主任的名字是？" value="您初中班主任的名字是？"></el-option>
+                                        <el-option label="您的小学校名是？" value="您的小学校名是？"></el-option>
+                                        <el-option label="您最熟悉的童年好友名字是？" value="您最熟悉的童年好友名字是？"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item label="答案"
+                                              prop="answer">
+                                    <el-input v-model="ruleForm3.answer"
+                                              name="answer"></el-input>
+                                </el-form-item>
+                                <el-form-item
+                                        label="输入新密码" prop="colpassword">
+                                    <el-input type="password"
+                                              v-model="ruleForm3.colpassword" auto-complete="off" name="colpassword"></el-input>
+                                </el-form-item>
+                                <el-form-item label="确认密码" prop="checkPass">
+                                    <el-input
+                                            type="password" v-model="ruleForm3.checkPass"
+                                            auto-complete="off" name="checkPass"></el-input>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-button type="primary"
+                                               @click="submitForm('ruleForm3','resetPass')">提交
+                                    </el-button>
+                                    <el-button @click="resetForm('ruleForm3')">重置</el-button>
+                                </el-form-item>
+                            </el-form>
+                        </el-tab-pane>
                     </el-tabs>
                 </template>
             </div>
