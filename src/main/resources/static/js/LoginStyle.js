@@ -350,6 +350,53 @@ var Main = {
                 }
             });
         },
+        clickToRegister(formName){
+            this.$refs[formName].validate((valid) => {
+                var that = this;
+                if (valid) {
+                    axios({
+                        url: getRootPath_web()+'/register/doregister',
+                        method: 'post',
+                        data: {
+                            colname :outSideThis.ruleForm2.colname.value,
+                            colpassword:outSideThis.ruleForm2.colpassword.value,
+                            colemail:outSideThis.ruleForm2.colemail.value,
+                            colstudentno:outSideThis.ruleForm2.colstudentno.value,
+                            colrealname:outSideThis.ruleForm2.colrealname.value
+                        },
+                        transformRequest: [function (data) {
+                            // Do whatever you want to transform the data
+                            let ret = '';
+                            for (let it in data) {
+                                ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                            }
+                            return ret
+                        }],
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    }).then(function (response) {
+                        console.log(response.data);
+                        if (response.data===true){
+                            that.openNotiSuccess("成功", "注册成功,请切换至登录选项！");
+                        }else {
+                            that.openNotiError("错误", response.data.message);
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                        that.openNotiError("错误", "服务器错误！");
+                    });
+                    //console.log(this.$refs.content.value)
+                    //this.openNotiSuccess("成功", "修改成功！")
+                    //this.$options.methods.openNotiSuccess.bind(this)();
+                    //alert('submit!');
+                } else {
+                    console.log('error submit!!');
+                    that.openNotiError("错误", "表单填写错误！");
+                    return false;
+                }
+            });
+        },
         showMsg(msg) {
             this.$message({
                 message: msg,

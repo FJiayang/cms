@@ -51,7 +51,7 @@
                                     :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2"
                                     label-width="100px" class="demo-ruleForm"
                                     action="/cms/register/doregister"
-                                    method="POST" name="register">
+                                    method="POST" name="ruleForm2">
                                 <el-form-item label="用户名"
                                               prop="colname">
                                     <el-input
@@ -86,7 +86,7 @@
                                 </el-form-item>
                                 <el-form-item>
                                     <el-button type="primary"
-                                               native-type="submit">提交
+                                               @click="clickToRegister('ruleForm2')">提交
                                     </el-button>
                                     <el-button @click="resetForm('ruleForm2')">重置</el-button>
                                 </el-form-item>

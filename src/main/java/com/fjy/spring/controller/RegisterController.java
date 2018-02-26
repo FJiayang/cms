@@ -38,7 +38,8 @@ public class RegisterController {
     HttpServletRequest request;
 
     @PostMapping(value = "/register/doregister")
-    public String doRegister(@Valid TbUser tbUser, BindingResult bindingResult)throws Exception{
+    @ResponseBody
+    public boolean doRegister(@Valid TbUser tbUser, BindingResult bindingResult)throws Exception{
         if (bindingResult.hasErrors()){
             ResultEnum resultEnum = ResultEnum.WRONG_FORM;
             resultEnum.setData(bindingResult.getFieldError().getDefaultMessage());
@@ -47,8 +48,9 @@ public class RegisterController {
         //加密用户密码
         tbUser.setColpassword(new BigInteger(CodingUtil.encryptSHA(tbUser.getColpassword().getBytes())).toString(32));
         if (userService.doRegisterService(tbUser)){
-            return "redirect:" + request.getScheme() + "://" + request.getServerName() + ":"
-                    + serverProperties.getPortNum() + request.getContextPath() + "/index";
+            return true;
+            /*return "redirect:" + request.getScheme() + "://" + request.getServerName() + ":"
+                    + serverProperties.getPortNum() + request.getContextPath() + "/index";*/
             // return "login";
         }
         throw new UserException(ResultEnum.UNKOWN_ERROR);
