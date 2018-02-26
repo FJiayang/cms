@@ -93,6 +93,20 @@ var Main = {
             activeName: 'login',
             fileList: [],
             DownloadList: [],
+            NoticeList:[
+                {
+                    noticeid: 1,
+                    adminid: 1,
+                    noticeContent: "系统正式上线，Alpha测试版",
+                    issueTime: "2018-2-26 11:00"
+                },
+                {
+                    noticeid: 2,
+                    adminid: 1,
+                    noticeContent: "系统，测试",
+                    issueTime: "2018-2-26 11:13"
+                }
+            ],
             VersionList:[
                 {
                     date:'2018-02-24',
@@ -366,6 +380,15 @@ var Main = {
                 .then(function (response) {
                     console.log(response.data);
                     that.tableHomeworkData = response.data;
+                    //that.limitTime = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            axios.get(getRootPath_web()+'/home/findAllNotice')
+                .then(function (response) {
+                    console.log(response.data);
+                    that.NoticeList = response.data;
                     //that.limitTime = response.data;
                 })
                 .catch(function (error) {

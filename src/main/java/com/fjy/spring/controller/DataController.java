@@ -48,6 +48,9 @@ public class DataController {
     @Autowired
     private VUserfileService vUserfileService;
 
+    @Autowired
+    private NoticeService noticeService;
+
     @Resource
     private HttpServletRequest httpServletRequest;
 
@@ -171,5 +174,10 @@ public class DataController {
         }else {
             throw new UserException(ResultEnum.ILLEGAL_ACCESS);
         }
+    }
+
+    @GetMapping("/home/findAllNotice")
+    public List<TbNotice> findAllNotice(){
+        return noticeService.findAll();
     }
 }
