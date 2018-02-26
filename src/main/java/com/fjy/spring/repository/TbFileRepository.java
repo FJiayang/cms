@@ -11,4 +11,6 @@ public interface TbFileRepository extends JpaRepository<TbFile,Integer>{
     public List<TbFile> findByWorkFolderAndCourseName(String workFolder,String courseName);
 
     public List<TbFile> findByColuserid(Integer id);
+
+    public TbFile findByColfilepath(String filePath);
 }

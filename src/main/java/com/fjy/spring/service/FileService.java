@@ -52,4 +52,8 @@ public class FileService {
         return tbFileRepository.findByColuserid(id);
     }
 
+    public TbFile findByFilepath(String filePath){
+        return tbFileRepository.findByColfilepath(filePath);
+    }
+
 }

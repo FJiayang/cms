@@ -147,7 +147,9 @@ public class UpLoadController {
         TbUser user = (TbUser) request.getSession().getAttribute(GlobalConstant.USER_SESSION_KEY);
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy_MM_dd HH_mm_ss");
         String dateNowStr = sdf.format(date);
+        String dateNowStr2 = sdf2.format(date);
         String uploadUrl;
         //String uploadUrl = request.getSession().getServletContext().getRealPath("/") + "upload/";
         if (rename) {
@@ -180,7 +182,15 @@ public class UpLoadController {
             File targetFile = new File(pathname);
             //若文件已存在则自动重命名
             if (targetFile.exists()){
-                File mvfile = new File(pathname+".bak");
+                log.info("源文件路径:"+pathname);
+                TbFile file1 = fileService.findByFilepath(pathname);
+                file1.setColfilepath(file1.getColfilepath()+"."+dateNowStr2+".bak");
+                file1.setColfilename(file1.getColfilename()+"."+dateNowStr2+".bak");
+                if (fileService.addFile(file1))
+                    log.info("重命名文件数据库更新成功");
+                else
+                    log.error("重命名文件数据库更新失败");
+                File mvfile = new File(pathname+"."+dateNowStr2+".bak");
                 try {
                     FileUtils.moveFile(targetFile, mvfile);
                     log.info("源文件："+targetFile.getName()+"已重命名为："+ mvfile.getName());
