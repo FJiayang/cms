@@ -182,15 +182,21 @@ public class UpLoadController {
             File targetFile = new File(pathname);
             //若文件已存在则自动重命名
             if (targetFile.exists()){
+                String bakpathname;
+                if (rename) {
+                    bakpathname = uploadUrl + "bak/" +user.getColstudentno() + user.getColrealname() + suffix;
+                } else {
+                    bakpathname = uploadUrl +"bak/"+ filename;
+                }
                 log.info("源文件路径:"+pathname);
                 TbFile file1 = fileService.findByFilepath(pathname);
-                file1.setColfilepath(file1.getColfilepath()+"."+dateNowStr2+".bak");
+                file1.setColfilepath(bakpathname+"."+dateNowStr2+".bak");
                 file1.setColfilename(file1.getColfilename()+"."+dateNowStr2+".bak");
                 if (fileService.addFile(file1))
                     log.info("重命名文件数据库更新成功");
                 else
                     log.error("重命名文件数据库更新失败");
-                File mvfile = new File(pathname+"."+dateNowStr2+".bak");
+                File mvfile = new File(bakpathname+"."+dateNowStr2+".bak");
                 try {
                     FileUtils.moveFile(targetFile, mvfile);
                     log.info("源文件："+targetFile.getName()+"已重命名为："+ mvfile.getName());
