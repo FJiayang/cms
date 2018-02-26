@@ -70,7 +70,7 @@ var Main = {
             }
         };
         return {
-            activeIndex: '2-1',
+            activeIndex: '2',
             ruleForm2: {
                 coluserid:'',
                 colname: '',

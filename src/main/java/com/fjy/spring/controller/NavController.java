@@ -73,4 +73,9 @@ public class NavController {
     public String toUserPage(){
         return "/home/user";
     }
+
+    @GetMapping(value = {"/error"})
+    public String toErrorPage(){
+        return "/error";
+    }
 }
