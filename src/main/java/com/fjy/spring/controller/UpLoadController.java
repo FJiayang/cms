@@ -42,16 +42,6 @@ public class UpLoadController {
     @Resource
     HttpServletRequest httpServletRequest;
 
-    @GetMapping("/toOneUpload")
-    public String toOneUpload() {
-        return "oneUpload";
-    }
-
-    @GetMapping("/toMoreUpload")
-    public String toMoreUpload() {
-        return "moreUpload";
-    }
-
     /**
      * 测试文件上传路径地址
      *

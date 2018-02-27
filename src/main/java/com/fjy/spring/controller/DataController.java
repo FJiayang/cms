@@ -7,14 +7,13 @@ import com.fjy.spring.service.*;
 import com.fjy.spring.untils.CodingUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +49,9 @@ public class DataController {
 
     @Autowired
     private NoticeService noticeService;
+
+    @Autowired
+    private VersionService versionService;
 
     @Resource
     private HttpServletRequest httpServletRequest;
@@ -179,5 +181,21 @@ public class DataController {
     @GetMapping("/home/findAllNotice")
     public List<TbNotice> findAllNotice(){
         return noticeService.findAll();
+    }
+
+    @PostMapping("/home/admin/addoneversion")
+    public boolean addOneVersion(TbVersion version){
+        log.info(version.toString());
+        return versionService.addOneVersion(version)!=null;
+    }
+
+    @PostMapping("/home/admin/addversion")
+    public boolean addVersion(@RequestBody List<TbVersion> versions){
+        return versionService.addAllVersion(versions)!=null;
+    }
+
+    @GetMapping("/home/findallversion")
+    public List<TbVersion> findAllVersion(){
+        return versionService.findAll();
     }
 }

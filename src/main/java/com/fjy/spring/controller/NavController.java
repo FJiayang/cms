@@ -29,7 +29,7 @@ public class NavController {
 
     @GetMapping(value = {"/home"})
     public String toHomePage(){
-        return "/home/home";
+        return "home/home";
     }
 
     @GetMapping(value = {"/logout"})
@@ -41,41 +41,41 @@ public class NavController {
 
     @GetMapping(value = {"/home/feedback"})
     public String toFeedbackPage(){
-        return "/home/feedback";
+        return "home/feedback";
     }
 
     @GetMapping(value = {"/home/about"})
     public String toAboutPage(){
-        return "/home/about";
+        return "home/about";
     }
 
     @GetMapping(value = {"/home/admin"})
     public String toAdminPage(){
-        return "/home/admin";
+        return "home/admin";
     }
 
     @GetMapping(value = {"/home/managecourse"})
     public String toManageCoursePage(){
-        return "/home/managecourse";
+        return "home/managecourse";
     }
 
     @GetMapping(value = {"/home/manageuser"})
     public String toManageUserPage(){
-        return "/home/manageuser";
+        return "home/manageuser";
     }
 
     @GetMapping(value = {"/home/homework"})
     public String toHomeworkPage(){
-        return "/home/homework";
+        return "home/homework";
     }
 
     @GetMapping(value = {"/home/user"})
     public String toUserPage(){
-        return "/home/user";
+        return "home/user";
     }
 
     @GetMapping(value = {"/error"})
     public String toErrorPage(){
-        return "/error";
+        return "error";
     }
 }

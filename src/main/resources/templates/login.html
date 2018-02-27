@@ -61,6 +61,9 @@
                                         label="密码" prop="colpassword">
                                     <el-input type="password"
                                               v-model="ruleForm2.colpassword" auto-complete="off" name="colpassword"></el-input>
+                                    <el-tooltip class="item" effect="dark" content="全站密码采用SHA加密算法，任何人都无法获取用户密码" placement="right">
+                                        <el-button type="text">密码安全性？</el-button>
+                                    </el-tooltip>
                                 </el-form-item>
                                 <el-form-item label="确认密码" prop="checkPass">
                                     <el-input
@@ -103,6 +106,9 @@
                                               prop="colname">
                                     <el-input
                                             v-model="ruleForm3.colname" name="colname"></el-input>
+                                    <el-tooltip class="item" effect="dark" content="全站对问题的答案进行SHA加密算法，任何人均无法获取用户知晓用户的问题答案" placement="right">
+                                        <el-button type="text">问题和答案安全性？</el-button>
+                                    </el-tooltip>
                                 </el-form-item>
                                 <el-form-item label="问题"
                                               prop="question">

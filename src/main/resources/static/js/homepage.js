@@ -109,210 +109,6 @@ var Main = {
             ],
             VersionList:[
                 {
-                    date:'2018-02-24',
-                    content:'实现对重复文件自动重命名',
-                    version:'V1.11',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-24',
-                    content:'实现对文件是否重命名的控制，目前设定为管理员上传的文件不会重命名，完善日志输出存储',
-                    version:'V1.10',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-24',
-                    content:'添加运行日志处理，频率为每天对error和info级别的日志进行文件保存，实现判断注册用户名是否已存在',
-                    version:'V1.9.1',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-24',
-                    content:'实现前端对学号和用户名的异步判断，核心技术为axios',
-                    version:'V1.9',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-24',
-                    content:'修复注册表单输入正确不会显示反馈图标的问题',
-                    version:'V1.8.2',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-24',
-                    content:'修复文件批量下载的错误，为压缩文件进行统一管理，批量下载不支持多线程',
-                    version:'V1.8.1',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-24',
-                    content:'实现文件批量下载',
-                    version:'V1.8',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-23',
-                    content:'实现对未交作业人员的查询和展示',
-                    version:'V1.7',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-23',
-                    content:'去除js对绝对地址的依赖，为日志添加排序选项',
-                    version:'V1.6.1',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-23',
-                    content:'实现用户仅能查看自己提交的文件',
-                    version:'V1.6',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-23',
-                    content:'修复用户信息修改页面数据绑定方式，改为使用axios进行数据获取和绑定',
-                    version:'V1.5',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-22',
-                    content:'实现后台对未交作业人员的查询',
-                    version:'V1.4',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-22',
-                    content:'实现用户信息修改',
-                    version:'V1.3.1',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-21',
-                    content:'实现用户信息修改页面session传值',
-                    version:'V1.3',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-09',
-                    content:'实现用户管理和作业管理数据读取',
-                    version:'V1.2.1',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-09',
-                    content:'实现单文件删除',
-                    version:'V1.2',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-08',
-                    content:'完成课程管理数据读取，修复页面加载css，js错误',
-                    version:'V1.1.2',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-08',
-                    content:'完成管理员主页的数据读取',
-                    version:'V1.1.1',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-08',
-                    content:'完成前端界面设计',
-                    version:'V1.0',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-08',
-                    content:'实现表单异步提交并显示消息',
-                    version:'V0.15',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-07',
-                    content:'实现作业上传自动创建文件夹',
-                    version:'V0.14',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-07',
-                    content:'实现作业获取和展示',
-                    version:'V0.13',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-06',
-                    content:'完成前端上传页面设计',
-                    version:'V0.12',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-06',
-                    content:'实现登录日志记录',
-                    version:'V0.11',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-05',
-                    content:'提高加密安全性',
-                    version:'V0.10.1',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-05',
-                    content:'实现用户密码SHA加密',
-                    version:'V0.10',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-05',
-                    content:'实现登录拦截器',
-                    version:'V0.9',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-05',
-                    content:'实现注册功能',
-                    version:'V0.8',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-05',
-                    content:'实现json数据绑定',
-                    version:'V0.7',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-04',
-                    content:'实现多文件上传，按钮vue传值（vue2.1特性）',
-                    version:'V0.6',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-04',
-                    content:'实现Element组件+单文件上传',
-                    version:'V0.5',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-04',
-                    content:'使用thymeleaf模板引擎，引入frame框架和公用css和js文件',
-                    version:'V0.4',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-03',
-                    content:'实现文件上传和数据库记录、Element+vue登录注册UI',
-                    version:'V0.3',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-01-30',
-                    content:'实现登录，编写错误码，实现错误码返回json',
-                    version:'V0.2',
-                    user:'F嘉阳'
-                },
-                {
                     date:'2018-01-30',
                     content:'实现数据库查询用户，获取密码，编写了单元测试类',
                     version:'V0.1',
@@ -394,6 +190,15 @@ var Main = {
                 .catch(function (error) {
                     console.log(error);
                 });
+            axios.get(getRootPath_web()+'/home/findallversion')
+                .then(function (response) {
+                    console.log(response.data);
+                    that.VersionList = response.data;
+                    //that.limitTime = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         })
     },
     methods: {
@@ -402,6 +207,12 @@ var Main = {
                 title: title,
                 message: content,
                 type: 'success'
+            });
+        },
+        openNotiError(title, content) {
+            this.$notify.error({
+                title: title,
+                message: content
             });
         },
         openSuccess(content) {
@@ -418,6 +229,7 @@ var Main = {
         },
         submitForm(formName, url) {
             this.$refs[formName].validate((valid) => {
+                let that = this;
                 if (valid) {
                     axios({
                         url: getRootPath_web()+'/' + url,
@@ -436,9 +248,22 @@ var Main = {
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
                         }
-                    })
-                    console.log(this.$refs.content.value)
-                    this.openNotiSuccess("成功", "反馈成功！")
+                    }).then(function (response) {
+                        console.log(response.data);
+                        if (response.data===true){
+                            //that.$refs[formName].submit;
+                            //return true;
+                            that.openNotiSuccess("成功", "反馈成功！")
+                        }else if (response.data===false){
+                            that.openNotiError("失败", "反馈失败！");
+                        }else {
+                            that.openNotiError("错误", response.data.message);
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                        that.openNotiError("错误", "服务器错误！");
+                    });
+                    //console.log(this.$refs.content.value)
                     //this.$options.methods.openNotiSuccess.bind(this)();
                     //alert('submit!');
                 } else {
@@ -467,6 +292,7 @@ var Main = {
             window.open(getRootPath_web()+"/download/dodownload?fileId=" + row.colfileid);
         },
         handleDelete(row) {
+            let that = this;
             axios({
                 url: getRootPath_web()+'/home/filedelete',
                 method: 'post',
@@ -484,8 +310,21 @@ var Main = {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
+            }).then(function (response) {
+                console.log(response.data);
+                if (response.data===true){
+                    //that.$refs[formName].submit;
+                    //return true;
+                    that.openNotiSuccess("成功", "删除成功！")
+                }else if (response.data===false){
+                    that.openNotiError("失败", "删除失败!");
+                }else {
+                    that.openNotiError("错误", response.data.message);
+                }
+            }).catch(function (error) {
+                console.log(error);
+                that.openNotiError("错误", "服务器错误！");
             });
-            this.openNotiSuccess("成功", "删除成功！");
         },
         handlePreview(file) {
             console.log(file);

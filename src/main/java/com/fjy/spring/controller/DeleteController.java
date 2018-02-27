@@ -33,20 +33,25 @@ public class DeleteController {
      */
     @RequestMapping("/home/filedelete")
     @ResponseBody
-    public void delete(@RequestParam(value = "fileid") Integer fileid)throws Exception {
+    public boolean delete(@RequestParam(value = "fileid") Integer fileid)throws Exception {
         TbFile tbFile = new TbFile();
         tbFile.setColfileid(fileid);
         TbFile resfile = fileService.findFileById(tbFile);
         File filepath = new File(resfile.getColfilepath());
         if (!filepath.exists()) {
             log.error("删除文件失败:" + resfile.getColfilename() + "不存在！");
+            return false;
         } else {
             if (filepath.isFile()){
                 deleteFile(resfile.getColfilepath(),resfile.getColfileid());
-                new UserException(ResultEnum.SUCCESS);
+                return true;
             }
-            else
+            else{
                 deleteDirectory(resfile.getColfilepath());
+                return true;
+            }
+
+
         }
 
     }

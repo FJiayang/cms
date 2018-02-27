@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.junit.Assert.*;
 
+/*
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -39,4 +40,4 @@ public class LoginControllerTest {
                         "    \"data\": null\n" +
                         "}"));
     }
-}
+}*/
