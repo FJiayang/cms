@@ -54,17 +54,17 @@ public class NavController {
         return "home/admin";
     }
 
-    @GetMapping(value = {"/home/managecourse"})
+    @GetMapping(value = {"/home/admin/managecourse"})
     public String toManageCoursePage(){
         return "home/managecourse";
     }
 
-    @GetMapping(value = {"/home/manageuser"})
+    @GetMapping(value = {"/home/admin/manageuser"})
     public String toManageUserPage(){
         return "home/manageuser";
     }
 
-    @GetMapping(value = {"/home/homework"})
+    @GetMapping(value = {"/home/admin/homework"})
     public String toHomeworkPage(){
         return "home/homework";
     }
