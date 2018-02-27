@@ -51,14 +51,6 @@ var Main = {
                 .catch(function (error) {
                     console.log(error);
                 });
-            axios.get(getRootPath_web()+'/home/findallvhomework')
-                .then(function (response) {
-                    console.log(response.data);
-                    that.homeworkData = response.data;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
         })
     },
     methods: {
@@ -111,7 +103,7 @@ var Main = {
         },
         handleDownload(row) {
             /*var url = window.location.protocol+"://"+window.location.host+":"+window.location.port+"/"*/
-            window.open(getRootPath_web()+"/download/downloadzip?courseName="
+            window.open(getRootPath_web()+"/home/admin/download/downloadzip?courseName="
                 + row.courseName+"&Folder="+row.folder);
         },
         handleSelect(key, keyPath) {

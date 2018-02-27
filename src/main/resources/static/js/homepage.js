@@ -200,7 +200,7 @@ var Main = {
     methods: {
         getFileList(){
             let that = this;
-            axios.get(getRootPath_web()+'/download/findone')
+            axios.get(getRootPath_web()+'/home/download/findone')
                 .then(function (response) {
                     //console.log(response.data);
                     that.DownloadList = response.data;
@@ -230,7 +230,7 @@ var Main = {
             });
         },
         uploadURL(row) {
-            return getRootPath_web()+"/moreUpload?courseName=" + row.coursename + "&folder=" + row.workfolder+"&rename=true";
+            return getRootPath_web()+"/home/moreUpload?courseName=" + row.coursename + "&folder=" + row.workfolder+"&rename=true";
         },
         limitTime(row) {
             return DateDiff(row.worktime.replace(/([^\s]+)\s.*/, "$1"), cur);
@@ -300,7 +300,7 @@ var Main = {
         },
         handleDownload(row) {
             /*var url = window.location.protocol+"://"+window.location.host+":"+window.location.port+"/"*/
-            window.open(getRootPath_web()+"/download/dodownload?fileId=" + row.colfileid);
+            window.open(getRootPath_web()+"/home/download/dodownload?fileId=" + row.colfileid);
         },
         handleDelete(row) {
             let that = this;

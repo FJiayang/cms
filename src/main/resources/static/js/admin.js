@@ -62,7 +62,7 @@ var Main = {
     },
     methods: {
         uploadURL(row) {
-            return getRootPath_web()+"/moreUpload?rename=false";
+            return getRootPath_web()+"/home/moreUpload?rename=false";
         },
         submitUpload() {
             this.$refs.upload.submit();

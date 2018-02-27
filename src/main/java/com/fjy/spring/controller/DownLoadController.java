@@ -42,31 +42,31 @@ public class DownLoadController {
         return "download/dodownload";
     }*/
 
-    @GetMapping("/download/findall")
+    @GetMapping("/home/admin/download/findall")
     @ResponseBody
-    public List<TbFile> toDownloadAll(){
+    public List<TbFile> toDownloadAll() {
         List<TbFile> files = fileService.findAllFile();//此处做空指针判断并抛出错误
-        if (files!=null)
+        if (files != null)
             return files;
         new UserException(ResultEnum.EMPTY_DATA);
         return null;
     }
 
-    @GetMapping("/download/findone")
+    @GetMapping("/home/download/findone")
     @ResponseBody
-    public List<TbFile> toDownloadOne(){
-        TbUser user = (TbUser)request.getSession().getAttribute(USER_SESSION_KEY);
+    public List<TbFile> toDownloadOne() {
+        TbUser user = (TbUser) request.getSession().getAttribute(USER_SESSION_KEY);
         //log.info(user.toString());
         List<TbFile> files = fileService.findByColuserid(user.getColuserid());
         //此处做空指针判断并抛出错误
-        if (files!=null)
+        if (files != null)
             return files;
         new UserException(ResultEnum.EMPTY_DATA);
         return null;
     }
 
-    @RequestMapping("/download/dodownload")
-    public String download(@RequestParam Integer fileId , HttpServletRequest request, HttpServletResponse response){
+    @RequestMapping("/home/download/dodownload")
+    public String download(@RequestParam Integer fileId, HttpServletRequest request, HttpServletResponse response) {
 
         response.setContentType("text/html;charset=utf-8");
         try {
@@ -124,16 +124,17 @@ public class DownLoadController {
 
     /**
      * 传入课程名和文件夹名称，打包下载目录下所有文件
+     *
      * @param courseName
      * @param folder
      * @param response
      */
-    @GetMapping("/download/downloadzip")
+    @GetMapping("/home/admin/download/downloadzip")
     public void batDownload(@RequestParam(value = "courseName") String courseName,
-                            @RequestParam(value = "Folder")String folder, HttpServletResponse response){
+                            @RequestParam(value = "Folder") String folder, HttpServletResponse response) {
         //获取文件夹名称
-        String paths = serverProperties.getFilePath()+ "upload/"+courseName+"/"+folder;
-        String zipPath = serverProperties.getFilePath()+"zip/";
+        String paths = serverProperties.getFilePath() + "upload/" + courseName + "/" + folder;
+        String zipPath = serverProperties.getFilePath() + "zip/";
 
         File dir = new File(zipPath);
         if (!dir.exists()) {
@@ -141,12 +142,12 @@ public class DownLoadController {
         }
 
         List<String> pathList = new ArrayList<String>();
-        pathList=getFileString(paths);
+        pathList = getFileString(paths);
         //需要压缩的文件--包括文件地址和文件名
-        String []path =(String[])pathList.toArray(new String[0]);
+        String[] path = (String[]) pathList.toArray(new String[0]);
         // 要生成的压缩文件地址和文件名称
-        String zipFileName=courseName+folder+".zip";
-        String desPath = zipPath+"\\"+zipFileName;
+        String zipFileName = courseName + folder + ".zip";
+        String desPath = zipPath + "\\" + zipFileName;
         //System.out.println("打包文件存储地址："+desPath);
 
         File zipFile = new File(desPath);
@@ -156,24 +157,25 @@ public class DownLoadController {
         try {
             //构造最终压缩包的输出流
             zipStream = new ZipOutputStream(new FileOutputStream(zipFile));
-            for(int i =0;i<path.length;i++){
+            for (int i = 0; i < path.length; i++) {
                 File file = new File(path[i]);
                 //将需要压缩的文件格式化为输入流
-                zipSource = new FileInputStream(file);
-                //压缩条目不是具体独立的文件，而是压缩包文件列表中的列表项，称为条目，就像索引一样
-                ZipEntry zipEntry = new ZipEntry(file.getName());
-                //定位该压缩条目位置，开始写入文件到压缩包中
+                if (!file.isDirectory()){
+                    zipSource = new FileInputStream(file);
+                    //压缩条目不是具体独立的文件，而是压缩包文件列表中的列表项，称为条目，就像索引一样
+                    ZipEntry zipEntry = new ZipEntry(file.getName());
+                    //定位该压缩条目位置，开始写入文件到压缩包中
 
-                zipStream.putNextEntry(zipEntry);
+                    zipStream.putNextEntry(zipEntry);
 
-                //输入缓冲流
-                bufferStream = new BufferedInputStream(zipSource, 1024 * 10);
-                int read = 0;
-                //创建读写缓冲区
-                byte[] buf = new byte[1024 * 10];
-                while((read = bufferStream.read(buf, 0, 1024 * 10)) != -1)
-                {
-                    zipStream.write(buf, 0, read);
+                    //输入缓冲流
+                    bufferStream = new BufferedInputStream(zipSource, 1024 * 10);
+                    int read = 0;
+                    //创建读写缓冲区
+                    byte[] buf = new byte[1024 * 10];
+                    while ((read = bufferStream.read(buf, 0, 1024 * 10)) != -1) {
+                        zipStream.write(buf, 0, read);
+                    }
                 }
             }
 
@@ -182,9 +184,9 @@ public class DownLoadController {
         } finally {
             //关闭流
             try {
-                if(null != bufferStream) bufferStream.close();
-                if(null != zipStream) zipStream.close();
-                if(null != zipSource) zipSource.close();
+                if (null != bufferStream) bufferStream.close();
+                if (null != zipStream) zipStream.close();
+                if (null != zipSource) zipSource.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -226,6 +228,7 @@ public class DownLoadController {
 
     /**
      * 获取目录下所有文件的路径
+     *
      * @param fileDir
      * @return
      */
@@ -235,7 +238,7 @@ public class DownLoadController {
         File[] files = file.listFiles();// 获取目录下的所有文件或文件夹
         List<String> path = new ArrayList<String>();
         List<String> name = new ArrayList<String>();
-        int i = 0,j=0;
+        int i = 0, j = 0;
         if (files == null) {// 如果目录为空，直接退出
             path.add("空目录");
             return path;
