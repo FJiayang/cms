@@ -9,7 +9,7 @@ serverproperties:
 spring:
   thymeleaf:
     prefix: classpath:/templates/
-    cache: false
+    cache: true
     check-template: true
 
   datasource:

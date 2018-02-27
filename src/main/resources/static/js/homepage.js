@@ -163,15 +163,11 @@ var Main = {
     },
     mounted() {
         this.$nextTick(() => {
-            var that = this;
-            axios.get(getRootPath_web()+'/download/findone')
-                .then(function (response) {
-                    console.log(response.data);
-                    that.DownloadList = response.data;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+            let that = this;
+            /*setInterval(function(){
+                that.getFileList();
+            },1000);*/
+            this.getFileList();
             axios.get(getRootPath_web()+'/home/findAllHomework')
                 .then(function (response) {
                     console.log(response.data);
@@ -202,6 +198,18 @@ var Main = {
         })
     },
     methods: {
+        getFileList(){
+            let that = this;
+            axios.get(getRootPath_web()+'/download/findone')
+                .then(function (response) {
+                    //console.log(response.data);
+                    that.DownloadList = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    that.openNotiError("失败", "获取文件列表失败！");
+                });
+        },
         openNotiSuccess(title, content) {
             this.$notify({
                 title: title,
@@ -279,7 +287,10 @@ var Main = {
             console.log(row.colfileid);
         },
         submitUpload() {
+            let that = this;
             this.$refs.upload.submit();
+            this.openNotiSuccess("成功", "文件上传成功！");
+            setTimeout(function () {that.getFileList();},1000);
         },
         handleRemove(file, fileList) {
             console.log(file, fileList);
@@ -315,7 +326,8 @@ var Main = {
                 if (response.data===true){
                     //that.$refs[formName].submit;
                     //return true;
-                    that.openNotiSuccess("成功", "删除成功！")
+                    that.openNotiSuccess("成功", "删除成功！");
+                    that.getFileList();
                 }else if (response.data===false){
                     that.openNotiError("失败", "删除失败!");
                 }else {
