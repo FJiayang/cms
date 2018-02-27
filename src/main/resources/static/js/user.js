@@ -140,6 +140,20 @@ var Main = {
                     workfolder: "第一次作业"
                 }
             ],
+            NoticeList:[
+                {
+                    noticeid: 1,
+                    adminid: 1,
+                    noticeContent: "系统正式上线，Alpha测试版",
+                    issueTime: "2018-2-26 11:00"
+                },
+                {
+                    noticeid: 2,
+                    adminid: 1,
+                    noticeContent: "系统，测试",
+                    issueTime: "2018-2-26 11:13"
+                }
+            ]
         }
     },
     methods: {
@@ -231,11 +245,32 @@ var Main = {
             var that = this;
             axios.get(getRootPath_web()+'/home/userinfo')
                 .then(function (response) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     that.ruleForm2 = response.data;
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    //console.log(error);
+                    that.openNotiError("错误", response.data.message);
+                });
+            axios.get(getRootPath_web()+'/home/findAllHomework')
+                .then(function (response) {
+                    console.log(response.data);
+                    that.tableHomeworkData = response.data;
+                    //that.limitTime = response.data;
+                })
+                .catch(function (error) {
+                    //console.log(error);
+                    that.openNotiError("错误", response.data.message);
+                });
+            axios.get(getRootPath_web()+'/home/findAllNotice')
+                .then(function (response) {
+                    console.log(response.data);
+                    that.NoticeList = response.data;
+                    //that.limitTime = response.data;
+                })
+                .catch(function (error) {
+                    //console.log(error);
+                    that.openNotiError("错误", response.data.message);
                 });
         })
     }
