@@ -26,12 +26,12 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--路径文件名，文件名包含时间-->
         <fileNamePattern>F:\JAVA Workspace\Temp\log\%d\info.%d.log</fileNamePattern>
-        <!--<fileNamePattern>/www/cmsfile/%d/info.%d.log</fileNamePattern>-->
-    </rollingPolicy>
-</appender>
+            <!--<fileNamePattern>/www/cmsfile/%d/info.%d.log</fileNamePattern>-->
+        </rollingPolicy>
+    </appender>
 
-<appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <!--根据范围过滤ERROR等级以下的日志-->
+    <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--根据范围过滤ERROR等级以下的日志-->
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>ERROR</level>
         </filter>
