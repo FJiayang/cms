@@ -1,8 +1,10 @@
 package com.fjy.spring.controller;
 
+import com.fjy.spring.domain.TbAdmin;
 import com.fjy.spring.domain.TbLog;
 import com.fjy.spring.domain.TbUser;
 import com.fjy.spring.properties.ServerProperties;
+import com.fjy.spring.service.AdminService;
 import com.fjy.spring.service.LogService;
 import com.fjy.spring.service.UserService;
 import com.fjy.spring.untils.CodingUtil;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -19,6 +22,7 @@ import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 import static com.fjy.spring.constant.GlobalConstant.USER_SESSION_KEY;
 

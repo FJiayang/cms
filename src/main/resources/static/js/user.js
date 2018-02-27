@@ -176,10 +176,6 @@ var Main = {
         submitForm(formName, url) {
             this.$refs[formName].validate((valid) => {
                 var that = this;
-                var params = new URLSearchParams();
-                params.append('userid', '55');       //你要传给后台的参数值 key/value
-                params.append('question', th.ruleForm3.question.value);
-                params.append('answer', th.ruleForm3.answer.value);
                 if (valid) {//此处暂时去除校验
                     axios({
                         url: getRootPath_web()+'/' + url,
