@@ -1,13 +1,19 @@
 package com.fjy.spring.controller;
 
+import com.fjy.spring.domain.TbUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import static com.fjy.spring.constant.GlobalConstant.USER_SESSION_KEY;
+
 @Controller
+@SessionAttributes(USER_SESSION_KEY)
 public class NavController {
     @Resource
     HttpServletRequest request;

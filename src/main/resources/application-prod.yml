@@ -2,6 +2,8 @@
 server:
   servlet:
     context-path: /cms
+    session:
+      timeout: 1440s
   port: 8081
 serverproperties:
   port_num: 8081
@@ -30,4 +32,3 @@ spring:
   #resources:
   #  static-locations: classpath:/templates/
 debug: false
-

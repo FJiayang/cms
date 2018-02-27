@@ -25,8 +25,8 @@
         <!--滚动策略-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--路径文件名，文件名包含时间-->
-        <fileNamePattern>F:\JAVA Workspace\Temp\log\%d\info.%d.log</fileNamePattern>
-            <!--<fileNamePattern>/www/cmsfile/%d/info.%d.log</fileNamePattern>-->
+        <!--<fileNamePattern>F:\JAVA Workspace\Temp\log\%d\info.%d.log</fileNamePattern>-->
+            <fileNamePattern>/www/cmsfile/%d/info.%d.log</fileNamePattern>
         </rollingPolicy>
     </appender>
 
@@ -44,8 +44,8 @@
         <!--滚动策略-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--路径文件名，文件名包含时间-->
-            <fileNamePattern>F:\JAVA Workspace\Temp\log\error.%d.log</fileNamePattern>
-            <!--<fileNamePattern>/www/cmsfile/%d/error.%d.log</fileNamePattern>-->
+            <!--<fileNamePattern>F:\JAVA Workspace\Temp\log\error.%d.log</fileNamePattern>-->
+            <fileNamePattern>/www/cmsfile/%d/error.%d.log</fileNamePattern>
         </rollingPolicy>
     </appender>
 
