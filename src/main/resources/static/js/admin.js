@@ -49,7 +49,7 @@ var Main = {
                 .catch(function (error) {
                     console.log(error);
                 });
-            axios.get(getRootPath_web()+'/home/findvfeedback')
+            axios.get(getRootPath_web()+'/home/admin/findvfeedback')
                 .then(function (response) {
                     console.log(response.data);
                     that.feedbackData = response.data;

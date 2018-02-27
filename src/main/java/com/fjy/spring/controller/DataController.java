@@ -74,7 +74,7 @@ public class DataController {
         throw new UserException(ResultEnum.EMPTY_DATA);
     }
 
-    @GetMapping("/home/findvfeedback")
+    @GetMapping("/home/admin/findvfeedback")
     public List<VFeedBack> findAllVFeedback(){
         List<VFeedBack> feedBacks = feedBackService.findAllVFeedback();
         if (feedBacks!=null){
@@ -92,7 +92,7 @@ public class DataController {
         throw new UserException(ResultEnum.EMPTY_DATA);
     }
 
-    @GetMapping("/home/findalluser")
+    @GetMapping("/home/admin/findalluser")
     public List<TbUser> findAllUser(){
         List<TbUser> users = userService.findAllUser();
         if (users!=null){
@@ -110,7 +110,7 @@ public class DataController {
         throw new UserException(ResultEnum.EMPTY_DATA);
     }
 
-    @GetMapping("/home/findStudentInCourseFile")
+    @GetMapping("/home/admin/findStudentInCourseFile")
     public  List<TbStudentlist> findStudentInCourseFile(
             @RequestParam(value = "Folder") String Folder,@RequestParam(value = "CourseName") String CourseName){
         List<TbStudentlist> files = vUserfileService.findStudentNoByWorkFolderAndCourseName(Folder,CourseName);
@@ -169,7 +169,7 @@ public class DataController {
             , @RequestParam(value = "password") String password,
               @RequestParam(value = "question") String question
             , @RequestParam(value = "answer") String answer) throws Exception {
-        log.info("name:{}, password:{}, question:{}, answer:{}",name,password,question,answer);
+        //log.info("name:{}, password:{}, question:{}, answer:{}",name,password,question,answer);
         if (findUserQue(name,question,answer)){
             //service方法内含有对密码加密的操作
             return userService.updateColpasswordByColname(password,name);
@@ -185,7 +185,7 @@ public class DataController {
 
     @PostMapping("/home/admin/addoneversion")
     public boolean addOneVersion(TbVersion version){
-        log.info(version.toString());
+        //log.info(version.toString());
         return versionService.addOneVersion(version)!=null;
     }
 

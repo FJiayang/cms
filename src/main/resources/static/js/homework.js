@@ -65,7 +65,7 @@ var Main = {
         findUncommitStudent(row){
             var that = this;
             this.dialogTableVisible = true;
-            axios.get(getRootPath_web()+'/home/findStudentInCourseFile',
+            axios.get(getRootPath_web()+'/home/admin/findStudentInCourseFile',
                 {
                     params: {
                         Folder: row.folder,

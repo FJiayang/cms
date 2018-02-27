@@ -18,7 +18,7 @@ var Main = {
     mounted() {
         this.$nextTick(() => {
             var that = this;
-            axios.get(getRootPath_web()+'/home/findalluser')
+            axios.get(getRootPath_web()+'/home/admin/findalluser')
                 .then(function (response) {
                     console.log(response.data);
                     that.userData = response.data;
