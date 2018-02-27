@@ -125,7 +125,7 @@ public class UpLoadController {
      * @param request
      * @return
      */
-    @RequestMapping("/moreUpload")
+    @RequestMapping("/home/moreUpload")
     public void moreUpload(HttpServletRequest request,
                            @RequestParam(value = "courseName", required = false) String courseName,
                            @RequestParam(value = "folder", required = false) String folder,
