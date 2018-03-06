@@ -33,9 +33,8 @@ public class UpdateController {
         if (tbUser.getColuserid()==null){
             throw new UserException(ResultEnum.ID_NULLPOINT);
         }
-        if (tbUser.getColpassword()!=null&&tbUser.getColpassword()!=""){
-            //加密用户密码
-            tbUser.setColpassword(new BigInteger(CodingUtil.encryptSHA(tbUser.getColpassword().getBytes())).toString(32));
+        if (tbUser.getColpassword()!=null){
+            userService.updateColpasswordByColname(tbUser.getColpassword(),tbUser.getColname());
         }
         if (userService.doRegisterService(tbUser)){
             log.info(tbUser.getColname()+" 信息更新成功");
@@ -43,6 +42,7 @@ public class UpdateController {
                     + serverProperties.getPortNum() + request.getContextPath() + "/home/user";
             // return "login";
         }
+        log.error(tbUser.getColname()+" 信息更新失败");
         throw new UserException(ResultEnum.UNKOWN_ERROR);
     }
 }
