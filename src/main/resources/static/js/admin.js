@@ -1,6 +1,9 @@
 var Main = {
     data() {
         return {
+            NoticeForm: {
+                content: ''
+            },
             activeIndex: '1',
             form: {
                 content: '',
@@ -61,6 +64,25 @@ var Main = {
         })
     },
     methods: {
+        openNotiSuccess(title, content) {
+            this.$notify({
+                title: title,
+                message: content,
+                type: 'success'
+            });
+        },
+        openNotiError(title, content) {
+            this.$notify.error({
+                title: title,
+                message: content
+            });
+        },
+        openSuccess(content) {
+            this.$message({
+                message: content,
+                type: 'success'
+            });
+        },
         uploadURL(row) {
             return getRootPath_web()+"/home/moreUpload?rename=false";
         },
@@ -81,6 +103,50 @@ var Main = {
         },
         onSubmit() {
             console.log('submit!');
+        },submitForm(formName) {
+            this.$refs[formName].validate((valid) => {
+                let that = this;
+                if (valid) {
+                    axios({
+                        url: getRootPath_web()+'/home/admin/addNotice',
+                        method: 'post',
+                        data: {
+                            content: this.$refs.content.value
+                        },
+                        transformRequest: [function (data) {
+                            // Do whatever you want to transform the data
+                            let ret = ''
+                            for (let it in data) {
+                                ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                            }
+                            return ret
+                        }],
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    }).then(function (response) {
+                        console.log(response.data);
+                        if (response.data===true){
+                            //that.$refs[formName].submit;
+                            //return true;
+                            that.openNotiSuccess("成功", "发布成功！")
+                        }else if (response.data===false){
+                            that.openNotiError("失败", "发布失败！");
+                        }else {
+                            that.openNotiError("错误", response.data.message);
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                        that.openNotiError("错误", "服务器错误！");
+                    });
+                    //console.log(this.$refs.content.value)
+                    //this.$options.methods.openNotiSuccess.bind(this)();
+                    //alert('submit!');
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
         }
     }
 }

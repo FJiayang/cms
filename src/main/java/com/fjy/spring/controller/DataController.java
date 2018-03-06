@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import static com.fjy.spring.constant.GlobalConstant.USER_SESSION_KEY;
 
@@ -52,6 +50,9 @@ public class DataController {
 
     @Autowired
     private VersionService versionService;
+
+    @Autowired
+    private AdminService adminService;
 
     @Resource
     private HttpServletRequest httpServletRequest;
@@ -181,6 +182,25 @@ public class DataController {
     @GetMapping("/home/findAllNotice")
     public List<TbNotice> findAllNotice(){
         return noticeService.findAll();
+    }
+
+    @PostMapping("/home/admin/addNotice")
+    public boolean addNotice(String content){
+        TbUser user= (TbUser)httpServletRequest.getSession().getAttribute(USER_SESSION_KEY);
+        TbNotice notice = new TbNotice();
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateNowStr = sdf.format(date);
+        Optional<VAdmin> vAdmin = adminService.findAdminByUserId(user.getColuserid());
+        if (vAdmin.isPresent()){
+            VAdmin admin = vAdmin.get();
+            notice.setAdminid(admin.getAdminid());
+            notice.setIssueTime(dateNowStr);
+            notice.setNoticeContent(content);
+            return noticeService.addOne(notice)!=null;
+        }else
+            return false;
+
     }
 
     @PostMapping("/home/admin/addoneversion")

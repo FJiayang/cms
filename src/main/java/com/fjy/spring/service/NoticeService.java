@@ -17,4 +17,7 @@ public class NoticeService {
         return noticeRepository.findAll();
     }
 
+    public TbNotice addOne(TbNotice notice){
+        return noticeRepository.save(notice);
+    }
 }
