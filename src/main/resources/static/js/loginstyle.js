@@ -106,7 +106,7 @@ var Main = {
                     .then(function (response) {
                         console.log(response.data);
                         if (response.data === false) {
-                            return callback(new Error('姓名与学号不匹配'));
+                            return callback(new Error('姓名与学号不匹配或该用户已注册'));
                         } else {
                             callback()
                         }

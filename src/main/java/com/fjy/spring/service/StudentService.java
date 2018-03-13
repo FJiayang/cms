@@ -3,6 +3,7 @@ package com.fjy.spring.service;
 import com.fjy.spring.domain.TbStudent;
 import com.fjy.spring.domain.TbStudentlist;
 import com.fjy.spring.domain.TbUser;
+import com.fjy.spring.enums.RegisteredEnum;
 import com.fjy.spring.repository.TbStudentListRepository;
 import com.fjy.spring.repository.TbStudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,12 @@ public class StudentService {
         return tbStudentListRepository.findByColstudentnoAndColrealname(studentno,realname);
     }
 
+    public TbStudentlist UpdateStudentListRegistered(String realname,String studentno){
+        TbStudentlist studentlist = new TbStudentlist();
+        studentlist = findByColstudentnoAndColrealname(studentno,realname);
+        studentlist.setRegistered(RegisteredEnum.REGISTERED.getCode());
+        return tbStudentListRepository.save(studentlist);
+    }
 
 
 }

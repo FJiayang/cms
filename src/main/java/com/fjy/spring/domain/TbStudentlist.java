@@ -17,4 +17,6 @@ public class TbStudentlist {
 
     private String sex;
 
+    private Integer registered;
+
 }
