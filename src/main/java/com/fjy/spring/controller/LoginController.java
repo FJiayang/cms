@@ -69,10 +69,21 @@ public class LoginController {
     @PostMapping("/beforeLogin")
     @ResponseBody
     public boolean beforeLogin(TbUser tbUser)throws Exception{
-        System.out.println(tbUser.toString());
-        //加密用户密码
         tbUser.setColpassword(new BigInteger(CodingUtil.encryptSHA(tbUser.getColpassword().getBytes())).toString(32));
         TbUser user = userService.doLoginService(tbUser.getColname(),tbUser.getColpassword());
         return user!=null;
+    }
+
+    /**
+     * 登录时判断用户名是否存在，若不存在，则返回false
+     * @param name
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/beforeLoginCheckNameExist")
+    @ResponseBody
+    public boolean beforeLoginCheckNameExist(@RequestParam(value = "name") String name)throws Exception{
+        Optional<TbUser> user = userService.findByColname(name);
+        return user.isPresent();
     }
 }

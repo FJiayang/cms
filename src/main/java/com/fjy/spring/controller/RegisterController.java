@@ -50,7 +50,7 @@ public class RegisterController {
         tbUser.setColpassword(new BigInteger(CodingUtil.encryptSHA(tbUser.getColpassword().getBytes())).toString(32));
         if (userService.doRegisterService(tbUser)){
             //更新用户列表是否注册的标记
-            studentService.UpdateStudentListRegistered(tbUser.getColrealname(),tbUser.getColstudentno());
+            studentService.UpdateStudentListRegistered(tbUser.getColrealname(),tbUser.getColstudentno(),RegisteredEnum.REGISTERED.getCode());
             return true;
             /*return "redirect:" + request.getScheme() + "://" + request.getServerName() + ":"
                     + serverProperties.getPortNum() + request.getContextPath() + "/index";*/

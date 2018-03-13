@@ -27,10 +27,10 @@ public class StudentService {
         return tbStudentListRepository.findByColstudentnoAndColrealname(studentno,realname);
     }
 
-    public TbStudentlist UpdateStudentListRegistered(String realname,String studentno){
+    public TbStudentlist UpdateStudentListRegistered(String realname,String studentno,Integer code){
         TbStudentlist studentlist = new TbStudentlist();
         studentlist = findByColstudentnoAndColrealname(studentno,realname);
-        studentlist.setRegistered(RegisteredEnum.REGISTERED.getCode());
+        studentlist.setRegistered(code);
         return tbStudentListRepository.save(studentlist);
     }
 

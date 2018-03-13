@@ -1,5 +1,6 @@
 var dt = new Date();
 let th = this;
+/*let username = this.ruleForm2.colname.value;*/
 var month = dt.getMonth()+1;
 var day = dt.getDate();
 var year = dt.getFullYear();
@@ -30,24 +31,79 @@ var Main = {
             }
         };
         var checkName = (rule, value, callback) => {
+            let that= this;
             if (!value) {
                 return callback(new Error('用户名不能为空'));
             }else {
-                callback()
+                //判断用户名是否已存在
+                axios.get(getRootPath_web() + '/CheckUserName', {
+                    params: {
+                        name: value
+                    }
+                })
+                    .then(function (response) {
+                        console.log(response.data);
+                        if (response.data === true) {
+                            callback();
+                        } else if(value!==that.ruleForm2.colname){
+                            return callback(new Error('用户名已存在'));
+                        }else {
+                            callback();
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        that.errorNotify(error.message);
+                    });
             }
         };
         var checkNo = (rule, value, callback) => {
             if (!value) {
                 return callback(new Error('学号不能为空'));
-            }else {
-                callback()
+            } else {
+                //判断是否为指定班级的合法用户
+                axios.get(getRootPath_web() + '/CheckStudentNo', {
+                    params: {
+                        studentno: value
+                    }
+                })
+                    .then(function (response) {
+                        console.log(response.data);
+                        if (response.data === true) {
+                            callback()
+                        } else {
+                            return callback(new Error('学号非法'));
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        this.errorNotify(error.message);
+                    });
             }
         };
         var checkRealName = (rule, value, callback) => {
             if (!value) {
                 return callback(new Error('真实姓名不能为空'));
-            }else {
-                callback()
+            } else {
+                //判断用户名与学号是否匹配
+                axios.get(getRootPath_web() + '/CheckStudent', {
+                    params: {
+                        realname: value,
+                        studentno: this.ruleForm2.colstudentno
+                    }
+                })
+                    .then(function (response) {
+                        console.log(response.data);
+                        if (response.data === false) {
+                            return callback(new Error('姓名与学号不匹配或该用户已注册'));
+                        } else {
+                            callback()
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        this.errorNotify(error.message);
+                    });
             }
         };
         var validatePass = (rule, value, callback) => {
@@ -157,6 +213,12 @@ var Main = {
         }
     },
     methods: {
+        errorNotify(content) {
+            this.$notify.error({
+                title: '错误',
+                message: content
+            })
+        },
         openNotiSuccess(title, content) {
             this.$notify({
                 title: title,
@@ -176,15 +238,12 @@ var Main = {
         submitForm(formName, url) {
             this.$refs[formName].validate((valid) => {
                 var that = this;
-                if (valid) {//此处暂时去除校验
+                if (valid) {
                     axios({
-                        url: getRootPath_web()+'/' + url,
+                        url: getRootPath_web()+'/home/userUpdate',
                         method: 'post',
-                        data: {
-                            userid:th.ruleForm3.userid.value,
-                            question:th.ruleForm3.question.value,
-                            answer:th.ruleForm3.answer.value
-                        },
+                        data: that.ruleForm2
+                        ,
                         transformRequest: [function (data) {
                             // Do whatever you want to transform the data
                             let ret = ''
@@ -199,10 +258,58 @@ var Main = {
                     }).then(function (response) {
                         console.log(response.data);
                         if (response.data===true){
-                            that.openNotiSuccess("成功", "修改成功！");
+                            that.openNotiSuccess("成功", "修改成功，刷新页面即可查看新信息！");
                         }else if (response.data===false){
                             that.openNotiError("失败", "修改失败！");
                         }else {
+                            that.openNotiError("错误", response.data.message);
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                        that.openNotiError("错误", "服务器错误！");
+                    });
+                    //console.log(this.$refs.content.value)
+                    //this.openNotiSuccess("成功", "修改成功！")
+                    //this.$options.methods.openNotiSuccess.bind(this)();
+                    //alert('submit!');
+                } else {
+                    console.log('error submit!!');
+                    that.openNotiError("错误", "表单填写错误！");
+                    return false;
+                }
+            });
+        },
+        clickToSubmit(formName) {
+            this.$refs[formName].validate((valid) => {
+                var that = this;
+                if (valid) {
+                    axios({
+                        url: getRootPath_web() + '/beforeLogin',
+                        method: 'post',
+                        data: {
+                            colname: outSideThis.ruleForm1.colname.value,
+                            colpassword: outSideThis.ruleForm1.colpassword.value
+                        },
+                        transformRequest: [function (data) {
+                            // Do whatever you want to transform the data
+                            let ret = '';
+                            for (let it in data) {
+                                ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                            }
+                            return ret
+                        }],
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    }).then(function (response) {
+                        console.log(response.data);
+                        if (response.data === true) {
+                            //that.$refs[formName].submit;
+                            //return true;
+                            document.getElementById('ruleForm1').submit();
+                        } else if (response.data === false) {
+                            that.openNotiError("失败", response.data.message);
+                        } else {
                             that.openNotiError("错误", response.data.message);
                         }
                     }).catch(function (error) {
