@@ -1,0 +1,18 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="/dist/thymeleaf/common_head :: header(测试页面)">
+</head>
+<body>
+<div th:insert="~{/dist/thymeleaf/common_head :: #body_js}"></div>
+<div id="app">
+    <el-container>
+        <div th:include="/dist/thymeleaf/layout :: asider"></div>
+        <div th:include="/dist/thymeleaf/layout :: header"></div>
+    </el-container>
+</div>
+<!--<div th:include="/dist/thymeleaf/footer :: copyright"></div>-->
+<script th:src="@{js/homepage.js}"></script>
+<script th:src="@{js/common.js}"></script>
+</body>
+</html>
