@@ -23,7 +23,7 @@ public class AdminInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         TbUser user = (TbUser)request.getSession().getAttribute(GlobalConstant.USER_SESSION_KEY);
-        log.info(user.getColuserid()+"");
+        //log.info(user.getColuserid()+"");
         if (adminService == null) {//解决service为null无法注入问题
             BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
             adminService = (AdminService) factory.getBean("adminService");

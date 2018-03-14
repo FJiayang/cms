@@ -5,7 +5,6 @@ import com.fjy.spring.enums.ResultEnum;
 import com.fjy.spring.exception.UserException;
 import com.fjy.spring.service.*;
 import com.fjy.spring.untils.CodingUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +17,6 @@ import java.util.*;
 import static com.fjy.spring.constant.GlobalConstant.USER_SESSION_KEY;
 
 @RestController
-@Slf4j
 public class DataController {
 
     @Autowired
@@ -134,7 +132,6 @@ public class DataController {
      */
     @PostMapping("/home/adduserque")
     public boolean adduserque(TbUserque userque)throws Exception{
-        log.info(userque.toString());
         //对密保问题加密存储
         userque.setAnswer(new BigInteger(CodingUtil.encryptSHA(userque.getAnswer().getBytes())).toString(32));
         return userService.addUserQue(userque);
@@ -205,7 +202,6 @@ public class DataController {
 
     @PostMapping("/home/admin/addoneversion")
     public boolean addOneVersion(TbVersion version){
-        //log.info(version.toString());
         return versionService.addOneVersion(version)!=null;
     }
 
