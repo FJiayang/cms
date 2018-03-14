@@ -5,7 +5,7 @@
 
 	<groupId>com.fjy</groupId>
 	<artifactId>spring</artifactId>
-	<version>V2.5.1</version>
+	<version>V2.6.1</version>
 	<packaging>jar</packaging>
 
 	<name>spring</name>

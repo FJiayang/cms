@@ -1,40 +1,42 @@
 var dt = new Date();
 let th = this;
 /*let username = this.ruleForm2.colname.value;*/
-var month = dt.getMonth()+1;
+var month = dt.getMonth() + 1;
 var day = dt.getDate();
 var year = dt.getFullYear();
 var cur = year + '-' + month + '-' + day;
-function  DateDiff(sDate1,  sDate2){    //sDate1和sDate2是2002-12-18格式
-    var  aDate,  oDate1,  oDate2,  iDays
-    aDate  =  sDate1.split("-")
-    oDate1  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])    //转换为12-18-2002格式
-    aDate  =  sDate2.split("-")
-    oDate2  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])
-    iDays  =  parseInt(Math.abs(oDate1  -  oDate2)  /  1000  /  60  /  60  /24)    //把相差的毫秒数转换为天数
-    return  iDays
+
+function DateDiff(sDate1, sDate2) {    //sDate1和sDate2是2002-12-18格式
+    var aDate, oDate1, oDate2, iDays
+    aDate = sDate1.split("-")
+    oDate1 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0])    //转换为12-18-2002格式
+    aDate = sDate2.split("-")
+    oDate2 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0])
+    iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24)    //把相差的毫秒数转换为天数
+    return iDays
 }
+
 var Main = {
     data() {
         var checkQuestion = (rule, value, callback) => {
             if (!value) {
                 return callback(new Error('问题不能为空'));
-            }else {
+            } else {
                 callback()
             }
         };
         var checkAnswer = (rule, value, callback) => {
             if (!value) {
                 return callback(new Error('答案不能为空'));
-            }else {
+            } else {
                 callback()
             }
         };
         var checkName = (rule, value, callback) => {
-            let that= this;
+            let that = this;
             if (!value) {
                 return callback(new Error('用户名不能为空'));
-            }else {
+            } else {
                 //判断用户名是否已存在
                 axios.get(getRootPath_web() + '/CheckUserName', {
                     params: {
@@ -45,9 +47,9 @@ var Main = {
                         console.log(response.data);
                         if (response.data === true) {
                             callback();
-                        } else if(value!==that.ruleForm2.colname){
+                        } else if (value !== that.ruleForm2.colname) {
                             return callback(new Error('用户名已存在'));
-                        }else {
+                        } else {
                             callback();
                         }
                     })
@@ -82,6 +84,7 @@ var Main = {
             }
         };
         var checkRealName = (rule, value, callback) => {
+            let that = this;
             if (!value) {
                 return callback(new Error('真实姓名不能为空'));
             } else {
@@ -94,7 +97,7 @@ var Main = {
                 })
                     .then(function (response) {
                         console.log(response.data);
-                        if (response.data === false) {
+                        if (response.data === false && value !== that.ruleForm2.colrealname) {
                             return callback(new Error('姓名与学号不匹配或该用户已注册'));
                         } else {
                             callback()
@@ -128,7 +131,7 @@ var Main = {
         return {
             activeIndex: '2',
             ruleForm2: {
-                coluserid:'',
+                coluserid: '',
                 colname: '',
                 colstudentno: '',
                 colrealname: '',
@@ -137,24 +140,24 @@ var Main = {
                 checkPass: '',
             },
             ruleForm3: {
-                coluserid:'',
+                coluserid: '',
                 question: '',
                 answer: ''
             },
             rules3: {
                 question: [
-                    {required: true,validator: checkQuestion, trigger: 'blur'}
+                    {required: true, validator: checkQuestion, trigger: 'blur'}
                 ],
                 answer: [
-                    {required: true,validator: checkAnswer, trigger: 'blur'}
+                    {required: true, validator: checkAnswer, trigger: 'blur'}
                 ]
             },
             rules2: {
                 colpassword: [
-                    {required: true,validator: validatePass, trigger: 'blur'}
+                    {required: true, validator: validatePass, trigger: 'blur'}
                 ],
                 checkPass: [
-                    {required: true,validator: validatePass2, trigger: 'blur'}
+                    {required: true, validator: validatePass2, trigger: 'blur'}
                 ],
                 colstudentno: [
                     {
@@ -171,7 +174,7 @@ var Main = {
                     }
                 ],
                 colname: [
-                    {required: true,validator: checkName, trigger: 'blur'}
+                    {required: true, validator: checkName, trigger: 'blur'}
                 ],
             },
             tableHomeworkData: [
@@ -196,7 +199,7 @@ var Main = {
                     workfolder: "第一次作业"
                 }
             ],
-            NoticeList:[
+            NoticeList: [
                 {
                     noticeid: 1,
                     adminid: 1,
@@ -232,15 +235,15 @@ var Main = {
                 message: content
             });
         },
-        limitTime(row){
-            return DateDiff(row.worktime.replace(/([^\s]+)\s.*/, "$1"),  cur);
+        limitTime(row) {
+            return DateDiff(row.worktime.replace(/([^\s]+)\s.*/, "$1"), cur);
         },
         submitForm(formName, url) {
             this.$refs[formName].validate((valid) => {
                 var that = this;
                 if (valid) {
                     axios({
-                        url: getRootPath_web()+'/home/userUpdate',
+                        url: getRootPath_web() + '/home/userUpdate',
                         method: 'post',
                         data: that.ruleForm2
                         ,
@@ -257,11 +260,11 @@ var Main = {
                         }
                     }).then(function (response) {
                         console.log(response.data);
-                        if (response.data===true){
+                        if (response.data === true) {
                             that.openNotiSuccess("成功", "修改成功，刷新页面即可查看新信息！");
-                        }else if (response.data===false){
+                        } else if (response.data === false) {
                             that.openNotiError("失败", "修改失败！");
-                        }else {
+                        } else {
                             that.openNotiError("错误", response.data.message);
                         }
                     }).catch(function (error) {
@@ -334,7 +337,7 @@ var Main = {
             console.log(tab, event);
         },
         ClickToJump(targe) {
-            window.location.href = getRootPath_web()+"/" + targe;
+            window.location.href = getRootPath_web() + "/" + targe;
         },
         handleSelect(key, keyPath) {
             console.log(key, keyPath);
@@ -346,7 +349,7 @@ var Main = {
     mounted() {
         this.$nextTick(() => {
             var that = this;
-            axios.get(getRootPath_web()+'/home/userinfo')
+            axios.get(getRootPath_web() + '/home/userinfo')
                 .then(function (response) {
                     //console.log(response.data);
                     that.ruleForm2 = response.data;
@@ -355,7 +358,7 @@ var Main = {
                     //console.log(error);
                     that.openNotiError("错误", response.data.message);
                 });
-            axios.get(getRootPath_web()+'/home/findAllHomework')
+            axios.get(getRootPath_web() + '/home/findAllHomework')
                 .then(function (response) {
                     console.log(response.data);
                     that.tableHomeworkData = response.data;
@@ -365,7 +368,7 @@ var Main = {
                     //console.log(error);
                     that.openNotiError("错误", response.data.message);
                 });
-            axios.get(getRootPath_web()+'/home/findAllNotice')
+            axios.get(getRootPath_web() + '/home/findAllNotice')
                 .then(function (response) {
                     console.log(response.data);
                     that.NoticeList = response.data;

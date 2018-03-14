@@ -4,9 +4,9 @@ server:
     context-path: /cms
     session:
       timeout: 1440s
-  port: 8081
+  port: 8085
 serverproperties:
-  port_num: 8081
+  port_num: 8085
   filePath: /www/cmsfile/
 spring:
   thymeleaf:
