@@ -42,7 +42,11 @@
                     <br>
                     <el-button type="text" @click="dialogTableVisible = true">查看更新日志</el-button>
 
-                    <el-dialog title="GitLab更新日志" :visible.sync="dialogTableVisible">
+                    <el-dialog title="GitLab更新日志"
+                               :visible.sync="dialogTableVisible"
+                               width="88%"
+
+                    >
                         <el-table :data="VersionList" :default-sort="{prop: 'date', order: 'descending'}">
                             <el-table-column property="date" label="日期" sortable></el-table-column>
                             <el-table-column property="content" label="内容" sortable></el-table-column>
