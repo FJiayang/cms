@@ -55,6 +55,10 @@ a{
     width: 50%;
 }
 .footer{
+    width:100%;
+    font-size:14px;
+    position:fixed;
+    bottom:20px;
     text-align: center;
 }
 

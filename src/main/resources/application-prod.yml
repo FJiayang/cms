@@ -5,6 +5,11 @@ server:
     session:
       timeout: 1440s
   port: 8085
+  tomcat:
+    remote-ip-header: x-forwarded-for
+    protocol-header: x-forwarded-proto
+    port-header: X-Forwarded-Port
+  use-forward-headers: true
 serverproperties:
   port_num: 8085
   filePath: /www/cmsfile/
