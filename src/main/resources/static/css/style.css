@@ -7,7 +7,6 @@
     src: url('../fonts/element-icons.ttf'),
     url('../fonts/element-icons.woff'); /* IE9 */
 }
-*{padding:0;margin:0;}
 html{height:100%;}
 body{min-height:100%;}
 .loginTitle{
@@ -60,7 +59,6 @@ a{
 .footer{
     width:100%;
     font-size:14px;
-    position:absolute;
     bottom:20px;
     left:0;
     text-align: center;

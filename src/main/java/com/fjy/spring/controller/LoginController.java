@@ -8,6 +8,7 @@ import com.fjy.spring.service.AdminService;
 import com.fjy.spring.service.LogService;
 import com.fjy.spring.service.UserService;
 import com.fjy.spring.untils.CodingUtil;
+import com.fjy.spring.untils.GetIPAddrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,7 +58,9 @@ public class LoginController {
             log.setUserid(user.getColuserid());
             log.setColtime(dateNowStr);
             log.setColheader(request.getHeader("user-agent"));
-            log.setColip(request.getRemoteAddr());
+            //解决nginx代理后IP地址获取问题
+            //log.setColip(request.getRemoteAddr());
+            log.setColip(GetIPAddrUtil.getIpAddr(request));
             logService.addLogRec(log);
 
             return  "redirect:" + request.getScheme() + "://" + request.getServerName() + ":"
