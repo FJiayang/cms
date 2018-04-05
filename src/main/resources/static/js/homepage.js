@@ -3,7 +3,6 @@ var month = dt.getMonth() + 1;
 var day = dt.getDate();
 var year = dt.getFullYear();
 var cur = year + '-' + month + '-' + day;
-
 function DateDiff(sDate1, sDate2) {    //sDate1和sDate2是2002-12-18格式
     var aDate, oDate1, oDate2, iDays
     aDate = sDate1.split("-")
@@ -13,7 +12,9 @@ function DateDiff(sDate1, sDate2) {    //sDate1和sDate2是2002-12-18格式
     iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24)    //把相差的毫秒数转换为天数
     return iDays
 }
-
+function displayStyle(id,type) {
+    document.getElementById(id).style.display=type;
+}
 var Main = {
     data() {
         var checkName = (rule, value, callback) => {
@@ -65,6 +66,7 @@ var Main = {
                 colrealname: '',
                 colemail: ''
             },
+            isShow:true,
             rules2: {
                 colpassword: [
                     {required: true, validator: validatePass, trigger: 'blur'}
@@ -230,7 +232,27 @@ var Main = {
             });
         },
         uploadURL(row) {
-            return getRootPath_web()+"/home/moreUpload?courseName=" + row.coursename + "&folder=" + row.workfolder+"&rename=true";
+             let that = this;
+            console.log(row.worktime+"||"+row.workid);
+            if (compareTime(cur,row.worktime)){
+                that.isShow = true;
+                console.log("Show"+that.isShow);
+                //提交时间合法
+                //document.getElementById("btn-group").style.display="";
+                //displayStyle("btn-show"+row.workid,"none");
+                //displayStyle("btn-group"+row.workid,"");
+                return getRootPath_web()+"/home/moreUpload?courseName=" + row.coursename + "&folder=" + row.workfolder+"&rename=true";
+            }else{
+                that.isShow = false;
+                console.log("EShow"+that.isShow);
+                //提交时间不合法
+                //displayStyle("btn-show"+row.workid,"");
+                //displayStyle("btn-group"+row.workid,"none");
+                //displayStyle("btn-show");
+                //document.getElementById("btn-show").style.display="";
+                return 0;
+
+            }
         },
         limitTime(row) {
             return DateDiff(row.worktime.replace(/([^\s]+)\s.*/, "$1"), cur);

@@ -8,6 +8,7 @@ import com.fjy.spring.properties.ServerProperties;
 import com.fjy.spring.service.FileService;
 import com.fjy.spring.service.LogService;
 import com.fjy.spring.untils.FormatFileSizeUtil;
+import com.fjy.spring.untils.GetIPAddrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -212,7 +213,7 @@ public class UpLoadController {
             TbLog logs = new TbLog();
             logs.setUserid(user.getColuserid());
             logs.setColtime(dateNowStr);
-            logs.setColip(httpServletRequest.getRemoteAddr());
+            logs.setColip(GetIPAddrUtil.getIpAddr(httpServletRequest));
             logs.setColheader(user.getColname() + "上传了'" + filename + "'文件");
             logService.addLogRec(logs);
 

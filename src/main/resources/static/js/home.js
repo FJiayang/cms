@@ -328,8 +328,14 @@ var Main = {
             });
         },
         uploadURL(row) {
-            return "http://localhost:8080/cms/moreUpload?courseName=" + row.coursename + "&folder=" + row.workfolder;
-        },
+            console.log(row.worktime);
+            if (compareTime(cur,row.worktime)){
+                document.getElementById("btn-group").style.display="";
+                return "http://localhost:8080/cms/moreUpload?courseName=" + row.coursename + "&folder=" + row.workfolder;
+            }else{
+                document.getElementById("btn-show").style.display="";
+            }
+            },
         limitTime(row) {
             return DateDiff(row.worktime.replace(/([^\s]+)\s.*/, "$1"), cur);
         },
