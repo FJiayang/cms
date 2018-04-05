@@ -28,4 +28,5 @@ function compareTime(startTime,endTime) {
     } else {
         return '异常';
     }
+
 }

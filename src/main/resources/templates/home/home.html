@@ -127,11 +127,11 @@
                                                     <el-form-item label="提交作业">
                                                         <el-upload class="upload-demo" ref="upload"
                                                                    :action="uploadURL(props.row)"
-                                                                   :on-preview="handlePreview"
+                                                                   :on-preview="handlePreview(props.row)"
                                                                    :on-remove="handleRemove" :file-list="fileList"
                                                                    :auto-upload="false"
                                                                    name="imageFile">
-                                                            <div id="btn-group" v-show="isShow">
+                                                            <div id="btn-group" v-show="isShow(props.row)">
                                                                 <el-button slot="trigger" size="small" type="primary">
                                                                     选取文件
                                                                 </el-button>
@@ -143,7 +143,7 @@
                                                                 <div slot="tip" class="el-upload__tip">上传文件大小不能超过100Mb
                                                                 </div>
                                                             </div>
-                                                            <div id="btn-show" v-show="!isShow">
+                                                            <div id="btn-show" v-show="!isShow(props.row)">
                                                                 <el-alert
                                                                         title="作业提交已截止"
                                                                         type="error"

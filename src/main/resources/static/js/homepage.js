@@ -66,7 +66,7 @@ var Main = {
                 colrealname: '',
                 colemail: ''
             },
-            isShow:true,
+            iShow:true,
             rules2: {
                 colpassword: [
                     {required: true, validator: validatePass, trigger: 'blur'}
@@ -232,27 +232,8 @@ var Main = {
             });
         },
         uploadURL(row) {
-             let that = this;
-            console.log(row.worktime+"||"+row.workid);
-            if (compareTime(cur,row.worktime)){
-                that.isShow = true;
-                console.log("Show"+that.isShow);
-                //提交时间合法
-                //document.getElementById("btn-group").style.display="";
-                //displayStyle("btn-show"+row.workid,"none");
-                //displayStyle("btn-group"+row.workid,"");
                 return getRootPath_web()+"/home/moreUpload?courseName=" + row.coursename + "&folder=" + row.workfolder+"&rename=true";
-            }else{
-                that.isShow = false;
-                console.log("EShow"+that.isShow);
-                //提交时间不合法
-                //displayStyle("btn-show"+row.workid,"");
-                //displayStyle("btn-group"+row.workid,"none");
-                //displayStyle("btn-show");
-                //document.getElementById("btn-show").style.display="";
-                return 0;
 
-            }
         },
         limitTime(row) {
             return DateDiff(row.worktime.replace(/([^\s]+)\s.*/, "$1"), cur);
@@ -360,8 +341,47 @@ var Main = {
                 that.openNotiError("错误", "服务器错误！");
             });
         },
-        handlePreview(file) {
-            console.log(file);
+        isShow(row){
+            let that = this;
+            console.log(row.worktime+"||"+row.workid);
+            if (compareTime(cur,row.worktime)){
+                console.log("true");
+                return true;
+                //提交时间合法
+                //document.getElementById("btn-group").style.display="";
+                //displayStyle("btn-show"+row.workid,"none");
+                //displayStyle("btn-group"+row.workid,"");
+            }else {
+                console.log("false");
+                return false;
+                //提交时间不合法
+                //displayStyle("btn-show"+row.workid,"");
+                //displayStyle("btn-group"+row.workid,"none");
+                //displayStyle("btn-show");
+                //document.getElementById("btn-show").style.display="";
+            }
+        },
+        handlePreview(row) {
+            console.log(row);
+           /* let that = this;
+            console.log(row.worktime+"||"+row.workid);
+           if (compareTime(cur,row.worktime)){
+                that.isShow = true;
+                console.log("Show"+that.isShow);
+                //提交时间合法
+                //document.getElementById("btn-group").style.display="";
+                //displayStyle("btn-show"+row.workid,"none");
+                //displayStyle("btn-group"+row.workid,"");
+                }
+            if (!compareTime(cur,row.worktime)){
+                that.isShow = false;
+                console.log("EShow"+that.isShow);
+                //提交时间不合法
+                //displayStyle("btn-show"+row.workid,"");
+                //displayStyle("btn-group"+row.workid,"none");
+                //displayStyle("btn-show");
+                //document.getElementById("btn-show").style.display="";
+            }*/
         },
         handleExceed(files, fileList) {
             this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
