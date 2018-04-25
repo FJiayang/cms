@@ -46,8 +46,9 @@ public class DownLoadController {
     @ResponseBody
     public List<TbFile> toDownloadAll() {
         List<TbFile> files = fileService.findAllFile();//此处做空指针判断并抛出错误
-        if (files != null)
+        if (files != null) {
             return files;
+        }
         new UserException(ResultEnum.EMPTY_DATA);
         return null;
     }
@@ -59,8 +60,9 @@ public class DownLoadController {
         //log.info(user.toString());
         List<TbFile> files = fileService.findByColuserid(user.getColuserid());
         //此处做空指针判断并抛出错误
-        if (files != null)
+        if (files != null) {
             return files;
+        }
         new UserException(ResultEnum.EMPTY_DATA);
         return null;
     }
@@ -103,20 +105,22 @@ public class DownLoadController {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (bis != null)
+            if (bis != null) {
                 try {
                     bis.close();
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-            if (bos != null)
+            }
+            if (bos != null) {
                 try {
                     bos.close();
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
+            }
         }
         return null;
 
@@ -184,9 +188,15 @@ public class DownLoadController {
         } finally {
             //关闭流
             try {
-                if (null != bufferStream) bufferStream.close();
-                if (null != zipStream) zipStream.close();
-                if (null != zipSource) zipSource.close();
+                if (null != bufferStream) {
+                    bufferStream.close();
+                }
+                if (null != zipStream) {
+                    zipStream.close();
+                }
+                if (null != zipSource) {
+                    zipSource.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -209,20 +219,22 @@ public class DownLoadController {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (bis != null)
+            if (bis != null) {
                 try {
                     bis.close();
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-            if (bos != null)
+            }
+            if (bos != null) {
                 try {
                     bos.close();
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
+            }
         }
     }
 

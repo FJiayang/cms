@@ -1,11 +1,13 @@
 package com.fjy.spring.controller;
 
 import com.fjy.spring.constant.GlobalConstant;
+import com.fjy.spring.domain.Homework;
 import com.fjy.spring.domain.TbFile;
 import com.fjy.spring.domain.TbLog;
 import com.fjy.spring.domain.TbUser;
 import com.fjy.spring.properties.ServerProperties;
 import com.fjy.spring.service.FileService;
+import com.fjy.spring.service.HomeworkService;
 import com.fjy.spring.service.LogService;
 import com.fjy.spring.untils.FormatFileSizeUtil;
 import com.fjy.spring.untils.GetIPAddrUtil;
@@ -31,11 +33,20 @@ import java.util.Map;
 @Slf4j
 public class UpLoadController {
 
+    /**
+     * 服务器配置信息
+     */
     @Autowired
-    private ServerProperties serverProperties;//服务器配置信息
+    private ServerProperties serverProperties;
+
+    /**
+     * 文件相关数据库操作
+     */
+    @Autowired
+    private FileService fileService;
 
     @Autowired
-    private FileService fileService;//文件相关数据库操作
+    private HomeworkService homeworkService;
 
     @Autowired
     private LogService logService;
@@ -79,20 +90,22 @@ public class UpLoadController {
          * 存储文件信息
          */
         TbFile file = new TbFile();
-        file.setColfilesize(new FormatFileSizeUtil().GetFileSize(imageFile.getSize()));
+        file.setColfilesize(FormatFileSizeUtil.GetFileSize(imageFile.getSize()));
         file.setColfilename(filename);
         file.setColfilepath(uploadUrl + filename);
         file.setColip(request.getRemoteAddr());
         file.setColuserid(user.getColuserid());
-        if (fileService.addFile(file))
+        if (fileService.addFile(file)) {
             log.info("记录写入数据库成功");
-            //System.out.println("记录写入数据库成功");
-        else
+        }
+        //System.out.println("记录写入数据库成功");
+        else {
             log.error("记录写入数据库失败");
+        }
         //System.out.println("记录写入数据库失败");
 
         log.info("文件上传到: " + uploadUrl + filename);
-        log.info("文件大小: " + new FormatFileSizeUtil().GetFileSize(imageFile.getSize()));
+        log.info("文件大小: " + FormatFileSizeUtil.GetFileSize(imageFile.getSize()));
         log.info("文件名: " + filename);
 
         File targetFile = new File(uploadUrl + filename);
@@ -130,6 +143,7 @@ public class UpLoadController {
     public void moreUpload(HttpServletRequest request,
                            @RequestParam(value = "courseName", required = false) String courseName,
                            @RequestParam(value = "folder", required = false) String folder,
+                           @RequestParam(value = "workid") Integer workId,
                            @RequestParam(value = "rename", required = true) boolean rename) {
 
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
@@ -158,13 +172,21 @@ public class UpLoadController {
         List<String> fileList = new ArrayList<String>();
 
         for (MultipartFile file : files.values()) {
+            Homework homework = homeworkService.findById(workId);
+            String filePrefix = homework.getFilePrefix();
+            String fileSuffix = homework.getFileSuffix();
             String filename = file.getOriginalFilename();
-            String suffix = "." + filename.substring(filename.lastIndexOf(".") + 1);//获取文件后缀
+
+            //获取文件后缀
+            String suffix = "." + filename.substring(filename.lastIndexOf(".") + 1);
             TbFile tbFile = new TbFile();
             String pathname;
+
+
+            //文件重命名
             if (rename) {
-                pathname = uploadUrl + user.getColstudentno() + user.getColrealname() + suffix;
-                tbFile.setColfilename(user.getColstudentno() + user.getColrealname() + suffix);
+                pathname = uploadUrl + filePrefix + user.getColstudentno() + user.getColrealname() + fileSuffix + suffix;
+                tbFile.setColfilename(filePrefix + user.getColstudentno() + user.getColrealname() + fileSuffix + suffix);
             } else {
                 pathname = uploadUrl + filename;
                 tbFile.setColfilename(filename);
@@ -172,39 +194,41 @@ public class UpLoadController {
 
             File targetFile = new File(pathname);
             //若文件已存在则自动重命名
-            if (targetFile.exists()){
+            if (targetFile.exists()) {
                 String bakpathname;
                 if (rename) {
-                    bakpathname = uploadUrl + "bak/" +user.getColstudentno() + user.getColrealname() + suffix;
+                    bakpathname = uploadUrl + "bak/" + user.getColstudentno() + user.getColrealname() + suffix;
                 } else {
-                    bakpathname = uploadUrl +"bak/"+ filename;
+                    bakpathname = uploadUrl + "bak/" + filename;
                 }
-                log.info("源文件路径:"+pathname);
+                log.info("源文件路径:" + pathname);
                 TbFile file1 = fileService.findByFilepath(pathname);
-                file1.setColfilepath(bakpathname+"."+dateNowStr2+".bak");
-                file1.setColfilename(file1.getColfilename()+"."+dateNowStr2+".bak");
-                if (fileService.addFile(file1))
+                file1.setColfilepath(bakpathname + "." + dateNowStr2 + ".bak");
+                file1.setColfilename(file1.getColfilename() + "." + dateNowStr2 + ".bak");
+                if (fileService.addFile(file1)) {
                     log.info("重命名文件数据库更新成功");
-                else
+                } else {
                     log.error("重命名文件数据库更新失败");
-                File mvfile = new File(bakpathname+"."+dateNowStr2+".bak");
+                }
+                File mvfile = new File(bakpathname + "." + dateNowStr2 + ".bak");
                 try {
                     FileUtils.moveFile(targetFile, mvfile);
-                    log.info("源文件："+targetFile.getName()+"已重命名为："+ mvfile.getName());
+                    log.info("源文件：" + targetFile.getName() + "已重命名为：" + mvfile.getName());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
 
             log.info("文件上传到: " + uploadUrl + filename);
-            log.info("文件大小: " + new FormatFileSizeUtil().GetFileSize(file.getSize()));
+            log.info("文件大小: " + FormatFileSizeUtil.GetFileSize(file.getSize()));
             log.info("文件名: " + filename);
 
-            tbFile.setColfilesize(new FormatFileSizeUtil().GetFileSize(file.getSize()));
+            tbFile.setColfilesize(FormatFileSizeUtil.GetFileSize(file.getSize()));
 
             tbFile.setColtime(dateNowStr);
             tbFile.setColrealname(filename);
-            tbFile.setColfilepath(pathname);//文件自动学号+姓名命名
+            //文件自动学号+姓名命名
+            tbFile.setColfilepath(pathname);
             tbFile.setColip(request.getRemoteAddr());
             tbFile.setColuserid(user.getColuserid());
             tbFile.setCourseName(courseName);
@@ -217,10 +241,11 @@ public class UpLoadController {
             logs.setColheader(user.getColname() + "上传了'" + filename + "'文件");
             logService.addLogRec(logs);
 
-            if (fileService.addFile(tbFile))
+            if (fileService.addFile(tbFile)) {
                 log.info("记录写入数据库成功");
-            else
+            } else {
                 log.error("记录写入数据库失败");
+            }
 
             if (!targetFile.exists()) {
                 try {

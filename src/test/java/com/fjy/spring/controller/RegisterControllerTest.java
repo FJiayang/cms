@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.junit.Assert.*;
 
-/*
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -74,4 +74,4 @@ public class RegisterControllerTest {
                 .param("name","root1"))
                 .andExpect(MockMvcResultMatchers.content().string("true"));
     }
-}*/
+}

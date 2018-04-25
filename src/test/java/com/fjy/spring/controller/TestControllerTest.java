@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.junit.Assert.*;
-/*
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -39,4 +39,4 @@ public class TestControllerTest {
         mvc.perform(MockMvcRequestBuilders.get("/test/id/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
-}*/
+}

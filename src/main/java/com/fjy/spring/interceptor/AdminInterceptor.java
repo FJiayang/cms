@@ -24,7 +24,8 @@ public class AdminInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         TbUser user = (TbUser)request.getSession().getAttribute(GlobalConstant.USER_SESSION_KEY);
         //log.info(user.getColuserid()+"");
-        if (adminService == null) {//解决service为null无法注入问题
+        //解决service为null无法注入问题
+        if (adminService == null) {
             BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
             adminService = (AdminService) factory.getBean("adminService");
         }
@@ -33,8 +34,9 @@ public class AdminInterceptor implements HandlerInterceptor {
         if (!admin.isPresent()){
                 response.sendRedirect("/cms/home");
                 return false;
-        }else
+        }else {
             return true;
+        }
     }
 
 }

@@ -63,8 +63,9 @@ public class RegisterController {
     @ResponseBody
     public boolean doCheckStudentNo(@RequestParam(value = "studentno") String studentno){
         TbStudentlist studentlist = studentService.findStudentByNo(studentno);
-        if (studentlist!=null)
+        if (studentlist!=null) {
             return true;
+        }
         return false;
     }
 
@@ -73,8 +74,9 @@ public class RegisterController {
     public boolean doCheckStudent(@RequestParam(value = "studentno") String studentno,
                                   @RequestParam(value = "realname") String realname){
         TbStudentlist studentlist = studentService.findByColstudentnoAndColrealname(studentno,realname);
-        if (studentlist!=null&&studentlist.getRegistered()!= RegisteredEnum.REGISTERED.getCode())
+        if (studentlist!=null&&studentlist.getRegistered()!= RegisteredEnum.REGISTERED.getCode()) {
             return true;
+        }
         return false;
     }
 
@@ -87,8 +89,9 @@ public class RegisterController {
     @ResponseBody
     public boolean doUserName(@RequestParam(value = "name") String name){
         Optional<TbUser> user = userService.findByColname(name);
-        if (user.isPresent())
+        if (user.isPresent()) {
             return false;
+        }
         return true;
     }
 

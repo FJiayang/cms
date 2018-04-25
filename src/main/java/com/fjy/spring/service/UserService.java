@@ -81,8 +81,9 @@ public class UserService {
 
     public boolean addUserQue(TbUserque userque) {
         TbUserque tbUserque = userqueRepository.save(userque);
-        if (tbUserque != null)
+        if (tbUserque != null) {
             return true;
+        }
         return false;
     }
 

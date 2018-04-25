@@ -3,6 +3,7 @@ var month = dt.getMonth() + 1;
 var day = dt.getDate();
 var year = dt.getFullYear();
 var cur = year + '-' + month + '-' + day;
+
 function DateDiff(sDate1, sDate2) {    //sDate1和sDate2是2002-12-18格式
     var aDate, oDate1, oDate2, iDays
     aDate = sDate1.split("-")
@@ -12,9 +13,11 @@ function DateDiff(sDate1, sDate2) {    //sDate1和sDate2是2002-12-18格式
     iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24)    //把相差的毫秒数转换为天数
     return iDays
 }
-function displayStyle(id,type) {
-    document.getElementById(id).style.display=type;
+
+function displayStyle(id, type) {
+    document.getElementById(id).style.display = type;
 }
+
 var Main = {
     data() {
         var checkName = (rule, value, callback) => {
@@ -66,7 +69,7 @@ var Main = {
                 colrealname: '',
                 colemail: ''
             },
-            iShow:true,
+            iShow: true,
             rules2: {
                 colpassword: [
                     {required: true, validator: validatePass, trigger: 'blur'}
@@ -95,7 +98,7 @@ var Main = {
             activeName: 'login',
             fileList: [],
             DownloadList: [],
-            NoticeList:[
+            NoticeList: [
                 {
                     noticeid: 1,
                     adminid: 1,
@@ -109,12 +112,12 @@ var Main = {
                     issueTime: "2018-2-26 11:13"
                 }
             ],
-            VersionList:[
+            VersionList: [
                 {
-                    date:'2018-01-30',
-                    content:'实现数据库查询用户，获取密码，编写了单元测试类',
-                    version:'V0.1',
-                    user:'F嘉阳'
+                    date: '2018-01-30',
+                    content: '实现数据库查询用户，获取密码，编写了单元测试类',
+                    version: 'V0.1',
+                    user: 'F嘉阳'
                 }
             ],
             tableHomeworkData: [
@@ -170,7 +173,7 @@ var Main = {
                 that.getFileList();
             },1000);*/
             this.getFileList();
-            axios.get(getRootPath_web()+'/home/findAllHomework')
+            axios.get(getRootPath_web() + '/home/findAllHomework')
                 .then(function (response) {
                     console.log(response.data);
                     that.tableHomeworkData = response.data;
@@ -179,7 +182,7 @@ var Main = {
                 .catch(function (error) {
                     console.log(error);
                 });
-            axios.get(getRootPath_web()+'/home/findAllNotice')
+            axios.get(getRootPath_web() + '/home/findAllNotice')
                 .then(function (response) {
                     console.log(response.data);
                     that.NoticeList = response.data;
@@ -188,7 +191,7 @@ var Main = {
                 .catch(function (error) {
                     console.log(error);
                 });
-            axios.get(getRootPath_web()+'/home/findallversion')
+            axios.get(getRootPath_web() + '/home/findallversion')
                 .then(function (response) {
                     console.log(response.data);
                     that.VersionList = response.data;
@@ -200,9 +203,9 @@ var Main = {
         })
     },
     methods: {
-        getFileList(){
+        getFileList() {
             let that = this;
-            axios.get(getRootPath_web()+'/home/download/findone')
+            axios.get(getRootPath_web() + '/home/download/findone')
                 .then(function (response) {
                     //console.log(response.data);
                     that.DownloadList = response.data;
@@ -232,7 +235,7 @@ var Main = {
             });
         },
         uploadURL(row) {
-                return getRootPath_web()+"/home/moreUpload?courseName=" + row.coursename + "&folder=" + row.workfolder+"&rename=true";
+            return getRootPath_web() + "/home/moreUpload?courseName=" + row.coursename + "&folder=" + row.workfolder + "&workid=" + row.workid + "&rename=true";
 
         },
         limitTime(row) {
@@ -243,7 +246,7 @@ var Main = {
                 let that = this;
                 if (valid) {
                     axios({
-                        url: getRootPath_web()+'/' + url,
+                        url: getRootPath_web() + '/' + url,
                         method: 'post',
                         data: {
                             content: this.$refs.content.value
@@ -261,13 +264,13 @@ var Main = {
                         }
                     }).then(function (response) {
                         console.log(response.data);
-                        if (response.data===true){
+                        if (response.data === true) {
                             //that.$refs[formName].submit;
                             //return true;
                             that.openNotiSuccess("成功", "反馈成功！")
-                        }else if (response.data===false){
+                        } else if (response.data === false) {
                             that.openNotiError("失败", "反馈失败！");
-                        }else {
+                        } else {
                             that.openNotiError("错误", response.data.message);
                         }
                     }).catch(function (error) {
@@ -293,22 +296,24 @@ var Main = {
             let that = this;
             this.$refs.upload.submit();
             this.openNotiSuccess("成功", "文件上传成功！");
-            setTimeout(function () {that.getFileList();},1000);
+            setTimeout(function () {
+                that.getFileList();
+            }, 1000);
         },
         handleRemove(file, fileList) {
             console.log(file, fileList);
         },
         ClickToJump(targe) {
-            window.location.href = getRootPath_web()+"/" + targe;
+            window.location.href = getRootPath_web() + "/" + targe;
         },
         handleDownload(row) {
             /*var url = window.location.protocol+"://"+window.location.host+":"+window.location.port+"/"*/
-            window.open(getRootPath_web()+"/home/download/dodownload?fileId=" + row.colfileid);
+            window.open(getRootPath_web() + "/home/download/dodownload?fileId=" + row.colfileid);
         },
         handleDelete(row) {
             let that = this;
             axios({
-                url: getRootPath_web()+'/home/filedelete',
+                url: getRootPath_web() + '/home/filedelete',
                 method: 'post',
                 data: {
                     fileid: row.colfileid
@@ -326,14 +331,14 @@ var Main = {
                 }
             }).then(function (response) {
                 console.log(response.data);
-                if (response.data===true){
+                if (response.data === true) {
                     //that.$refs[formName].submit;
                     //return true;
                     that.openNotiSuccess("成功", "删除成功！");
                     that.getFileList();
-                }else if (response.data===false){
+                } else if (response.data === false) {
                     that.openNotiError("失败", "删除失败!");
-                }else {
+                } else {
                     that.openNotiError("错误", response.data.message);
                 }
             }).catch(function (error) {
@@ -341,17 +346,17 @@ var Main = {
                 that.openNotiError("错误", "服务器错误！");
             });
         },
-        isShow(row){
+        isShow(row) {
             let that = this;
-            console.log(row.worktime+"||"+row.workid);
-            if (compareTime(cur,row.worktime)){
+            console.log(row.worktime + "||" + row.workid);
+            if (compareTime(cur, row.worktime)) {
                 console.log("true");
                 return true;
                 //提交时间合法
                 //document.getElementById("btn-group").style.display="";
                 //displayStyle("btn-show"+row.workid,"none");
                 //displayStyle("btn-group"+row.workid,"");
-            }else {
+            } else {
                 console.log("false");
                 return false;
                 //提交时间不合法
@@ -363,25 +368,25 @@ var Main = {
         },
         handlePreview(row) {
             console.log(row);
-           /* let that = this;
-            console.log(row.worktime+"||"+row.workid);
-           if (compareTime(cur,row.worktime)){
-                that.isShow = true;
-                console.log("Show"+that.isShow);
-                //提交时间合法
-                //document.getElementById("btn-group").style.display="";
-                //displayStyle("btn-show"+row.workid,"none");
-                //displayStyle("btn-group"+row.workid,"");
-                }
-            if (!compareTime(cur,row.worktime)){
-                that.isShow = false;
-                console.log("EShow"+that.isShow);
-                //提交时间不合法
-                //displayStyle("btn-show"+row.workid,"");
-                //displayStyle("btn-group"+row.workid,"none");
-                //displayStyle("btn-show");
-                //document.getElementById("btn-show").style.display="";
-            }*/
+            /* let that = this;
+             console.log(row.worktime+"||"+row.workid);
+            if (compareTime(cur,row.worktime)){
+                 that.isShow = true;
+                 console.log("Show"+that.isShow);
+                 //提交时间合法
+                 //document.getElementById("btn-group").style.display="";
+                 //displayStyle("btn-show"+row.workid,"none");
+                 //displayStyle("btn-group"+row.workid,"");
+                 }
+             if (!compareTime(cur,row.worktime)){
+                 that.isShow = false;
+                 console.log("EShow"+that.isShow);
+                 //提交时间不合法
+                 //displayStyle("btn-show"+row.workid,"");
+                 //displayStyle("btn-group"+row.workid,"none");
+                 //displayStyle("btn-show");
+                 //document.getElementById("btn-show").style.display="";
+             }*/
         },
         handleExceed(files, fileList) {
             this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);

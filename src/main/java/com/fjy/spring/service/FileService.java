@@ -15,15 +15,17 @@ public class FileService {
 
     public boolean addFile(TbFile tbFile) {
         TbFile file = tbFileRepository.save(tbFile);
-        if (file != null)
+        if (file != null) {
             return true;
+        }
         return false;
     }
 
     public List<TbFile> findFile(TbFile tbFile){
         List<TbFile> files =  tbFileRepository.findByColfilename(tbFile.getColfilename());
-        if (files!=null)
+        if (files!=null) {
             return files;
+        }
         return null;
     }
 
