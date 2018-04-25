@@ -144,7 +144,7 @@ public class UpLoadController {
     public void moreUpload(HttpServletRequest request,
                            @RequestParam(value = "courseName", required = false) String courseName,
                            @RequestParam(value = "folder", required = false) String folder,
-                           @RequestParam(value = "workid") Integer workId,
+                           @RequestParam(value = "workid", required = false) Integer workId,
                            @RequestParam(value = "rename", required = true) boolean rename) {
 
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
@@ -173,7 +173,11 @@ public class UpLoadController {
         List<String> fileList = new ArrayList<String>();
 
         for (MultipartFile file : files.values()) {
-            Homework homework = homeworkService.findById(workId);
+            Homework homework = new Homework();
+            //管理员上传不需要传workId
+            if (workId != null) {
+                homework = homeworkService.findById(workId);
+            }
             String filePrefix = homework.getFilePrefix();
             String fileSuffix = homework.getFileSuffix();
             String filename = file.getOriginalFilename();
@@ -185,7 +189,7 @@ public class UpLoadController {
 
 
             //文件重命名
-            if (rename) {
+            if (rename && workId != null) {
                 pathname = uploadUrl + filePrefix + user.getColstudentno() + user.getColrealname() + fileSuffix + suffix;
                 tbFile.setColfilename(filePrefix + user.getColstudentno() + user.getColrealname() + fileSuffix + suffix);
             } else {
