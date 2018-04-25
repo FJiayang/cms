@@ -59,14 +59,7 @@ public class LoginController {
             log.setUserid(user.getColuserid());
             log.setColtime(dateNowStr);
             log.setColheader(request.getHeader("user-agent"));
-
-            System.out.println("【request】"+request.getRequestURI());
-            System.out.println("【request】"+request.getContextPath());
-            System.out.println("【request】"+request.getPathInfo());
-            System.out.println("【request】"+request.getAuthType());
-            System.out.println("【request】"+request.getRequestURL());
-            System.out.println("【request】"+request.getPathTranslated());
-            System.out.println("【request】"+request.getQueryString());
+            log.setRequestURL(request.getRequestURL().toString());
 
             //解决nginx代理后IP地址获取问题
             //log.setColip(request.getRemoteAddr());

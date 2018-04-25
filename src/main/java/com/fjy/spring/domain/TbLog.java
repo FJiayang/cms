@@ -20,4 +20,7 @@ public class TbLog {
 
     private String colheader;
 
+    @Column(name = "requesturl")
+    private String requestURL;
+
 }
