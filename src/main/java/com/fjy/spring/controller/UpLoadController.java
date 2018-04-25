@@ -83,7 +83,8 @@ public class UpLoadController {
         String uploadUrl = serverProperties.getFilePath() + "upload/";
         String filename = imageFile.getOriginalFilename();
         File dir = new File(uploadUrl);
-        if (!dir.exists()) {//判断目录是否存在，否则自动创建
+        //判断目录是否存在，否则自动创建
+        if (!dir.exists()) {
             dir.mkdirs();
         }
         /**

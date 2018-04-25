@@ -130,28 +130,29 @@
                                                                    :on-preview="handlePreview(props.row)"
                                                                    :on-remove="handleRemove" :file-list="fileList"
                                                                    :auto-upload="false"
+                                                                   v-show="isShow(props.row)"
                                                                    name="imageFile">
-                                                            <div id="btn-group" v-show="isShow(props.row)">
+
                                                                 <el-button slot="trigger" size="small" type="primary">
                                                                     选取文件
                                                                 </el-button>
                                                                 <el-button style="margin-left: 10px;" size="small"
                                                                            type="success"
-                                                                           @click="submitUpload">
+                                                                           @click="submitUpload" >
                                                                     上传到服务器
                                                                 </el-button>
                                                                 <div slot="tip" class="el-upload__tip">上传文件大小不能超过100Mb
                                                                 </div>
-                                                            </div>
-                                                            <div id="btn-show" v-show="!isShow(props.row)">
-                                                                <el-alert
-                                                                        title="作业提交已截止"
-                                                                        type="error"
-                                                                        center
-                                                                        show-icon>
-                                                                </el-alert>
-                                                            </div>
+
                                                         </el-upload>
+                                                        <div id="btn-show" v-show="!isShow(props.row)">
+                                                            <el-alert
+                                                                    title="作业提交已截止"
+                                                                    type="error"
+                                                                    center
+                                                                    show-icon>
+                                                            </el-alert>
+                                                        </div>
                                                     </el-form-item>
                                                 </el-form>
                                             </template>

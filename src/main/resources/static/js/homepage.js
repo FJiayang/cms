@@ -348,7 +348,7 @@ var Main = {
         },
         isShow(row) {
             let that = this;
-            console.log(row.worktime + "||" + row.workid);
+            // console.log(row.worktime + "||" + row.workid);
             if (compareTime(cur, row.worktime)) {
                 console.log("true");
                 return true;
