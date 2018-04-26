@@ -38,9 +38,6 @@ public class DataController {
     private HomeworkService homeworkService;
 
     @Autowired
-    private FileService fileService;
-
-    @Autowired
     private VUserfileService vUserfileService;
 
     @Autowired

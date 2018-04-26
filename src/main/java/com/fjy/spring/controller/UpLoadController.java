@@ -11,6 +11,7 @@ import com.fjy.spring.service.HomeworkService;
 import com.fjy.spring.service.LogService;
 import com.fjy.spring.untils.FormatFileSizeUtil;
 import com.fjy.spring.untils.GetIPAddrUtil;
+import com.fjy.spring.untils.LogUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import static com.fjy.spring.constant.GlobalConstant.USER_SESSION_KEY;
 
 @Controller
 @Slf4j
@@ -98,6 +101,10 @@ public class UpLoadController {
         file.setColuserid(user.getColuserid());
         if (fileService.addFile(file)) {
             log.info("记录写入数据库成功");
+
+            // 记录上传日志
+            addVisitLog("上传文件" + file.getColrealname() + " " + file.getColfilename());
+
         }
         //System.out.println("记录写入数据库成功");
         else {
@@ -248,6 +255,9 @@ public class UpLoadController {
 
             if (fileService.addFile(tbFile)) {
                 log.info("记录写入数据库成功");
+
+                // 记录上传日志
+                addVisitLog("上传文件" + tbFile.getColrealname() + " " + tbFile.getColfilename());
             } else {
                 log.error("记录写入数据库失败");
             }
@@ -265,13 +275,21 @@ public class UpLoadController {
                             request.getScheme() + "://" + request.getServerName() + ":"
                                     + serverProperties.getPortNum() + request.getContextPath() + "/upload/"
                                     + file.getOriginalFilename());
-                } catch (IllegalStateException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
         }
+    }
+
+    /**
+     * 登陆后的访问日志记录
+     *
+     * @param content
+     */
+    private void addVisitLog(String content) {
+        TbUser user = (TbUser) httpServletRequest.getSession().getAttribute(USER_SESSION_KEY);
+        TbLog log = LogUtil.addLog(user, content, httpServletRequest);
+        logService.addLogRec(log);
     }
 }

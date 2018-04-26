@@ -1,11 +1,14 @@
 package com.fjy.spring.controller;
 
 import com.fjy.spring.domain.TbFile;
+import com.fjy.spring.domain.TbLog;
 import com.fjy.spring.domain.TbUser;
 import com.fjy.spring.enums.ResultEnum;
 import com.fjy.spring.exception.UserException;
 import com.fjy.spring.properties.ServerProperties;
 import com.fjy.spring.service.FileService;
+import com.fjy.spring.service.LogService;
+import com.fjy.spring.untils.LogUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,11 +31,17 @@ import static com.fjy.spring.constant.GlobalConstant.USER_SESSION_KEY;
 
 @Controller
 public class DownLoadController {
+    /**
+     * 服务器配置信息
+     */
     @Autowired
-    private ServerProperties serverProperties;//服务器配置信息
+    private ServerProperties serverProperties;
 
     @Autowired
     private FileService fileService;
+
+    @Autowired
+    private LogService logService;
 
     @Resource
     HttpServletRequest request;
@@ -45,12 +54,12 @@ public class DownLoadController {
     @GetMapping("/home/admin/download/findall")
     @ResponseBody
     public List<TbFile> toDownloadAll() {
-        List<TbFile> files = fileService.findAllFile();//此处做空指针判断并抛出错误
+        //此处做空指针判断并抛出错误
+        List<TbFile> files = fileService.findAllFile();
         if (files != null) {
             return files;
         }
-        new UserException(ResultEnum.EMPTY_DATA);
-        return null;
+        throw new UserException(ResultEnum.EMPTY_DATA);
     }
 
     @GetMapping("/home/download/findone")
@@ -63,8 +72,7 @@ public class DownLoadController {
         if (files != null) {
             return files;
         }
-        new UserException(ResultEnum.EMPTY_DATA);
-        return null;
+        throw new UserException(ResultEnum.EMPTY_DATA);
     }
 
     @RequestMapping("/home/download/dodownload")
@@ -102,6 +110,10 @@ public class DownLoadController {
             while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
                 bos.write(buff, 0, bytesRead);
             }
+            //记录下载日志
+            addVisitLog("下载文件"+tbFile.getColrealname()+" "+tbFile.getColfilename());
+
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -164,7 +176,7 @@ public class DownLoadController {
             for (int i = 0; i < path.length; i++) {
                 File file = new File(path[i]);
                 //将需要压缩的文件格式化为输入流
-                if (!file.isDirectory()){
+                if (!file.isDirectory()) {
                     zipSource = new FileInputStream(file);
                     //压缩条目不是具体独立的文件，而是压缩包文件列表中的列表项，称为条目，就像索引一样
                     ZipEntry zipEntry = new ZipEntry(file.getName());
@@ -182,6 +194,9 @@ public class DownLoadController {
                     }
                 }
             }
+
+            //记录下载日志
+            addVisitLog("下载压缩文件"+zipFile.getName());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -281,4 +296,15 @@ public class DownLoadController {
             System.out.println(it1.next());
         }
     }*/
+
+    /**
+     * 登陆后的访问日志记录
+     *
+     * @param content
+     */
+    private void addVisitLog(String content) {
+        TbUser user = (TbUser) request.getSession().getAttribute(USER_SESSION_KEY);
+        TbLog log = LogUtil.addLog(user, content, request);
+        logService.addLogRec(log);
+    }
 }

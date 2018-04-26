@@ -1,9 +1,13 @@
 package com.fjy.spring.controller;
 
 import com.fjy.spring.domain.TbFile;
+import com.fjy.spring.domain.TbLog;
+import com.fjy.spring.domain.TbUser;
 import com.fjy.spring.enums.ResultEnum;
 import com.fjy.spring.exception.UserException;
 import com.fjy.spring.service.FileService;
+import com.fjy.spring.service.LogService;
+import com.fjy.spring.untils.GetIPAddrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,13 +16,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static com.fjy.spring.constant.GlobalConstant.USER_SESSION_KEY;
 
 @Controller
 @Slf4j
 public class DeleteController {
+    /**
+     * 文件相关数据库操作
+     */
     @Autowired
-    private FileService fileService;//文件相关数据库操作
+    private FileService fileService;
+
+    @Autowired
+    private LogService logService;
+
+    @Resource
+    HttpServletRequest request;
 
     @GetMapping("/home/findfile")
     @ResponseBody
@@ -68,6 +87,22 @@ public class DeleteController {
             if (file.delete()) {
                 fileService.deleteFileById(tbFile);
                 log.info("删除单个文件" + fileName + "成功！");
+
+                TbUser user =(TbUser)request.getSession().getAttribute(USER_SESSION_KEY);
+                //写入日志信息
+                Date date = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String dateNowStr = sdf.format(date);
+                TbLog log = new TbLog();
+                log.setUserid(user.getColuserid());
+                log.setColtime(dateNowStr);
+                log.setColheader("删除单个文件" + fileName + "成功！");
+                log.setRequestURL(request.getRequestURL().toString());
+
+                //解决nginx代理后IP地址获取问题
+                log.setColip(GetIPAddrUtil.getIpAddr(request));
+                logService.addLogRec(log);
+
                 return true;
             } else {
                 log.info("删除单个文件" + fileName + "失败！");
