@@ -262,11 +262,13 @@ public class DownLoadController {
     public List<String> getFileString(String fileDir) {
         List<File> fileList = new ArrayList<File>();
         File file = new File(fileDir);
-        File[] files = file.listFiles();// 获取目录下的所有文件或文件夹
+        // 获取目录下的所有文件或文件夹
+        File[] files = file.listFiles();
         List<String> path = new ArrayList<String>();
         List<String> name = new ArrayList<String>();
         int i = 0, j = 0;
-        if (files == null) {// 如果目录为空，直接退出
+        // 如果目录为空，直接退出
+        if (files == null) {
             path.add("空目录");
             return path;
         }

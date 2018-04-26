@@ -246,18 +246,11 @@ public class UpLoadController {
             tbFile.setCourseName(courseName);
             tbFile.setWorkFolder(folder);
 
-            TbLog logs = new TbLog();
-            logs.setUserid(user.getColuserid());
-            logs.setColtime(dateNowStr);
-            logs.setColip(GetIPAddrUtil.getIpAddr(httpServletRequest));
-            logs.setColheader(user.getColname() + "上传了'" + filename + "'文件");
-            logService.addLogRec(logs);
-
             if (fileService.addFile(tbFile)) {
                 log.info("记录写入数据库成功");
 
                 // 记录上传日志
-                addVisitLog("上传文件" + tbFile.getColrealname() + " " + tbFile.getColfilename());
+                addVisitLog("上传了" + tbFile.getColrealname() + "->" + tbFile.getColfilename());
             } else {
                 log.error("记录写入数据库失败");
             }
@@ -284,7 +277,6 @@ public class UpLoadController {
 
     /**
      * 登陆后的访问日志记录
-     *
      * @param content
      */
     private void addVisitLog(String content) {

@@ -74,7 +74,7 @@ public class RegisterController {
     public boolean doCheckStudent(@RequestParam(value = "studentno") String studentno,
                                   @RequestParam(value = "realname") String realname){
         TbStudentlist studentlist = studentService.findByColstudentnoAndColrealname(studentno,realname);
-        if (studentlist!=null&&studentlist.getRegistered()!= RegisteredEnum.REGISTERED.getCode()) {
+        if (studentlist!=null&&studentlist.getRegistered().equals(RegisteredEnum.REGISTERED.getCode()) ) {
             return true;
         }
         return false;

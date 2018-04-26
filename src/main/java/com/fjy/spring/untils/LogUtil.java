@@ -3,6 +3,7 @@ package com.fjy.spring.untils;
 import com.fjy.spring.domain.TbLog;
 import com.fjy.spring.domain.TbUser;
 import com.fjy.spring.service.LogService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import static com.fjy.spring.constant.GlobalConstant.USER_SESSION_KEY;
  * @date 2018-04-26 12:45
  * 日志信息填充工具类
  */
+@Slf4j
 public class LogUtil {
 
     /**
@@ -28,14 +30,18 @@ public class LogUtil {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateNowStr = sdf.format(date);
-        TbLog log = new TbLog();
-        log.setUserid(user.getColuserid());
-        log.setColtime(dateNowStr);
-        log.setColheader(user.getColname()+" "+content);
-        log.setRequestURL(request.getRequestURL().toString());
+        TbLog tbLog = new TbLog();
+        tbLog.setUserid(user.getColuserid());
+        tbLog.setColtime(dateNowStr);
+        tbLog.setColheader(user.getColname()+" "+content);
+        tbLog.setRequestURL(request.getRequestURL().toString());
 
         //解决nginx代理后IP地址获取问题
-        log.setColip(GetIPAddrUtil.getIpAddr(request));
-        return log;
+        tbLog.setColip(GetIPAddrUtil.getIpAddr(request));
+
+        log.info(tbLog.toString());
+
+
+        return tbLog;
     }
 }

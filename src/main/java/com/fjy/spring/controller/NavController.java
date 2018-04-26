@@ -38,75 +38,75 @@ public class NavController {
 
     @GetMapping(value = {"testthymeleaf"})
     public String toTestPage(){
-        addVisitLog("测试页面 testthymeleaf");
+        addVisitLog();
         return "/dist/thymeleafTest";
     }
 
     @GetMapping(value = {"axiosTest"})
     public String toTestAxiosPage(){
-        addVisitLog("测试页面 axiosTest");
+        addVisitLog();
         return "/dist/axiosTest";
     }
 
     @GetMapping(value = {"/home"})
     public String toHomePage(){
-        addVisitLog("首页 home");
+        addVisitLog();
         return "home/home";
     }
 
     @GetMapping(value = {"/logout"})
     public String toLogOut(SessionStatus status){
         //request.getSession().getAttribute(USER_SESSION_KEY).invalidate();
-        addVisitLog("登出 logout");
+        addVisitLog();
         status.setComplete();
         return "login";
     }
 
     @GetMapping(value = {"/home/feedback"})
     public String toFeedbackPage(){
-        addVisitLog("反馈页面 /home/feedback");
+        addVisitLog();
         return "home/feedback";
     }
 
     @GetMapping(value = {"/home/about"})
     public String toAboutPage(){
-        addVisitLog("关于页面 /home/about");
+        addVisitLog();
         return "home/about";
     }
 
     @GetMapping(value = {"/home/admin"})
     public String toAdminPage(){
-        addVisitLog("管理员页面 /home/admin");
+        addVisitLog();
         return "home/admin";
     }
 
     @GetMapping(value = {"/home/admin/managecourse"})
     public String toManageCoursePage(){
-        addVisitLog("课程管理页面 /home/admin/managecourse");
+        addVisitLog();
         return "home/managecourse";
     }
 
     @GetMapping(value = {"/home/admin/manageuser"})
     public String toManageUserPage(){
-        addVisitLog("用户管理页面 /home/admin/manageuser");
+        addVisitLog();
         return "home/manageuser";
     }
 
     @GetMapping(value = {"/home/admin/homework"})
     public String toHomeworkPage(){
-        addVisitLog("作业管理页面 /home/admin/homework");
+        addVisitLog();
         return "home/homework";
     }
 
     @GetMapping(value = {"/home/user"})
     public String toUserPage(){
-        addVisitLog("个人中心页面 /home/user");
+        addVisitLog();
         return "home/user";
     }
 
     @GetMapping(value = {"/error"})
     public String toErrorPage(){
-        addVisitLog("404页面 error");
+        addVisitLog();
         return "error";
     }
 
@@ -123,11 +123,10 @@ public class NavController {
 
     /**
      * 登陆后的访问日志记录
-     * @param content
      */
-    private void addVisitLog(String content){
+    private void addVisitLog(){
         TbUser user =(TbUser)request.getSession().getAttribute(USER_SESSION_KEY);
-        TbLog log = LogUtil.addLog(user,content,request);
+        TbLog log = LogUtil.addLog(user,request.getHeader("user-agent"),request);
         logService.addLogRec(log);
     }
 }
