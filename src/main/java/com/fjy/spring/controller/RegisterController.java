@@ -2,6 +2,7 @@ package com.fjy.spring.controller;
 
 import com.fjy.spring.domain.TbStudentlist;
 import com.fjy.spring.domain.TbUser;
+import com.fjy.spring.enums.RegisteredEnum;
 import com.fjy.spring.enums.ResultEnum;
 import com.fjy.spring.exception.UserException;
 import com.fjy.spring.properties.ServerProperties;
@@ -48,6 +49,8 @@ public class RegisterController {
         //加密用户密码
         tbUser.setColpassword(new BigInteger(CodingUtil.encryptSHA(tbUser.getColpassword().getBytes())).toString(32));
         if (userService.doRegisterService(tbUser)){
+            //更新用户列表是否注册的标记
+            studentService.UpdateStudentListRegistered(tbUser.getColrealname(),tbUser.getColstudentno(),RegisteredEnum.REGISTERED.getCode());
             return true;
             /*return "redirect:" + request.getScheme() + "://" + request.getServerName() + ":"
                     + serverProperties.getPortNum() + request.getContextPath() + "/index";*/
@@ -60,8 +63,9 @@ public class RegisterController {
     @ResponseBody
     public boolean doCheckStudentNo(@RequestParam(value = "studentno") String studentno){
         TbStudentlist studentlist = studentService.findStudentByNo(studentno);
-        if (studentlist!=null)
+        if (studentlist!=null) {
             return true;
+        }
         return false;
     }
 
@@ -70,8 +74,9 @@ public class RegisterController {
     public boolean doCheckStudent(@RequestParam(value = "studentno") String studentno,
                                   @RequestParam(value = "realname") String realname){
         TbStudentlist studentlist = studentService.findByColstudentnoAndColrealname(studentno,realname);
-        if (studentlist!=null)
+        if (studentlist!=null&&studentlist.getRegistered().equals(RegisteredEnum.REGISTERED.getCode()) ) {
             return true;
+        }
         return false;
     }
 
@@ -84,8 +89,9 @@ public class RegisterController {
     @ResponseBody
     public boolean doUserName(@RequestParam(value = "name") String name){
         Optional<TbUser> user = userService.findByColname(name);
-        if (user.isPresent())
+        if (user.isPresent()) {
             return false;
+        }
         return true;
     }
 

@@ -30,24 +30,25 @@
                                        @click="submitUpload">
                                 上传到服务器
                             </el-button>
-                            <!--<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
+                            <div slot="tip" class="el-upload__tip">上传文件大小不能超过100Mb</div>
                         </el-upload>
                     </el-row>
                     <el-row>
                         <h4>发布公告</h4>
-                        <el-form :model="form">
+                        <el-form :model="NoticeForm" ref="NoticeForm">
                             <el-form-item label="公告内容">
-                                <el-input v-model="form.content" placeholder="公告内容" type="textarea"></el-input>
+                                <el-input v-model="NoticeForm.content" placeholder="公告内容" type="textarea"
+                                          name="content" ref="content"></el-input>
                             </el-form-item>
                             <el-form-item>
-                                <el-button type="primary" @click="onSubmit">添加</el-button>
+                                <el-button type="primary" @click="submitForm('NoticeForm')">添加</el-button>
                             </el-form-item>
                         </el-form>
                     </el-row>
                     <el-row>
                         <span>近期登陆日志</span><br>
                         <template>
-                            <el-table :data="logData" height="300" :default-sort="{prop: 'time', order: 'descending'}">
+                            <el-table :data="logData" height="350" :default-sort="{prop: 'time', order: 'descending'}">
                                 <el-table-column prop="colname" label="用户名" sortable>
                                 </el-table-column>
                                 <el-table-column prop="coltime" label="时间" sortable>

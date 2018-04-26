@@ -5,13 +5,22 @@ var year = dt.getFullYear();
 var cur = year + '-' + month + '-' + day;
 
 function DateDiff(sDate1, sDate2) {    //sDate1和sDate2是2002-12-18格式
-    var aDate, oDate1, oDate2, iDays
-    aDate = sDate1.split("-")
-    oDate1 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0])    //转换为12-18-2002格式
-    aDate = sDate2.split("-")
-    oDate2 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0])
-    iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24)    //把相差的毫秒数转换为天数
-    return iDays
+    let aDate, oDate1, oDate2, iDays;
+    if (compareTime(sDate1, sDate2)) {
+        return "已截止";
+    }
+    else {
+        aDate = sDate1.split("-");
+        oDate1 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]);    //转换为12-18-2002格式
+        aDate = sDate2.split("-");
+        oDate2 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]);
+        iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24);    //把相差的毫秒数转换为天数
+        return iDays
+    }
+}
+
+function displayStyle(id, type) {
+    document.getElementById(id).style.display = type;
 }
 
 var Main = {
@@ -65,6 +74,7 @@ var Main = {
                 colrealname: '',
                 colemail: ''
             },
+            iShow: true,
             rules2: {
                 colpassword: [
                     {required: true, validator: validatePass, trigger: 'blur'}
@@ -93,7 +103,7 @@ var Main = {
             activeName: 'login',
             fileList: [],
             DownloadList: [],
-            NoticeList:[
+            NoticeList: [
                 {
                     noticeid: 1,
                     adminid: 1,
@@ -107,216 +117,12 @@ var Main = {
                     issueTime: "2018-2-26 11:13"
                 }
             ],
-            VersionList:[
+            VersionList: [
                 {
-                    date:'2018-02-24',
-                    content:'实现对重复文件自动重命名',
-                    version:'V1.11',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-24',
-                    content:'实现对文件是否重命名的控制，目前设定为管理员上传的文件不会重命名，完善日志输出存储',
-                    version:'V1.10',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-24',
-                    content:'添加运行日志处理，频率为每天对error和info级别的日志进行文件保存，实现判断注册用户名是否已存在',
-                    version:'V1.9.1',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-24',
-                    content:'实现前端对学号和用户名的异步判断，核心技术为axios',
-                    version:'V1.9',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-24',
-                    content:'修复注册表单输入正确不会显示反馈图标的问题',
-                    version:'V1.8.2',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-24',
-                    content:'修复文件批量下载的错误，为压缩文件进行统一管理，批量下载不支持多线程',
-                    version:'V1.8.1',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-24',
-                    content:'实现文件批量下载',
-                    version:'V1.8',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-23',
-                    content:'实现对未交作业人员的查询和展示',
-                    version:'V1.7',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-23',
-                    content:'去除js对绝对地址的依赖，为日志添加排序选项',
-                    version:'V1.6.1',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-23',
-                    content:'实现用户仅能查看自己提交的文件',
-                    version:'V1.6',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-23',
-                    content:'修复用户信息修改页面数据绑定方式，改为使用axios进行数据获取和绑定',
-                    version:'V1.5',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-22',
-                    content:'实现后台对未交作业人员的查询',
-                    version:'V1.4',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-22',
-                    content:'实现用户信息修改',
-                    version:'V1.3.1',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-21',
-                    content:'实现用户信息修改页面session传值',
-                    version:'V1.3',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-09',
-                    content:'实现用户管理和作业管理数据读取',
-                    version:'V1.2.1',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-09',
-                    content:'实现单文件删除',
-                    version:'V1.2',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-08',
-                    content:'完成课程管理数据读取，修复页面加载css，js错误',
-                    version:'V1.1.2',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-08',
-                    content:'完成管理员主页的数据读取',
-                    version:'V1.1.1',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-08',
-                    content:'完成前端界面设计',
-                    version:'V1.0',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-08',
-                    content:'实现表单异步提交并显示消息',
-                    version:'V0.15',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-07',
-                    content:'实现作业上传自动创建文件夹',
-                    version:'V0.14',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-07',
-                    content:'实现作业获取和展示',
-                    version:'V0.13',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-06',
-                    content:'完成前端上传页面设计',
-                    version:'V0.12',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-06',
-                    content:'实现登录日志记录',
-                    version:'V0.11',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-05',
-                    content:'提高加密安全性',
-                    version:'V0.10.1',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-05',
-                    content:'实现用户密码SHA加密',
-                    version:'V0.10',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-05',
-                    content:'实现登录拦截器',
-                    version:'V0.9',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-05',
-                    content:'实现注册功能',
-                    version:'V0.8',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-05',
-                    content:'实现json数据绑定',
-                    version:'V0.7',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-04',
-                    content:'实现多文件上传，按钮vue传值（vue2.1特性）',
-                    version:'V0.6',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-04',
-                    content:'实现Element组件+单文件上传',
-                    version:'V0.5',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-04',
-                    content:'使用thymeleaf模板引擎，引入frame框架和公用css和js文件',
-                    version:'V0.4',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-02-03',
-                    content:'实现文件上传和数据库记录、Element+vue登录注册UI',
-                    version:'V0.3',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-01-30',
-                    content:'实现登录，编写错误码，实现错误码返回json',
-                    version:'V0.2',
-                    user:'F嘉阳'
-                },
-                {
-                    date:'2018-01-30',
-                    content:'实现数据库查询用户，获取密码，编写了单元测试类',
-                    version:'V0.1',
-                    user:'F嘉阳'
+                    date: '2018-01-30',
+                    content: '实现数据库查询用户，获取密码，编写了单元测试类',
+                    version: 'V0.1',
+                    user: 'F嘉阳'
                 }
             ],
             tableHomeworkData: [
@@ -367,16 +173,12 @@ var Main = {
     },
     mounted() {
         this.$nextTick(() => {
-            var that = this;
-            axios.get(getRootPath_web()+'/download/findone')
-                .then(function (response) {
-                    console.log(response.data);
-                    that.DownloadList = response.data;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            axios.get(getRootPath_web()+'/home/findAllHomework')
+            let that = this;
+            /*setInterval(function(){
+                that.getFileList();
+            },1000);*/
+            this.getFileList();
+            axios.get(getRootPath_web() + '/home/findAllHomework')
                 .then(function (response) {
                     console.log(response.data);
                     that.tableHomeworkData = response.data;
@@ -385,7 +187,7 @@ var Main = {
                 .catch(function (error) {
                     console.log(error);
                 });
-            axios.get(getRootPath_web()+'/home/findAllNotice')
+            axios.get(getRootPath_web() + '/home/findAllNotice')
                 .then(function (response) {
                     console.log(response.data);
                     that.NoticeList = response.data;
@@ -394,14 +196,41 @@ var Main = {
                 .catch(function (error) {
                     console.log(error);
                 });
+            axios.get(getRootPath_web() + '/home/findallversion')
+                .then(function (response) {
+                    console.log(response.data);
+                    that.VersionList = response.data;
+                    //that.limitTime = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         })
     },
     methods: {
+        getFileList() {
+            let that = this;
+            axios.get(getRootPath_web() + '/home/download/findone')
+                .then(function (response) {
+                    //console.log(response.data);
+                    that.DownloadList = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    that.openNotiError("失败", "获取文件列表失败！");
+                });
+        },
         openNotiSuccess(title, content) {
             this.$notify({
                 title: title,
                 message: content,
                 type: 'success'
+            });
+        },
+        openNotiError(title, content) {
+            this.$notify.error({
+                title: title,
+                message: content
             });
         },
         openSuccess(content) {
@@ -411,16 +240,18 @@ var Main = {
             });
         },
         uploadURL(row) {
-            return getRootPath_web()+"/moreUpload?courseName=" + row.coursename + "&folder=" + row.workfolder+"&rename=true";
+            return getRootPath_web() + "/home/moreUpload?courseName=" + row.coursename + "&folder=" + row.workfolder + "&workid=" + row.workid + "&rename=true";
+
         },
         limitTime(row) {
             return DateDiff(row.worktime.replace(/([^\s]+)\s.*/, "$1"), cur);
         },
         submitForm(formName, url) {
             this.$refs[formName].validate((valid) => {
+                let that = this;
                 if (valid) {
                     axios({
-                        url: getRootPath_web()+'/' + url,
+                        url: getRootPath_web() + '/' + url,
                         method: 'post',
                         data: {
                             content: this.$refs.content.value
@@ -436,9 +267,22 @@ var Main = {
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
                         }
-                    })
-                    console.log(this.$refs.content.value)
-                    this.openNotiSuccess("成功", "反馈成功！")
+                    }).then(function (response) {
+                        console.log(response.data);
+                        if (response.data === true) {
+                            //that.$refs[formName].submit;
+                            //return true;
+                            that.openNotiSuccess("成功", "反馈成功！")
+                        } else if (response.data === false) {
+                            that.openNotiError("失败", "反馈失败！");
+                        } else {
+                            that.openNotiError("错误", response.data.message);
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                        that.openNotiError("错误", "服务器错误！");
+                    });
+                    //console.log(this.$refs.content.value)
                     //this.$options.methods.openNotiSuccess.bind(this)();
                     //alert('submit!');
                 } else {
@@ -454,21 +298,27 @@ var Main = {
             console.log(row.colfileid);
         },
         submitUpload() {
+            let that = this;
             this.$refs.upload.submit();
+            this.openNotiSuccess("成功", "文件上传成功！");
+            setTimeout(function () {
+                that.getFileList();
+            }, 1000);
         },
         handleRemove(file, fileList) {
             console.log(file, fileList);
         },
         ClickToJump(targe) {
-            window.location.href = getRootPath_web()+"/" + targe;
+            window.location.href = getRootPath_web() + "/" + targe;
         },
         handleDownload(row) {
             /*var url = window.location.protocol+"://"+window.location.host+":"+window.location.port+"/"*/
-            window.open(getRootPath_web()+"/download/dodownload?fileId=" + row.colfileid);
+            window.open(getRootPath_web() + "/home/download/dodownload?fileId=" + row.colfileid);
         },
         handleDelete(row) {
+            let that = this;
             axios({
-                url: getRootPath_web()+'/home/filedelete',
+                url: getRootPath_web() + '/home/filedelete',
                 method: 'post',
                 data: {
                     fileid: row.colfileid
@@ -484,11 +334,64 @@ var Main = {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
+            }).then(function (response) {
+                console.log(response.data);
+                if (response.data === true) {
+                    //that.$refs[formName].submit;
+                    //return true;
+                    that.openNotiSuccess("成功", "删除成功！");
+                    that.getFileList();
+                } else if (response.data === false) {
+                    that.openNotiError("失败", "删除失败!");
+                } else {
+                    that.openNotiError("错误", response.data.message);
+                }
+            }).catch(function (error) {
+                console.log(error);
+                that.openNotiError("错误", "服务器错误！");
             });
-            this.openNotiSuccess("成功", "删除成功！");
         },
-        handlePreview(file) {
-            console.log(file);
+        isShow(row) {
+            let that = this;
+            // console.log(row.worktime + "||" + row.workid);
+            if (compareTime(cur, row.worktime)) {
+                console.log("true");
+                return true;
+                //提交时间合法
+                //document.getElementById("btn-group").style.display="";
+                //displayStyle("btn-show"+row.workid,"none");
+                //displayStyle("btn-group"+row.workid,"");
+            } else {
+                console.log("false");
+                return false;
+                //提交时间不合法
+                //displayStyle("btn-show"+row.workid,"");
+                //displayStyle("btn-group"+row.workid,"none");
+                //displayStyle("btn-show");
+                //document.getElementById("btn-show").style.display="";
+            }
+        },
+        handlePreview(row) {
+            console.log(row);
+            /* let that = this;
+             console.log(row.worktime+"||"+row.workid);
+            if (compareTime(cur,row.worktime)){
+                 that.isShow = true;
+                 console.log("Show"+that.isShow);
+                 //提交时间合法
+                 //document.getElementById("btn-group").style.display="";
+                 //displayStyle("btn-show"+row.workid,"none");
+                 //displayStyle("btn-group"+row.workid,"");
+                 }
+             if (!compareTime(cur,row.worktime)){
+                 that.isShow = false;
+                 console.log("EShow"+that.isShow);
+                 //提交时间不合法
+                 //displayStyle("btn-show"+row.workid,"");
+                 //displayStyle("btn-group"+row.workid,"none");
+                 //displayStyle("btn-show");
+                 //document.getElementById("btn-show").style.display="";
+             }*/
         },
         handleExceed(files, fileList) {
             this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);

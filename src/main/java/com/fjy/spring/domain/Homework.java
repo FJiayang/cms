@@ -30,4 +30,10 @@ public class Homework {
 
     @Column(name = "workremark")
     private String Remark;
+
+    @Column(name = "pre")
+    private String filePrefix;
+
+    @Column(name = "suf")
+    private String fileSuffix;
 }

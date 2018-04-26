@@ -60,7 +60,7 @@
                             </el-form-item>
                             <el-form-item>
                                 <el-button type="primary"
-                                           native-type="submit">提交
+                                           @click="submitForm('ruleForm2')">提交
                                 </el-button>
                                 <el-button @click="resetForm('ruleForm2')">重置</el-button>
                             </el-form-item>
@@ -109,36 +109,12 @@
                     <el-row>
                         <el-col :span="24">
                             <div class="grid-content">
-                                <el-card class="box-card hidden-xs-only">
-                                    <div slot="header" class="clearfix">
-                                        <span>作业提交倒计时</span>
-                                        <span style="color: red"> 功能未完成</span>
-                                    </div>
-                                    <div class="text item">
-                                        <el-table :data="tableHomeworkData" style="width: 100%"
-                                                  :default-sort="{prop: 'coursename', order: 'descending'}">
-                                            <el-table-column prop="coursename" label="科目" sortable width="180">
-                                            </el-table-column>
-                                            <el-table-column label="倒计时" sortable>
-                                                <template slot-scope="scope">
-                                                    {{limitTime(scope.row)}}
-                                                </template>
-                                            </el-table-column>
-                                        </el-table>
-                                    </div>
-                                </el-card>
+                                <el-card th:include="dist/thymeleaf/layout :: timelimit"></el-card>
                             </div>
                         </el-col>
                     </el-row>
                     <el-row>
-                        <el-card class="box-card hidden-xs-only">
-                            <div slot="header" class="clearfix">
-                                <span>公告</span>
-                            </div>
-                            <div v-for="o in 4" :key="o" class="text item">
-                                {{'公告内容 ' + o }}
-                            </div>
-                        </el-card>
+                        <el-card th:include="dist/thymeleaf/layout :: notice"></el-card>
                     </el-row>
                 </el-col>
             </el-main>

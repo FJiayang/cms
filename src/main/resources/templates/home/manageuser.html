@@ -26,7 +26,7 @@
                             <el-button @click="togglePost()" type="warning" plain>设为管理员</el-button>
                             <el-button @click="togglePost()" type="danger" plain>删除用户</el-button>
                         </div>
-                        <el-table ref="multipleTable" :data="userData"  @selection-change="handleSelectionChange"
+                        <el-table ref="multipleTable" :data="userData" height="650"  @selection-change="handleSelectionChange"
                                   tooltip-effect="dark" style="width: 100%" >
                             <el-table-column type="selection" prop='coluserid'>
                             </el-table-column>

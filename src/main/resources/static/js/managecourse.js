@@ -18,7 +18,12 @@ var Main = {
                     teacherrealname: "root"
                 }
             ],
-            multipleSelection: []
+            multipleSelection: [],
+            courseList:[
+                {courseName:"root"},
+                {courseName:"root2"},
+            ],
+            teacherList:[],
         }
     },
     mounted() {

@@ -64,8 +64,25 @@ var Main = {
         var checkName1 = (rule, value, callback) => {
             if (!value) {
                 return callback(new Error('用户名不能为空'));
-            } else {
-                callback()
+            }else {
+                //判断用户名是否已存在
+                axios.get(getRootPath_web() + '/beforeLoginCheckNameExist', {
+                    params: {
+                        name: value
+                    }
+                })
+                    .then(function (response) {
+                        console.log(response.data);
+                        if (response.data === true) {
+                            callback()
+                        } else {
+                            return callback(new Error('用户名未注册'));
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        that.errorNotify(error.message);
+                    });
             }
         };
         var checkNo = (rule, value, callback) => {
@@ -106,7 +123,7 @@ var Main = {
                     .then(function (response) {
                         console.log(response.data);
                         if (response.data === false) {
-                            return callback(new Error('姓名与学号不匹配'));
+                            return callback(new Error('姓名与学号不匹配或该用户已注册'));
                         } else {
                             callback()
                         }

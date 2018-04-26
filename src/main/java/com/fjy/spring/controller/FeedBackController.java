@@ -33,7 +33,7 @@ public class FeedBackController {
     HttpServletRequest request;
 
     @PostMapping("/home/dofeedback")
-    public void doFeedBack(@RequestParam(value = "content") String content){
+    public boolean doFeedBack(@RequestParam(value = "content") String content){
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateNowStr = sdf.format(date);
@@ -45,7 +45,9 @@ public class FeedBackController {
         RedirectUtil red = new RedirectUtil();
         if (feedBackService.addContent(feedBack)){
             log.info("反馈信息写入数据库成功");
+            return true;
         }
+        return false;
 
     }
 }

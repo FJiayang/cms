@@ -32,6 +32,7 @@
                         <li>具备完整开发和维护文档，提供错误码、数据字典</li>
                         <li>URL为RESTful API风格，便于开发和维护</li>
                         <li>异常统一管理</li>
+                        <li><a href="https://blog.fjy8018.top/index.php/archives/100/">更多</a></li>
                     </ul>
                     <br>
                     <ul>
@@ -42,7 +43,11 @@
                     <br>
                     <el-button type="text" @click="dialogTableVisible = true">查看更新日志</el-button>
 
-                    <el-dialog title="GitLab更新日志" :visible.sync="dialogTableVisible">
+                    <el-dialog title="GitLab更新日志"
+                               :visible.sync="dialogTableVisible"
+                               width="88%"
+
+                    >
                         <el-table :data="VersionList" :default-sort="{prop: 'date', order: 'descending'}">
                             <el-table-column property="date" label="日期" sortable></el-table-column>
                             <el-table-column property="content" label="内容" sortable></el-table-column>
@@ -52,10 +57,10 @@
                     </el-dialog>
                     <ul>
                         <h3>友情链接</h3>
-                        <li><a href="http://web.fjy8018.top:8080/blog/">F嘉阳 博客</a></li>
-                        <li><a href="http://www.fjy8018.top:8080/orderbook/">订书系统</a></li>
+                        <li><a href="https://blog.fjy8018.top/">F嘉阳 博客</a></li>
+                        <li><a href="http://orderbook.thresh.xin/">订书系统</a></li>
                         <li><a href="https://www.imis2.top/">班级网站</a></li>
-                        <li><a href="http://git.fjy8018.top:8080/users/sign_in">班级代码托管网站（私人）</a></li>
+                        <li><a href="http://home.fjy8018.top:8099/users/sign_in">班级代码托管网站（私人）</a></li>
                     </ul>
                 </el-col>
                 <el-col :md="5" :lg="5" :sm="5" :xl="5" class="hidden-xs-only"></el-col>
@@ -64,6 +69,6 @@
         </el-container>
     </el-container>
 </div>
-<script th:src="@{/js/homePage.js}"></script>
+<script th:src="@{/js/homepage.js}"></script>
 </body>
 </html>

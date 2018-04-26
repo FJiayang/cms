@@ -47,9 +47,11 @@
                     <h4>添加课程</h4>
                     <el-form :inline="true" :model="formInline" class="demo-form-inline">
                         <el-form-item label="课程名">
-                            <el-autocomplete class="inline-input" v-model="state1"
-                                             :fetch-suggestions="querySearchAsync" placeholder="课程名"
-                                             @select="handleSelect"></el-autocomplete>
+                            <el-select placeholder="请选择课程" v-model="courseList.courseName">
+                                <el-option v-for="course in courseList" :value="course.courseName" :label="course.courseName">{{course.courseName}}</el-option>
+                                <!--<el-option label="区域一" value="shanghai"></el-option>
+                                <el-option label="区域二" value="beijing"></el-option>-->
+                            </el-select>
                         </el-form-item>
                         <el-form-item label="教师名">
                             <el-autocomplete class="inline-input" v-model="state2"

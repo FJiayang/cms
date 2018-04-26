@@ -2,6 +2,8 @@
 server:
   servlet:
     context-path: /cms
+    session:
+      timeout: 1440s
   port: 8080
 serverproperties:
   port_num: 8080
@@ -22,7 +24,12 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 100Mb
+      max-request-size: 100Mb
+
+
   #resources:
   #  static-locations: classpath:/templates/
 debug: true
-
