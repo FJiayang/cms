@@ -1,5 +1,6 @@
 var dt = new Date();
 let th = this;
+let username = "";
 /*let username = this.ruleForm2.colname.value;*/
 var month = dt.getMonth() + 1;
 var day = dt.getDate();
@@ -47,7 +48,7 @@ var Main = {
                         console.log(response.data);
                         if (response.data === true) {
                             callback();
-                        } else if (value !== that.ruleForm2.colname) {
+                        } else if (value !== username) {
                             return callback(new Error('用户名已存在'));
                         } else {
                             callback();
@@ -138,9 +139,12 @@ var Main = {
                 colemail: '',
                 colpassword: '',
                 checkPass: '',
+                question: '',
+                answer: ''
             },
             ruleForm3: {
                 coluserid: '',
+                colname: '',
                 question: '',
                 answer: ''
             },
@@ -243,7 +247,7 @@ var Main = {
                 var that = this;
                 if (valid) {
                     axios({
-                        url: getRootPath_web() + '/home/userUpdate',
+                        url: getRootPath_web() + url,
                         method: 'post',
                         data: that.ruleForm2
                         ,
@@ -352,7 +356,9 @@ var Main = {
             axios.get(getRootPath_web() + '/home/userinfo')
                 .then(function (response) {
                     //console.log(response.data);
-                    that.ruleForm2 = response.data;
+                    // 注意此处赋值为引用赋值
+                    that.ruleForm3 = that.ruleForm2 = response.data;
+                    username=response.data.colname;
                 })
                 .catch(function (error) {
                     //console.log(error);

@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
@@ -12,7 +13,7 @@ public class TbUserque {
 
     @Id
     @Column(name = "coluserid")
-    private Integer userid;
+    private Integer coluserid;
 
     @Column(name = "colquestion")
     private String question;

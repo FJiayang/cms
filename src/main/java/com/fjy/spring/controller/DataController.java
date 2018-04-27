@@ -130,6 +130,7 @@ public class DataController {
      */
     @PostMapping("/home/adduserque")
     public boolean adduserque(TbUserque userque) throws Exception {
+        System.out.println("【问题】"+userque.toString());
         //对密保问题加密存储
         userque.setAnswer(new BigInteger(CodingUtil.encryptSHA(userque.getAnswer().getBytes())).toString(32));
         return userService.addUserQue(userque);

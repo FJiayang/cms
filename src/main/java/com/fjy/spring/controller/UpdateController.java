@@ -43,18 +43,25 @@ public class UpdateController {
     @PostMapping(value = "/home/userUpdate")
     @ResponseBody
     public boolean doUserUpdate(TbUser tbUser)throws Exception{
+        System.out.println("【tbUser】"+tbUser.toString());
         if (tbUser.getColuserid()==null){
             throw new UserException(ResultEnum.ID_NULLPOINT);
         }
         if (tbUser.getColpassword()!=null){
             userService.updateColpasswordByColname(tbUser.getColpassword(),tbUser.getColname());
         }
+
         //注销原本的注册标记
         VUserinfo tempUser = userService.findUserInfo(tbUser.getColuserid());
-        studentService.UpdateStudentListRegistered(tempUser.getColrealname(),tempUser.getColstudentno(),
+
+        System.out.println("【VUserinfo】"+tempUser.toString());
+
+        studentService.updateStudentListRegistered(tempUser.getColrealname(),tempUser.getColstudentno(),
                 RegisteredEnum.UNREGISTERED.getCode());
+
+
         if (userService.doRegisterService(tbUser)){
-            studentService.UpdateStudentListRegistered(tbUser.getColrealname(),tbUser.getColstudentno(),
+            studentService.updateStudentListRegistered(tbUser.getColrealname(),tbUser.getColstudentno(),
                     RegisteredEnum.REGISTERED.getCode());
             log.info(tbUser.getColname()+" 信息更新成功");
             //写入数据库日志

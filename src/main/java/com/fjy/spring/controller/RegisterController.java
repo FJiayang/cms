@@ -50,7 +50,7 @@ public class RegisterController {
         tbUser.setColpassword(new BigInteger(CodingUtil.encryptSHA(tbUser.getColpassword().getBytes())).toString(32));
         if (userService.doRegisterService(tbUser)){
             //更新用户列表是否注册的标记
-            studentService.UpdateStudentListRegistered(tbUser.getColrealname(),tbUser.getColstudentno(),RegisteredEnum.REGISTERED.getCode());
+            studentService.updateStudentListRegistered(tbUser.getColrealname(),tbUser.getColstudentno(),RegisteredEnum.REGISTERED.getCode());
             return true;
             /*return "redirect:" + request.getScheme() + "://" + request.getServerName() + ":"
                     + serverProperties.getPortNum() + request.getContextPath() + "/index";*/
@@ -75,9 +75,9 @@ public class RegisterController {
                                   @RequestParam(value = "realname") String realname){
         TbStudentlist studentlist = studentService.findByColstudentnoAndColrealname(studentno,realname);
         if (studentlist!=null&&studentlist.getRegistered().equals(RegisteredEnum.REGISTERED.getCode()) ) {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     /**

@@ -60,7 +60,7 @@
                             </el-form-item>
                             <el-form-item>
                                 <el-button type="primary"
-                                           @click="submitForm('ruleForm2')">提交
+                                           @click="submitForm('ruleForm2','/home/userUpdate')">提交
                                 </el-button>
                                 <el-button @click="resetForm('ruleForm2')">重置</el-button>
                             </el-form-item>
@@ -71,11 +71,10 @@
                         <el-form
                                 :model="ruleForm3" status-icon :rules="rules3" ref="ruleForm3"
                                 label-width="100px" class="demo-ruleForm"
-                                action="/cms/home/adduserque"
                                 method="POST" name="ruleForm3">
                             <el-form-item label="ID"
                                           prop="coluserid">
-                                <el-input :readonly="true" v-model="ruleForm2.coluserid"
+                                <el-input :readonly="true" v-model="ruleForm3.coluserid"
                                           name="userid" readonly></el-input>
                             </el-form-item>
                             <el-form-item label="问题"
@@ -98,7 +97,7 @@
                             </el-form-item>
                             <el-form-item>
                                 <el-button type="primary"
-                                           @click="submitForm('ruleForm3','home/adduserque')">提交
+                                           @click="submitForm('ruleForm3','/home/adduserque')">提交
                                 </el-button>
                                 <el-button @click="resetForm('ruleForm3')">重置</el-button>
                             </el-form-item>

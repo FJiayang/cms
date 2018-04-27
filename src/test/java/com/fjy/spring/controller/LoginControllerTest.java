@@ -30,12 +30,12 @@ public class LoginControllerTest {
     @Test
     public void doLogin() throws Exception {
         //测试正常登录
-        mvc.perform(MockMvcRequestBuilders.post("/login/dologin").param("colname", "root").param("colpassword", "root"))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        mvc.perform(MockMvcRequestBuilders.post("/login/dologin").param("colname", "root").param("colpassword", "admin"))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
         //测试密码错误
         mvc.perform(MockMvcRequestBuilders.post("/login/dologin").param("colname", "root").param("colpassword", "123"))
                 .andExpect(MockMvcResultMatchers.content().json("{\n" +
-                        "    \"code\": 105,\n" +
+                        "    \"code\": 605,\n" +
                         "    \"message\": \"用户名或密码错误\",\n" +
                         "    \"data\": null\n" +
                         "}"));

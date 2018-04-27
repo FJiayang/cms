@@ -22,8 +22,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/db_imis2?useUnicode=true&characterEncoding=utf-8&useSSL=true
-    username: xxx
-    password: xxx
+    username: imis2
+    password: 2015imis2
 
   servlet:
     multipart:
