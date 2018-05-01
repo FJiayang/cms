@@ -301,6 +301,7 @@ var Main = {
             let that = this;
             if (file.status==="success"){
                 that.openNotiSuccess("成功", file.name+"上传成功！");
+                that.getFileList();
             }else{
                 that.openNotiError("失败", file.name+"上传失败！");
             }
@@ -312,9 +313,6 @@ var Main = {
         submitUpload() {
             let that = this;
             this.$refs.upload.submit();
-            setTimeout(function () {
-                that.getFileList();
-            }, 1000);
         },
         handleRemove(file, fileList) {
             console.log(file, fileList);
