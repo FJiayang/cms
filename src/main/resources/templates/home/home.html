@@ -129,6 +129,8 @@
                                                         <el-upload class="upload-demo" ref="upload"
                                                                    :action="uploadURL(props.row)"
                                                                    :on-preview="handlePreview(props.row)"
+                                                                   :on-success="uploadSuccess"
+                                                                   :on-error="uploadSuccess"
                                                                    :on-remove="handleRemove" :file-list="fileList"
                                                                    :auto-upload="false"
                                                                    v-show="isShow(props.row)"

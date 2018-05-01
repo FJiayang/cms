@@ -10,6 +10,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import javax.transaction.Transactional;
+
 import static org.junit.Assert.*;
 
 
@@ -28,6 +30,7 @@ public class LoginControllerTest {
     }
 
     @Test
+    @Transactional
     public void doLogin() throws Exception {
         //测试正常登录
         mvc.perform(MockMvcRequestBuilders.post("/login/dologin").param("colname", "root").param("colpassword", "admin"))

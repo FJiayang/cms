@@ -1,3 +1,12 @@
+let datax = [
+    {
+        courseNo: 1,
+        courseName: "信息安全T",
+        courseTime: "2018-02-07 20:42:28.0",
+        teacherusername: "FJY1",
+        teacherrealname: "root1"
+    }
+];
 var Main = {
     data() {
         return {
@@ -12,10 +21,10 @@ var Main = {
             tableData3: [
                 {
                     courseNo: 1,
-                    courseName: "信息安全",
-                    courseTime: "2018-02-06 20:42:28.0",
-                    teacherusername: "FJY",
-                    teacherrealname: "root"
+                    courseName: "信息安全T",
+                    courseTime: "2018-02-07 20:42:28.0",
+                    teacherusername: "FJY1",
+                    teacherrealname: "root1"
                 }
             ],
             multipleSelection: [],
@@ -33,6 +42,7 @@ var Main = {
                 .then(function (response) {
                     console.log(response.data);
                     that.tableData3 = response.data;
+                    datax=response.data;
                 })
                 .catch(function (error) {
                     console.log(error);

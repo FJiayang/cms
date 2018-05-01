@@ -26,7 +26,7 @@ public class RegisterControllerTest {
     @Test
     @Transactional
     public void doRegister()throws Exception {
-        //测试正常注册,abc每次调试必须改，因为唯一约束
+        // 测试正常注册
         mvc.perform(MockMvcRequestBuilders.post("/register/doregister")
                 .param("colname", "abc")
                 .param("colpassword", "123456")
@@ -38,11 +38,11 @@ public class RegisterControllerTest {
 
     @Test
     public void doCheckStudentNo()throws Exception {
-        //测试非法学号检查
+        // 测试非法学号检查
         mvc.perform(MockMvcRequestBuilders.get("/CheckStudentNo")
                 .param("studentno","0003"))
                 .andExpect(MockMvcResultMatchers.content().string("false"));
-        //测试合法学号检查
+        // 测试合法学号检查
         mvc.perform(MockMvcRequestBuilders.get("/CheckStudentNo")
                 .param("studentno","15251101238"))
                 .andExpect(MockMvcResultMatchers.content().string("true"));
@@ -50,25 +50,25 @@ public class RegisterControllerTest {
 
     @Test
     public void doCheckStudent()throws Exception {
-        //测试学号与姓名不匹配
+        // 测试学号与姓名不匹配
         mvc.perform(MockMvcRequestBuilders.get("/CheckStudent")
-                .param("studentno","15251101238")
-                .param("realname","符嘉"))
-                .andExpect(MockMvcResultMatchers.content().string("true"));
-        //测试学号与姓名匹配
-        mvc.perform(MockMvcRequestBuilders.get("/CheckStudent")
-                .param("studentno","15251101238")
-                .param("realname","符嘉阳"))
+                .param("studentno","15251101243")
+                .param("realname","杨诗"))
                 .andExpect(MockMvcResultMatchers.content().string("false"));
+        // 测试学号与姓名匹配
+        mvc.perform(MockMvcRequestBuilders.get("/CheckStudent")
+                .param("studentno","15251101243")
+                .param("realname","杨诗敏"))
+                .andExpect(MockMvcResultMatchers.content().string("true"));
     }
 
     @Test
     public void doUserName()throws Exception {
-        //测试用户名已存在
+        // 测试用户名已存在
         mvc.perform(MockMvcRequestBuilders.get("/CheckUserName")
                 .param("name","root"))
                 .andExpect(MockMvcResultMatchers.content().string("false"));
-        //测试用户名不存在
+        // 测试用户名不存在
         mvc.perform(MockMvcRequestBuilders.get("/CheckUserName")
                 .param("name","root1"))
                 .andExpect(MockMvcResultMatchers.content().string("true"));
