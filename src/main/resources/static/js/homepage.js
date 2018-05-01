@@ -196,6 +196,12 @@ var Main = {
                 .catch(function (error) {
                     console.log(error);
                 });
+
+        })
+    },
+    methods: {
+        showVersion(){
+            let that = this;
             axios.get(getRootPath_web() + '/home/findallversion')
                 .then(function (response) {
                     console.log(response.data);
@@ -205,9 +211,8 @@ var Main = {
                 .catch(function (error) {
                     console.log(error);
                 });
-        })
-    },
-    methods: {
+            this.dialogTableVisible = true;
+        },
         getFileList() {
             let that = this;
             axios.get(getRootPath_web() + '/home/download/findone')
