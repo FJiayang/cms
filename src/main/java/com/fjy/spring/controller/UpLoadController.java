@@ -241,7 +241,7 @@ public class UpLoadController {
             tbFile.setColrealname(filename);
             //文件自动学号+姓名命名
             tbFile.setColfilepath(pathname);
-            tbFile.setColip(request.getRemoteAddr());
+            tbFile.setColip(GetIPAddrUtil.getIpAddr(request));
             tbFile.setColuserid(user.getColuserid());
             tbFile.setCourseName(courseName);
             tbFile.setWorkFolder(folder);
