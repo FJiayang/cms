@@ -22,6 +22,8 @@
                         <span>上传模板文件</span>
                         <el-upload class="upload-demo" ref="upload"
                                    :action="uploadURL()"
+                                   :on-success="uploadSuccess"
+                                   :on-error="uploadSuccess"
                                    :on-preview="handlePreview"
                                    :on-remove="handleRemove" :file-list="fileList" :auto-upload="false"
                                    name="imageFile">

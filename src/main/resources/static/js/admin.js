@@ -77,6 +77,18 @@ var Main = {
                 message: content
             });
         },
+        uploadSuccess (response, file, fileList) {
+            let that = this;
+            if (file.status==="success"){
+                that.openNotiSuccess("成功", file.name+"上传成功！");
+            }else{
+                that.openNotiError("失败", file.name+"上传失败！");
+            }
+            /*            console.log('response', response);
+                        console.log('file',file,fileList);
+                        console.log('fileList',fileList);
+                        console.log("信息"+file.status+"|"+file.name)*/
+        },
         openSuccess(content) {
             this.$message({
                 message: content,
