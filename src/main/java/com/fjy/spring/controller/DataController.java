@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -54,7 +55,17 @@ public class DataController {
 
     @GetMapping("/home/findAllHomework")
     public List<VWorkDetail> findAllHomework() {
-        List<VWorkDetail> homeworks = workDetailService.findAll();
+        Format f = new SimpleDateFormat("yyyy-MM-dd");
+        Date today = new Date();
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(today);
+        // 今天-1天
+        c.add(Calendar.DAY_OF_MONTH, -1);
+
+        Date tomorrow = c.getTime();
+
+        List<VWorkDetail> homeworks = workDetailService.findAllVWorkDetailAfterTime(f.format(tomorrow));
         if (homeworks != null) {
             return homeworks;
         }

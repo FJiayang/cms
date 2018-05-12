@@ -33,4 +33,8 @@ public class HomeworkService {
         }
         return null;
     }
+
+    public List<VHomework> findAllVHomeworkAfterTime(String time){
+        return vHomeworkRepository.findAllByTimeAfter(time);
+    }
 }

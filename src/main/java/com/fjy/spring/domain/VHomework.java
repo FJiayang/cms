@@ -13,24 +13,24 @@ import javax.persistence.*;
 public class VHomework {
     @Id
     @Column(name = "workid")
-    private Integer Id;
+    private Integer id;
 
     @Column(name = "workname")
-    private String Name;
+    private String name;
 
     @Column(name = "worktime")
-    private String Time;
+    private String time;
 
     @Column(name = "colfileid")
     private Integer fileid;
 
     @Column(name = "workfolder")
-    private String Folder;
+    private String folder;
 
     @Column(name = "coursename")
     private String courseName;
 
     @Column(name = "workremark")
-    private String Remark;
+    private String remark;
 
 }

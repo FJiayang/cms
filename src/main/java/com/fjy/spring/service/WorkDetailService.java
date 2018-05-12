@@ -15,4 +15,8 @@ public class WorkDetailService {
     public List<VWorkDetail> findAll(){
         return workDetailRepository.findAll();
     }
+
+    public List<VWorkDetail> findAllVWorkDetailAfterTime(String time){
+        return workDetailRepository.findAllByWorktimeAfter(time);
+    }
 }
