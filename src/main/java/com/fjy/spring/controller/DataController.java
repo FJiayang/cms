@@ -60,12 +60,12 @@ public class DataController {
 
         Calendar c = Calendar.getInstance();
         c.setTime(today);
-        // 今天-1天
-        c.add(Calendar.DAY_OF_MONTH, -1);
+        // 今天-2天，因为数据库比较是">"号，即不包含当天
+        c.add(Calendar.DAY_OF_MONTH, -2);
 
-        Date tomorrow = c.getTime();
+        Date yesterday = c.getTime();
 
-        List<VWorkDetail> homeworks = workDetailService.findAllVWorkDetailAfterTime(f.format(tomorrow));
+        List<VWorkDetail> homeworks = workDetailService.findAllVWorkDetailAfterTime(f.format(yesterday));
         if (homeworks != null) {
             return homeworks;
         }
@@ -110,7 +110,17 @@ public class DataController {
 
     @GetMapping("/home/findallvhomework")
     public List<VHomework> findAllVHomework() {
-        List<VHomework> vHomeworks = homeworkService.findAllVHomework();
+        Format f = new SimpleDateFormat("yyyy-MM-dd");
+        Date today = new Date();
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(today);
+        // 今天-2天，因为数据库比较是">"号，即不包含当天
+        c.add(Calendar.DAY_OF_MONTH, -5);
+
+        Date yesterday = c.getTime();
+
+        List<VHomework> vHomeworks = homeworkService.findAllVHomeworkAfterTime(f.format(yesterday));
         if (vHomeworks != null) {
             return vHomeworks;
         }
