@@ -1,4 +1,14 @@
+
+
+
 # 班级作业提交系统
+
+![license](https://img.shields.io/static/v1?label=license&message=MPL&color=blue)
+
+GitHub Account: [FJiayang](https://github.com/FJiayang)
+
+OpenSource Address: [cms](https://github.com/FJiayang/cms)
+
 [系统介绍和详细截图](https://www.fjy8018.xin/index.php/archives/100/)
 
 ## 起因 ##
