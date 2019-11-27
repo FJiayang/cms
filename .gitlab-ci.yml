@@ -1,0 +1,69 @@
+image: harbor.fjy8018.top:8883/library/docker:19.03
+
+variables:
+  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode -Dmaven.test.skip=true"
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  DOCKER_DRIVER: overlay
+  DOCKER_HOST: tcp://localhost:2375
+  DOCKER_TLS_CERTDIR: ""
+  SPRING_PROFILES_ACTIVE: docker
+  IMAGE_VERSION: "V2.9.13"
+  DOCKER_REGISTRY_MIRROR: "https://clayphwh.mirror.aliyuncs.com"
+
+stages:
+  - test
+  - package
+  - review
+  - deploy
+
+maven-build:
+  image: harbor.fjy8018.top:8883/library/maven:3-jdk-8
+  stage: test
+  retry: 2
+  script:
+    - mvn $MAVEN_CLI_OPTS clean package -U -B -T 2C
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - target/*.jar
+
+maven-scan:
+  stage: test
+  retry: 2
+  image: harbor.fjy8018.top:8883/library/maven:3-jdk-8
+  script:
+    - mvn $MAVEN_CLI_OPTS verify sonar:sonar
+
+maven-deploy:
+  stage: deploy
+  retry: 2
+  image: harbor.fjy8018.top:8883/library/maven:3-jdk-8
+  script:
+    - mvn $MAVEN_CLI_OPTS deploy
+
+
+docker-harbor-build:
+  stage: package
+  retry: 2
+  image:
+    name: harbor.fjy8018.top:8883/google_container/kaniko-executor:debug
+    entrypoint: [""]
+  script:
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:$IMAGE_VERSION
+
+deploy_live:
+  image: harbor.fjy8018.top:8883/offical/kubectl:v1.14.0
+  stage: deploy
+  retry: 2
+  environment:
+    name: prod
+    url: https://cms.fjy8018.xin
+  script:
+    - kubectl version
+    - kubectl get pods -n hmdt
+    - cd manifests/
+    - sed -i "s/__IMAGE_VERSION_SLUG__/${IMAGE_VERSION}/" deployment.yaml
+    - kubectl apply -f deployment.yaml
+    #    - kubectl rollout status -f deployment.yaml
+    - kubectl get pods -n hmdt
